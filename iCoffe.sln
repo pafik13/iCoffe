@@ -13,7 +13,10 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "iCoffe", "iCoffe\iCoffe\iCo
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		iCoffe\iCoffe\iCoffe.projitems*{5116f7c9-4a70-405a-87c0-ade5abec805c}*SharedItemsImports = 4
 		iCoffe\iCoffe\iCoffe.projitems*{2e383f7a-5bd0-42dd-a5e1-beedcbb11c5d}*SharedItemsImports = 13
+		iCoffe\iCoffe\iCoffe.projitems*{a903bfe7-5a27-4e67-94ff-08bcc0c815fd}*SharedItemsImports = 4
+		iCoffe\iCoffe\iCoffe.projitems*{74de6cc2-0695-4c68-84f9-61f7bf0e75f6}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AppStore|Any CPU = AppStore|Any CPU

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace iCoffe
+namespace iCoffe.Shared
 {
 	public class MyClass
 	{
