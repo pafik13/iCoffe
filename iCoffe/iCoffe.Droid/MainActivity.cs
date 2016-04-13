@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using SDiag = System.Diagnostics;
 
 using Android.App;
 using Android.Content;
@@ -7,24 +7,22 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-using iCoffe.Shared;
+using Android.Locations;
 
 namespace iCoffe.Droid
 {
 	[Activity (Label = "iCoffe.Droid", MainLauncher = true, Icon = "@drawable/icon")]
-	public class MainActivity : Activity
+	public class MainActivity : Activity, ILocationListener
 	{
-		int count = 1;
-
-        List<CoffeeHouseNet> netsData = null;
-
+        // Views
         Fragment nets = null;
         Fragment map = null;
         Fragment gifts = null;
 
         // Location
+        LocationManager locMgr;
 
-		protected override void OnCreate (Bundle bundle)
+        protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
 
@@ -42,32 +40,19 @@ namespace iCoffe.Droid
             RelativeLayout rlGifts = FindViewById<RelativeLayout>(Resource.Id.rlGifts);
             rlGifts.Click += Gifts_Click; ;
 
-            netsData = new Data().Nets;
             FragmentTransaction trans = FragmentManager.BeginTransaction();
             gifts = new Fragments.GiftsFragment();
             trans.Add(Resource.Id.mContentFL, gifts);
-            //trans.Hide(gifts);
             map = new Fragments.MapFragment();
             trans.Add(Resource.Id.mContentFL, map);
-            //trans.Hide(map);
             nets = new Fragments.NetsFragment();
             trans.Add(Resource.Id.mContentFL, nets);
             trans.Commit();
             List_Click(null, null);
-            //LinearLayout ll = FindViewById<LinearLayout>(Resource.Id.linearLayout1);
-            //foreach (var item in nets)
-            //{
-            //    ll.AddView (
-            //        new TextView(this) {
-            //            Text = item.Name,
-            //            Gravity = GravityFlags.Center,
-            //            LayoutParameters = new LinearLayout.LayoutParams (
-            //                ViewGroup.LayoutParams.MatchParent, 
-            //                ViewGroup.LayoutParams.WrapContent
-            //            )
-            //        }
-            //    );
-            //}
+
+            //Location
+            //locMgr = GetSystemService(Context.LocationService) as LocationManager;
+
         }
 
         private void Gifts_Click(object sender, EventArgs e)
@@ -88,7 +73,7 @@ namespace iCoffe.Droid
             //{
             //map = new Fragments.MapFragment();
             //}
-            //FragmentManager.BeginTransaction().Replace(Resource.Id.mContentFL, map).Commit();
+            //FragmentManager.BeginTransaction().Replace(Resource.Id.mContentFL, map).Commit(); 
             FragmentManager.BeginTransaction().Hide(nets).Hide(gifts).Show(map).Commit();
         }
 
@@ -102,6 +87,90 @@ namespace iCoffe.Droid
             //FragmentManager.BeginTransaction().Replace(Resource.Id.mContentFL, list).Commit();
             //FragmentManager.BeginTransaction().
             FragmentManager.BeginTransaction().Hide(map).Hide(gifts).Show(nets).Commit();
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            SDiag.Debug.Print("OnResume called");
+
+            // initialize location manager
+            locMgr = GetSystemService(Context.LocationService) as LocationManager;
+
+            // pass in the provider (GPS), 
+            // the minimum time between updates (in seconds), 
+            // the minimum distance the user needs to move to generate an update (in meters),
+            // and an ILocationListener (recall that this class impletents the ILocationListener interface)
+            if (locMgr.AllProviders.Contains(LocationManager.NetworkProvider)
+                && locMgr.IsProviderEnabled(LocationManager.NetworkProvider))
+            {
+                locMgr.RequestLocationUpdates(LocationManager.NetworkProvider, 2000, 1, this);
+            }
+            else
+            {
+                Toast.MakeText(this, "The Network Provider does not exist or is not enabled!", ToastLength.Long).Show();
+            }
+
+            // pass in the provider (GPS), 
+            // the minimum time between updates (in seconds), 
+            // the minimum distance the user needs to move to generate an update (in meters),
+            // and an ILocationListener (recall that this class impletents the ILocationListener interface)
+            if (locMgr.AllProviders.Contains(LocationManager.GpsProvider)
+                && locMgr.IsProviderEnabled(LocationManager.GpsProvider))
+            {
+                locMgr.RequestLocationUpdates(LocationManager.GpsProvider, 2000, 1, this);
+            }
+            else
+            {
+                Toast.MakeText(this, "The GPS Provider does not exist or is not enabled!", ToastLength.Long).Show();
+            }
+
+            //var locationCriteria = new Criteria();
+            //locationCriteria.Accuracy = Accuracy.Coarse;
+            //locationCriteria.PowerRequirement = Power.Medium;
+            //string locationProvider = locMgr.GetBestProvider(locationCriteria, true);
+            //SDiag.Debug.Print("Starting location updates with " + locationProvider.ToString());
+            //locMgr.RequestLocationUpdates (locationProvider, 2000, 1, this);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+
+            // stop sending location updates when the application goes into the background
+            // to learn about updating location in the background, refer to the Backgrounding guide
+            // http://docs.xamarin.com/guides/cross-platform/application_fundamentals/backgrounding/
+
+
+            // RemoveUpdates takes a pending intent - here, we pass the current Activity
+            locMgr.RemoveUpdates(this);
+            SDiag.Debug.Print("Location updates paused because application is entering the background");
+        }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+            SDiag.Debug.Print("OnStop called");
+        }
+
+        public void OnLocationChanged(Location location)
+        {
+            SDiag.Debug.Print("Location changed");
+            SDiag.Debug.Print("Latitude: " + location.Latitude.ToString());
+            SDiag.Debug.Print("Longitude: " + location.Longitude.ToString());
+            SDiag.Debug.Print("Provider: " + location.Provider.ToString());
+        }
+        public void OnProviderDisabled(string provider)
+        {
+            SDiag.Debug.Print(provider + " disabled by user");
+        }
+        public void OnProviderEnabled(string provider)
+        {
+            SDiag.Debug.Print(provider + " enabled by user");
+        }
+        public void OnStatusChanged(string provider, Availability status, Bundle extras)
+        {
+            SDiag.Debug.Print(provider + " availability has changed to " + status.ToString());
         }
     }
 }
