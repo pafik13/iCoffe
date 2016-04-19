@@ -22,6 +22,9 @@ namespace iCoffe.Droid.Fragments
         IList<CoffeeHouseNet> nets;
         ListView netsListView;
 
+        ComplexObjsAdapter objsAdapter;
+        IList<GeolocComplexObj> objs;
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -38,6 +41,7 @@ namespace iCoffe.Droid.Fragments
             View view = inflater.Inflate(Resource.Layout.fragment, container, false);
             view.FindViewById<TextView>(Resource.Id.frTextView).Visibility = ViewStates.Gone;
             netsListView = view.FindViewById<ListView>(Resource.Id.frListView);
+            netsListView.ItemClick += NetsListView_ItemClick;
             //LinearLayout llMain = view.FindViewById<LinearLayout>(Resource.Id.frMainLL);
             //llMain.RemoveAllViews();
             //netsListView = new ListView(Activity) {
@@ -51,17 +55,28 @@ namespace iCoffe.Droid.Fragments
             return view;
         }
 
+        private void NetsListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            //throw new NotImplementedException();
+            //Toast.MakeText(Activity, string.Format(@"id : {0}", objsAdapter[e.Position].Obj.Id), ToastLength.Short).Show();
+            Intent intent = new Intent(Activity, typeof(GiftDescriptionActivity));
+            intent.PutExtra(@"ObjId", objsAdapter[e.Position].Obj.Id);
+            StartActivity(intent);
+        }
+
         public override void OnResume()
         {
             base.OnResume();
-            //
-            nets = new Data().Nets;
+            // get data
+            nets = Data.Nets;
+            objs = Data.ComplexObjs;
 
             // create our adapter
             netsAdapter = new NetsAdapter(Activity, nets);
+            objsAdapter = new ComplexObjsAdapter(Activity, objs);
 
             //Hook up our adapter to our ListView
-            netsListView.Adapter = netsAdapter;
+            Activity.RunOnUiThread(() => netsListView.Adapter = objsAdapter);
         }
     }
 }

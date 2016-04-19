@@ -30,7 +30,19 @@ namespace iCoffe.Droid.Fragments
             //return base.OnCreateView(inflater, container, savedInstanceState);
             View view = inflater.Inflate(Resource.Layout.fragment, container, false);
             TextView tv = view.FindViewById<TextView>(Resource.Id.frTextView);
-            tv.Text = @"Gifts";
+            // DisplayInfo
+            DisplayMetrics dm = new DisplayMetrics();
+            Activity.WindowManager.DefaultDisplay.GetMetrics(dm);
+            string text = String.Empty;
+            text += "Density : " + dm.Density.ToString() + System.Environment.NewLine;
+            text += "DensityDpi : " + dm.DensityDpi.ToString() + System.Environment.NewLine;
+            text += "ScaledDensity : " + dm.ScaledDensity.ToString() + System.Environment.NewLine;
+            text += "WidthPixels : " + dm.WidthPixels.ToString() + System.Environment.NewLine;
+            text += "HeightPixels : " + dm.HeightPixels.ToString() + System.Environment.NewLine;
+            text += "Xdpi : " + dm.Xdpi.ToString() + System.Environment.NewLine;
+            text += "Ydpi : " + dm.Ydpi.ToString() + System.Environment.NewLine;
+            tv.Text = text;
+            //tv.Text = @"Gifts";
             return view;
         }
     }

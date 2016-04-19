@@ -10,6 +10,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\CoffeeHouseNet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataModel\GeolocObj.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataModel\GeolocComplexObj.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataModel\GeolocPoint.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Data.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MyClass.cs" />
   </ItemGroup>

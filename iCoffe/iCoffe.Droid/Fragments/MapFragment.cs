@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SDiag = System.Diagnostics;
 
 using Android.App;
 using Android.Content;
@@ -10,11 +11,19 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Android.Gms.Maps;
+using Android.Gms.Maps.Model;
+using Android.Gms.Actions;
+
+using iCoffe.Shared;
 
 namespace iCoffe.Droid.Fragments
 {
-    public class MapFragment : Fragment
+    public class MapFragment : Fragment, IOnMapReadyCallback, GoogleMap.IOnMarkerClickListener
     {
+        MapView mapView;
+        GoogleMap map;
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -27,23 +36,83 @@ namespace iCoffe.Droid.Fragments
             // Use this to return your custom view for this Fragment
             // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
 
+
             //return base.OnCreateView(inflater, container, savedInstanceState);
-            View view = inflater.Inflate(Resource.Layout.fragment, container, false);
-            TextView tv = view.FindViewById<TextView>(Resource.Id.frTextView);
-            // DisplayInfo
-            DisplayMetrics dm = new DisplayMetrics();
-            Activity.WindowManager.DefaultDisplay.GetMetrics(dm);
-            string text = String.Empty;
-            text += "Density : " + dm.Density.ToString() + System.Environment.NewLine;
-            text += "DensityDpi : " + dm.DensityDpi.ToString() + System.Environment.NewLine;
-            text += "ScaledDensity : " + dm.ScaledDensity.ToString() + System.Environment.NewLine;
-            text += "WidthPixels : " + dm.WidthPixels.ToString() + System.Environment.NewLine;
-            text += "HeightPixels : " + dm.HeightPixels.ToString() + System.Environment.NewLine;
-            text += "Xdpi : " + dm.Xdpi.ToString() + System.Environment.NewLine;
-            text += "Ydpi : " + dm.Ydpi.ToString() + System.Environment.NewLine;
-            tv.Text = text;
-            //tv.Text = @"Map";
+            //View view = inflater.Inflate(Resource.Layout.fragment, container, false);
+            //TextView tv = view.FindViewById<TextView>(Resource.Id.frTextView);
+            //string text = string.Empty;
+            //foreach (var item in Data.Objs)
+            //{
+            //    text += string.Format(@"Id:{0}, X:{1}, Y:{2}", item.Id, item.geoloc.x, item.geoloc.y) + System.Environment.NewLine;
+            //}
+            //tv.Text = text;
+            ////tv.Text = @"Map";
+
+            View view = inflater.Inflate(Resource.Layout.MapFragment, container, false);
+            mapView = view.FindViewById<MapView>(Resource.Id.mvMap);
+            mapView.OnCreate(savedInstanceState);
+            mapView.GetMapAsync(this); //this is important
+
             return view;
+        }
+
+        public void OnMapReady(GoogleMap googleMap)
+        {
+            map = googleMap;
+            map.UiSettings.ZoomControlsEnabled = true;  // GetUiSettings().setZoomControlsEnabled(true);
+
+            //LatLng pos = new LatLng(54.974362, 73.418061);
+            LatLng pos = new LatLng(54.9748227, 73.4099986); 
+            map.AddMarker(new MarkerOptions().SetPosition(pos).SetTitle(@"ќмск")); // addMarker(new MarkerOptions().position(/*some location*/));
+
+            foreach (var item in Data.Objs)
+            {
+                //text += string.Format(@"Id:{0}, X:{1}, Y:{2}", item.Id, item.geoloc.x, item.geoloc.y) + System.Environment.NewLine;
+                //pos = ;
+                map.AddMarker(new MarkerOptions().SetPosition(new LatLng(item.geoloc.x, item.geoloc.y)).SetTitle(string.Format(@"Id:{0}", item.Id)));
+            }
+
+            map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(pos, 12)); // moveCamera(CameraUpdateFactory.newLatLngZoom(/*some location*/, 10));
+
+            map.SetOnMarkerClickListener(this);
+        }
+
+        public override void OnResume()
+        {
+            base.OnResume();
+            mapView.OnResume();
+        }
+
+        public override void OnPause()
+        {
+            base.OnPause();
+            mapView.OnPause();
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+            mapView.OnDestroy();
+        }
+
+        public override void OnSaveInstanceState(Bundle outState)
+        {
+            base.OnSaveInstanceState(outState);
+            mapView.OnSaveInstanceState(outState);
+        }
+
+        public override void OnLowMemory()
+        {
+            base.OnLowMemory();
+            mapView.OnLowMemory();
+        }
+
+        public bool OnMarkerClick(Marker marker)
+        {
+            //throw new NotImplementedException();
+            SDiag.Debug.Print(string.Format(@"marker : {0}", marker.Title));
+            marker.ShowInfoWindow();
+            return true;
         }
     }
 }
