@@ -26,14 +26,14 @@
                 p1:src="@drawable/ic_account_box_white_24dp"
                 p1:layout_width="wrap_content"
                 p1:layout_height="wrap_content"
-                p1:id="@+id/ivIcon1"
+                p1:id="@+id/siEmailIV"
                 p1:layout_centerInParent="true" />
         </RelativeLayout>
         <EditText
             p1:inputType="textEmailAddress"
             p1:layout_width="match_parent"
             p1:layout_height="match_parent"
-            p1:id="@+id/etEmail"
+            p1:id="@+id/siEmailET"
             p1:layout_margin="5dp"
             p1:hint="E-mail"
             p1:textColorHint="@color/Grey_500" />
@@ -61,14 +61,14 @@
                 p1:src="@drawable/ic_lock_outline_white_24dp"
                 p1:layout_width="wrap_content"
                 p1:layout_height="wrap_content"
-                p1:id="@+id/ivIcon2"
+                p1:id="@+id/siPasswordIV"
                 p1:layout_centerInParent="true" />
         </RelativeLayout>
         <EditText
-            p1:inputType="textEmailAddress"
+            p1:inputType="textPassword"
             p1:layout_width="match_parent"
             p1:layout_height="match_parent"
-            p1:id="@+id/etPassword"
+            p1:id="@+id/siPasswordET"
             p1:layout_margin="5dp"
             p1:hint="Пароль"
             p1:textColorHint="@color/Grey_500" />

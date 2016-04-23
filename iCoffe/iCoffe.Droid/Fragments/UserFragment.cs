@@ -35,7 +35,14 @@ namespace iCoffe.Droid.Fragments
             // Use this to return your custom view for this Fragment
             // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
 
-            user = new User() { City = @"Moscow", FirstName = @"Pavel", LastName = @"Lyubin" };
+            user = new User() { City = @"<No City>", FirstName = @"<No First>", LastName = @"<No Last>" };
+
+            ISharedPreferences prefs = Activity.GetSharedPreferences(@"icoffe", FileCreationMode.Private);
+            string userSer = prefs.GetString(SignInActivity.C_USER, string.Empty);
+            if (!string.IsNullOrEmpty(userSer))
+            {
+                user = Data.DeserializeUser(userSer);
+            }
 
             //return base.OnCreateView(inflater, container, savedInstanceState);
 

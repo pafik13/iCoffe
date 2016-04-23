@@ -20,15 +20,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edEventNameRL"
-            android:layout_margin="10dp">
+            android:layout_margin="8dp">
             <ImageView
                 android:src="@android:drawable/ic_menu_gallery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
                 android:id="@+id/edEventNameIV"
                 android:minHeight="64dp"
-                android:minWidth="64dp"
-                android:layout_margin="10dp" />
+                android:minWidth="64dp" />
             <TextView
                 android:text="Large Text"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -41,9 +40,8 @@
         <ImageView
             android:src="@android:drawable/ic_menu_gallery"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="128dp"
             android:id="@+id/edEventImageIV"
-            android:minHeight="128dp"
             android:scaleType="fitXY" />
         <Button
             android:text="ПОЛУЧИТЬ"
@@ -51,7 +49,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/edGiftBtn"
             android:layout_gravity="right"
-            android:layout_margin="10dp"
+            android:layout_margin="8dp"
             android:background="@drawable/event_desc_gift_button" />
     </LinearLayout>
     <LinearLayout

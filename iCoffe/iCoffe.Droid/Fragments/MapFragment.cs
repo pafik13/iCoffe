@@ -24,6 +24,9 @@ namespace iCoffe.Droid.Fragments
         MapView mapView;
         GoogleMap map;
 
+        Dictionary<string, int> markers = new Dictionary<string, int>();
+
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -69,7 +72,8 @@ namespace iCoffe.Droid.Fragments
             {
                 //text += string.Format(@"Id:{0}, X:{1}, Y:{2}", item.Id, item.geoloc.x, item.geoloc.y) + System.Environment.NewLine;
                 //pos = ;
-                map.AddMarker(new MarkerOptions().SetPosition(new LatLng(item.geoloc.x, item.geoloc.y)).SetTitle(string.Format(@"Id:{0}", item.Id)));
+                Marker m = map.AddMarker(new MarkerOptions().SetPosition(new LatLng(item.geoloc.x, item.geoloc.y)).SetTitle(string.Format(@"Id:{0}", item.Id)).SetSnippet(@"snippet"));
+                markers.Add(m.Id, item.Id);
             }
 
             map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(pos, 12)); // moveCamera(CameraUpdateFactory.newLatLngZoom(/*some location*/, 10));
@@ -110,9 +114,31 @@ namespace iCoffe.Droid.Fragments
         public bool OnMarkerClick(Marker marker)
         {
             //throw new NotImplementedException();
-            SDiag.Debug.Print(string.Format(@"marker : {0}", marker.Title));
-            marker.ShowInfoWindow();
+            SDiag.Debug.Print(string.Format(@"markerTitle : {0}", marker.Title));
+            if (markers.ContainsKey(marker.Id))
+            {
+                SDiag.Debug.Print(string.Format(@"markerId : {0}", markers[marker.Id]));
+                
+                Intent intent = new Intent(Activity, typeof(EventDescActivity));
+                intent.PutExtra(@"ObjId", markers[marker.Id]);
+                StartActivityForResult(intent, 1);
+            }
+            else
+            {
+                marker.ShowInfoWindow();
+            }
+
             return true;
+        }
+
+        public override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+
+            if ((requestCode == 1) && (resultCode == Result.Ok))
+            {
+                Activity.Intent.PutExtra(MainActivity.C_WAS_STARTED_NEW_ACTIVITY, true);
+            }
         }
     }
 }

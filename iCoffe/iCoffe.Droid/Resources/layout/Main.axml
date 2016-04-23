@@ -19,7 +19,7 @@
             android:layout_weight="1"
             android:background="@drawable/top_nav_states">
             <ImageView
-                android:src="@drawable/ic_free_breakfast_white_48dp"
+                android:src="@drawable/ic_cake_white_48dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/ivNets"
@@ -53,7 +53,7 @@
             android:layout_weight="1"
             android:background="@drawable/top_nav_states">
             <ImageView
-                android:src="@drawable/ic_cake_white_48dp"
+                android:src="@drawable/ic_free_breakfast_white_48dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/ivUser"

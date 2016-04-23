@@ -436,6 +436,9 @@ namespace iCoffe.Droid
 			// aapt resource value: 0x7f02003e
 			public const int top_nav_states = 2130837566;
 			
+			// aapt resource value: 0x7f02003f
+			public const int travelers_1 = 2130837567;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -509,12 +512,6 @@ namespace iCoffe.Droid
 			// aapt resource value: 0x7f08000e
 			public const int edTopLL = 2131230734;
 			
-			// aapt resource value: 0x7f080034
-			public const int etEmail = 2131230772;
-			
-			// aapt resource value: 0x7f080038
-			public const int etPassword = 2131230776;
-			
 			// aapt resource value: 0x7f08001f
 			public const int frListView = 2131230751;
 			
@@ -529,12 +526,6 @@ namespace iCoffe.Droid
 			
 			// aapt resource value: 0x7f080007
 			public const int icon_only = 2131230727;
-			
-			// aapt resource value: 0x7f080033
-			public const int ivIcon1 = 2131230771;
-			
-			// aapt resource value: 0x7f080037
-			public const int ivIcon2 = 2131230775;
 			
 			// aapt resource value: 0x7f08002a
 			public const int ivMap = 2131230762;
@@ -607,6 +598,18 @@ namespace iCoffe.Droid
 			
 			// aapt resource value: 0x7f080031
 			public const int siEdit2 = 2131230769;
+			
+			// aapt resource value: 0x7f080034
+			public const int siEmailET = 2131230772;
+			
+			// aapt resource value: 0x7f080033
+			public const int siEmailIV = 2131230771;
+			
+			// aapt resource value: 0x7f080038
+			public const int siPasswordET = 2131230776;
+			
+			// aapt resource value: 0x7f080037
+			public const int siPasswordIV = 2131230775;
 			
 			// aapt resource value: 0x7f080035
 			public const int siSignBtn = 2131230773;

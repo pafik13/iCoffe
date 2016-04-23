@@ -10,6 +10,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
+using UniversalImageLoader.Core;
+
 using iCoffe.Shared;
 
 namespace iCoffe.Droid
@@ -21,7 +23,9 @@ namespace iCoffe.Droid
         GeolocComplexObj complexObj;
 
         // Event info
+        ImageView eventLogo;
         TextView eventName;
+        ImageView eventImage;
         TextView eventAddresses;
         TextView eventOperTimes;
         TextView eventSite;
@@ -34,7 +38,9 @@ namespace iCoffe.Droid
             // Create your application here
             SetContentView(Resource.Layout.EventDesc);
 
+            eventLogo = FindViewById<ImageView>(Resource.Id.edEventNameIV);
             eventName = FindViewById<TextView>(Resource.Id.edEventNameTV);
+            eventImage = FindViewById<ImageView>(Resource.Id.edEventImageIV);
             eventAddresses = FindViewById<TextView>(Resource.Id.edAddressesTV);
             eventOperTimes = FindViewById<TextView>(Resource.Id.edOperTimesTV);
             eventSite = FindViewById<TextView>(Resource.Id.edSiteTV);
@@ -45,6 +51,14 @@ namespace iCoffe.Droid
             {
                 complexObj = Data.Get(objId);
 
+                // Get singleton instance
+                ImageLoader imageLoader = ImageLoader.Instance;
+
+                // Load image
+                imageLoader.DisplayImage(@"http://geolocwebapi.azurewebsites.net/images/Traveler.jpg", eventLogo);
+
+                imageLoader.DisplayImage(@"http://cdn01.travelerscoffee.ru/files/joints/photos/41cfd6cd60ac93a0ff4748694c1f01b68794a33c%D0%A4%D0%BB%D0%B0%D0%B3%D0%BC%D0%B0%D0%BD%20(1).jpg", eventImage);
+
                 eventName.Text = complexObj.Obj.Label != string.Empty ? @"L: " + complexObj.Obj.Label :
                                  complexObj.Obj.Title != string.Empty ? @"T: " + complexObj.Obj.Title : @"<No Label, No Title>";
 
@@ -52,9 +66,9 @@ namespace iCoffe.Droid
 
                 eventOperTimes.Text = @"<No OperTimes>";
 
-                eventSite.Text = @"<No Site>";
+                eventSite.Text = @"сайт: <No Site>";
 
-                eventPhone.Text = @"<No Phone>";
+                eventPhone.Text = @"тел.: <No Phone>";
             }
             SetResult(Result.Ok);
         }

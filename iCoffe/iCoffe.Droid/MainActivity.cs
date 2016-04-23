@@ -15,6 +15,8 @@ using Android.Locations;
 
 using RestSharp;
 
+using UniversalImageLoader.Core;
+
 using iCoffe.Shared;
 
 namespace iCoffe.Droid
@@ -22,8 +24,9 @@ namespace iCoffe.Droid
     [Activity(Label = "MainActivity")]
     public class MainActivity : Activity, ILocationListener
 	{
-        // flags
+        // Consts
         public const string C_WAS_STARTED_NEW_ACTIVITY = @"C_WAS_STARTED_NEW_ACTIVITY";
+        public const string C_IS_USER_SIGN_IN = @"C_IS_USER_SIGN_IN";
 
         // Layouts
         RelativeLayout rlNets;
@@ -41,7 +44,7 @@ namespace iCoffe.Droid
         string defaultPlace = String.Empty;
         double latitude;
         double longitude;
-        int radius;
+        int radius = 4;
 
         // Intermedia
         AlertDialog.Builder builder;
@@ -52,8 +55,12 @@ namespace iCoffe.Droid
 		{
 			base.OnCreate (bundle);
 
-			// Set our view from the "main" layout resource
-			SetContentView (Resource.Layout.Main);
+            var config = ImageLoaderConfiguration.CreateDefault(ApplicationContext);
+            // Initialize ImageLoader with configuration.
+            ImageLoader.Instance.Init(config);
+
+            // Set our view from the "main" layout resource
+            SetContentView (Resource.Layout.Main);
 
             // Get our button from the layout resource,
             // and attach an event to it
@@ -276,9 +283,12 @@ namespace iCoffe.Droid
                 //Thread.Sleep(5000);
                 var client = new RestClient(@"http://geolocwebapi.azurewebsites.net/");
                 var request = new RestRequest(@"api/Objs/Sel", Method.GET);
+                //request.AddQueryParameter(@"plat", latitude.ToString());
+                //request.AddQueryParameter(@"plong", longitude.ToString());
+                //request.AddQueryParameter(@"dmax", radius.ToString());
                 request.AddQueryParameter(@"plat", 54.974362.ToString());
                 request.AddQueryParameter(@"plong", 73.418061.ToString());
-                request.AddQueryParameter(@"dmax", 5.ToString());
+                request.AddQueryParameter(@"dmax", radius.ToString());
                 request.AddQueryParameter(@"grId", 1.ToString());
                 request.AddQueryParameter(@"pgn", null);
                 request.AddQueryParameter(@"pgs", null);
@@ -404,10 +414,13 @@ namespace iCoffe.Droid
             SDiag.Debug.Print("OnStop called");
         }
 
-        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        public override void OnBackPressed()
         {
-            base.OnActivityResult(requestCode, resultCode, data);
-            SDiag.Debug.Print("OnActivityResult called");
+            if (Intent.GetBooleanExtra(C_IS_USER_SIGN_IN, false))
+            {
+                MoveTaskToBack(true);
+            }
+            base.OnBackPressed();
         }
 
         //### LOCATION

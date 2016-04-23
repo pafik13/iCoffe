@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
+
 
 namespace iCoffe.Shared
 {
@@ -8,6 +11,27 @@ namespace iCoffe.Shared
         public static List<GeolocObj> Objs { get; set; }
         public static List<GeolocComplexObj> ComplexObjs { get; set; }
         public static GeolocPoint center { get; set; }
+
+        public static string SerializeUser(User user)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(User));
+
+            using (StringWriter textWriter = new StringWriter())
+            {
+                xmlSerializer.Serialize(textWriter, user);
+                return textWriter.ToString();
+            }
+        }
+
+        public static User DeserializeUser(string user)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(User));
+
+            using (TextReader reader = new StringReader(user))
+            {
+                return (User)xmlSerializer.Deserialize(reader);
+            }
+        }
 
         public static GeolocComplexObj Get(int id)
         {
