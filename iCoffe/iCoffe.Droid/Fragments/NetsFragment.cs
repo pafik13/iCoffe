@@ -59,9 +59,9 @@ namespace iCoffe.Droid.Fragments
         {
             //throw new NotImplementedException();
             //Toast.MakeText(Activity, string.Format(@"id : {0}", objsAdapter[e.Position].Obj.Id), ToastLength.Short).Show();
-            Intent intent = new Intent(Activity, typeof(GiftDescriptionActivity));
+            Intent intent = new Intent(Activity, typeof(EventDescActivity));
             intent.PutExtra(@"ObjId", objsAdapter[e.Position].Obj.Id);
-            StartActivity(intent);
+            StartActivityForResult(intent, 1);
         }
 
         public override void OnResume()
@@ -77,6 +77,16 @@ namespace iCoffe.Droid.Fragments
 
             //Hook up our adapter to our ListView
             Activity.RunOnUiThread(() => netsListView.Adapter = objsAdapter);
+        }
+
+        public override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+
+            if ((requestCode == 1) && (resultCode == Result.Ok))
+            {
+                Activity.Intent.PutExtra(MainActivity.C_WAS_STARTED_NEW_ACTIVITY, true);
+            }
         }
     }
 }

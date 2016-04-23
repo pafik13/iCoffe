@@ -22,15 +22,18 @@ namespace iCoffe.Droid
     [Activity(Label = "MainActivity")]
     public class MainActivity : Activity, ILocationListener
 	{
+        // flags
+        public const string C_WAS_STARTED_NEW_ACTIVITY = @"C_WAS_STARTED_NEW_ACTIVITY";
+
         // Layouts
         RelativeLayout rlNets;
         RelativeLayout rlMap;
-        RelativeLayout rlGifts;
+        RelativeLayout rlUser;
 
         // Views
         Fragment nets = null;
         Fragment map = null;
-        Fragment gifts = null;
+        Fragment user = null;
 
         // Location
         LocationManager locMgr;
@@ -60,8 +63,8 @@ namespace iCoffe.Droid
             rlMap = FindViewById<RelativeLayout>(Resource.Id.rlMap);
             rlMap.Click += Map_Click; ;
 
-            rlGifts = FindViewById<RelativeLayout>(Resource.Id.rlGifts);
-            rlGifts.Click += Gifts_Click; ;
+            rlUser = FindViewById<RelativeLayout>(Resource.Id.rlUser);
+            rlUser.Click += User_Click; ;
 
 
             //AlertDialog.Builder builder;
@@ -113,10 +116,10 @@ namespace iCoffe.Droid
             //throw new NotImplementedException();
             // GetData();
             FragmentTransaction trans = FragmentManager.BeginTransaction();
-            if (gifts == null)
+            if (user == null)
             {
-                gifts = new Fragments.GiftsFragment();
-                trans.Add(Resource.Id.mContentFL, gifts);
+                user = new Fragments.UserFragment();
+                trans.Add(Resource.Id.mContentFL, user);
             }
             if (map == null)
             {
@@ -129,13 +132,13 @@ namespace iCoffe.Droid
                 trans.Add(Resource.Id.mContentFL, nets);
             }
             trans.Commit();
-            if (!rlMap.Selected && !rlNets.Selected && !rlGifts.Selected)
+            if (!rlMap.Selected && !rlNets.Selected && !rlUser.Selected)
             {
                 Map_Click(null, null);
             }
         }
 
-        private void Gifts_Click(object sender, EventArgs e)
+        private void User_Click(object sender, EventArgs e)
         {
             //throw new NotImplementedException();
             //if (gifts == null)
@@ -143,11 +146,11 @@ namespace iCoffe.Droid
             //gifts = new Fragments.GiftsFragment();
             //}
             //FragmentManager.BeginTransaction().Replace(Resource.Id.mContentFL, gifts).Commit();
-            FragmentManager.BeginTransaction().Hide(nets).Hide(map).Show(gifts).Commit();
+            FragmentManager.BeginTransaction().Hide(nets).Hide(map).Show(user).Commit();
             RunOnUiThread(() => {
                 rlMap.Selected = false;
                 rlNets.Selected = false;
-                rlGifts.Selected = true;
+                rlUser.Selected = true;
             });
         }
 
@@ -159,11 +162,11 @@ namespace iCoffe.Droid
             //map = new Fragments.MapFragment();
             //}
             //FragmentManager.BeginTransaction().Replace(Resource.Id.mContentFL, map).Commit(); 
-            FragmentManager.BeginTransaction().Hide(nets).Hide(gifts).Show(map).Commit();
+            FragmentManager.BeginTransaction().Hide(nets).Hide(user).Show(map).Commit();
             RunOnUiThread(() => { 
                 rlMap.Selected = true;
                 rlNets.Selected = false;
-                rlGifts.Selected = false;
+                rlUser.Selected = false;
             });
         }
 
@@ -176,11 +179,11 @@ namespace iCoffe.Droid
             //}
             //FragmentManager.BeginTransaction().Replace(Resource.Id.mContentFL, list).Commit();
             //FragmentManager.BeginTransaction().
-            FragmentManager.BeginTransaction().Hide(map).Hide(gifts).Show(nets).Commit();
+            FragmentManager.BeginTransaction().Hide(map).Hide(user).Show(nets).Commit();
             RunOnUiThread(() => {
                 rlMap.Selected = false;
                 rlNets.Selected = true;
-                rlGifts.Selected = false;
+                rlUser.Selected = false;
             });
         }
 
@@ -189,71 +192,74 @@ namespace iCoffe.Droid
             base.OnResume();
             SDiag.Debug.Print("OnResume called");
 
-            if (IsInternetActive() && IsLocationActive())
+            if (!Intent.GetBooleanExtra(C_WAS_STARTED_NEW_ACTIVITY, false))
             {
-
-                if (defaultPlace == String.Empty)
+                if (IsInternetActive() && IsLocationActive())
                 {
-                    // pass in the provider (GPS), 
-                    // the minimum time between updates (in seconds), 
-                    // the minimum distance the user needs to move to generate an update (in meters),
-                    // and an ILocationListener (recall that this class impletents the ILocationListener interface)
-                    ////if (locMgr.AllProviders.Contains(LocationManager.NetworkProvider)
-                    ////    && locMgr.IsProviderEnabled(LocationManager.NetworkProvider))
-                    ////{
-                    ////    locMgr.RequestLocationUpdates(LocationManager.NetworkProvider, 2000, 1, this);
-                    ////}
-                    ////else
-                    ////{
-                    ////    Toast.MakeText(this, "The Network Provider does not exist or is not enabled!", ToastLength.Long).Show();
-                    ////}
 
-                    // pass in the provider (GPS), 
-                    // the minimum time between updates (in seconds), 
-                    // the minimum distance the user needs to move to generate an update (in meters),
-                    // and an ILocationListener (recall that this class impletents the ILocationListener interface)
-                    ////if (locMgr.AllProviders.Contains(LocationManager.GpsProvider)
-                    ////    && locMgr.IsProviderEnabled(LocationManager.GpsProvider))
-                    ////{
-                    ////    locMgr.RequestLocationUpdates(LocationManager.GpsProvider, 2000, 1, this);
-                    ////}
-                    ////else
-                    ////{
-                    ////    Toast.MakeText(this, "The GPS Provider does not exist or is not enabled!", ToastLength.Long).Show();
-                    ////}
-                    //Location loc = locMgr.GetLastKnownLocation();
-                    //loc.
-                    var locationCriteria = new Criteria();
-                    locationCriteria.Accuracy = Accuracy.Coarse;
-                    locationCriteria.PowerRequirement = Power.Medium;
-                    string locationProvider = locMgr.GetBestProvider(locationCriteria, true);
-                    SDiag.Debug.Print("Starting location updates with " + locationProvider.ToString());
-                    locMgr.RequestLocationUpdates(locationProvider, 2000, 1, this);
-
-                    // Progress
-                    string message = @"Получение данных о местоположении...";
-                    progressDialog = ProgressDialog.Show(this, @"", message, true);
-
-                    //progressDialog.Show();
-                    ThreadPool.QueueUserWorkItem(state =>
+                    if (defaultPlace == String.Empty)
                     {
-                        Thread.Sleep(30000);
+                        // pass in the provider (GPS), 
+                        // the minimum time between updates (in seconds), 
+                        // the minimum distance the user needs to move to generate an update (in meters),
+                        // and an ILocationListener (recall that this class impletents the ILocationListener interface)
+                        ////if (locMgr.AllProviders.Contains(LocationManager.NetworkProvider)
+                        ////    && locMgr.IsProviderEnabled(LocationManager.NetworkProvider))
+                        ////{
+                        ////    locMgr.RequestLocationUpdates(LocationManager.NetworkProvider, 2000, 1, this);
+                        ////}
+                        ////else
+                        ////{
+                        ////    Toast.MakeText(this, "The Network Provider does not exist or is not enabled!", ToastLength.Long).Show();
+                        ////}
 
-                        RunOnUiThread(() => {
-                            if (!isLocationFound)
+                        // pass in the provider (GPS), 
+                        // the minimum time between updates (in seconds), 
+                        // the minimum distance the user needs to move to generate an update (in meters),
+                        // and an ILocationListener (recall that this class impletents the ILocationListener interface)
+                        ////if (locMgr.AllProviders.Contains(LocationManager.GpsProvider)
+                        ////    && locMgr.IsProviderEnabled(LocationManager.GpsProvider))
+                        ////{
+                        ////    locMgr.RequestLocationUpdates(LocationManager.GpsProvider, 2000, 1, this);
+                        ////}
+                        ////else
+                        ////{
+                        ////    Toast.MakeText(this, "The GPS Provider does not exist or is not enabled!", ToastLength.Long).Show();
+                        ////}
+                        //Location loc = locMgr.GetLastKnownLocation();
+                        //loc.
+                        var locationCriteria = new Criteria();
+                        locationCriteria.Accuracy = Accuracy.Coarse;
+                        locationCriteria.PowerRequirement = Power.Medium;
+                        string locationProvider = locMgr.GetBestProvider(locationCriteria, true);
+                        SDiag.Debug.Print("Starting location updates with " + locationProvider.ToString());
+                        locMgr.RequestLocationUpdates(locationProvider, 2000, 1, this);
+
+                        // Progress
+                        string message = @"Получение данных о местоположении...";
+                        progressDialog = ProgressDialog.Show(this, @"", message, true);
+
+                        //progressDialog.Show();
+                        ThreadPool.QueueUserWorkItem(state =>
+                        {
+                            Thread.Sleep(30000);
+
+                            RunOnUiThread(() =>
                             {
-                                progressDialog.Dismiss();
-                            }
+                                if (!isLocationFound)
+                                {
+                                    progressDialog.Dismiss();
+                                }
+                            });
+
+                            SDiag.Debug.Print("Location find stopped.");
                         });
-
-                        SDiag.Debug.Print("Location find stopped.");
-                    });
+                    }
+                    else
+                    {
+                        GetNets();
+                    }
                 }
-                else
-                {
-                    GetNets();
-                }
-
             }
         }
 
@@ -398,6 +404,13 @@ namespace iCoffe.Droid
             SDiag.Debug.Print("OnStop called");
         }
 
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            SDiag.Debug.Print("OnActivityResult called");
+        }
+
+        //### LOCATION
         public void OnLocationChanged(Location location)
         {
             SDiag.Debug.Print("Location changed");

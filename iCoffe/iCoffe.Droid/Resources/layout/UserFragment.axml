@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:id="@+id/ufMainLL">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ufUserInfoRL"
+        android:background="@color/white_bg"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
+        <ImageView
+            android:src="@drawable/redhat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ufUserAvatarIV"
+            android:minHeight="64dp"
+            android:minWidth="64dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp" />
+        <TextView
+            android:text="UserName"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ufUserAvatarIV"
+            android:id="@+id/ufUserNameTV"
+            android:layout_centerHorizontal="true" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ufUserNameTV"
+            android:id="@+id/ufCityLL"
+            android:layout_centerHorizontal="true">
+            <ImageView
+                android:src="@drawable/ic_place_white_18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/ufCityIV"
+                android:layout_margin="2dp" />
+            <TextView
+                android:text="City"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/ufCityTV"
+                android:gravity="center" />
+        </LinearLayout>
+    </RelativeLayout>
+    <TextView
+        android:text="Мои подарки:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ufTextView"
+        android:gravity="center" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ufListView"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
+        android:paddingTop="10dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp" />
+</LinearLayout>

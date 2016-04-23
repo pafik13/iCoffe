@@ -21,6 +21,14 @@ namespace iCoffe.Droid
 
             // Create your application here
             SetContentView(Resource.Layout.SignIn);
+
+            FindViewById<Button>(Resource.Id.siSkipBtn).Click += SkipBtn_Click;
+        }
+
+        private void SkipBtn_Click(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+            StartActivity(typeof(MainActivity));
         }
     }
 }

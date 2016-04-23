@@ -251,178 +251,190 @@ namespace iCoffe.Droid
 			public const int background = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int button_test_background = 2130837505;
+			public const int bg_white_corned = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int common_full_open_on_phone = 2130837506;
+			public const int button_test_background = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int common_google_signin_btn_icon_dark = 2130837507;
+			public const int common_full_open_on_phone = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int common_google_signin_btn_icon_dark_disabled = 2130837508;
+			public const int common_google_signin_btn_icon_dark = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int common_google_signin_btn_icon_dark_focused = 2130837509;
+			public const int common_google_signin_btn_icon_dark_disabled = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int common_google_signin_btn_icon_dark_normal = 2130837510;
+			public const int common_google_signin_btn_icon_dark_focused = 2130837510;
 			
 			// aapt resource value: 0x7f020007
-			public const int common_google_signin_btn_icon_dark_pressed = 2130837511;
+			public const int common_google_signin_btn_icon_dark_normal = 2130837511;
 			
 			// aapt resource value: 0x7f020008
-			public const int common_google_signin_btn_icon_light = 2130837512;
+			public const int common_google_signin_btn_icon_dark_pressed = 2130837512;
 			
 			// aapt resource value: 0x7f020009
-			public const int common_google_signin_btn_icon_light_disabled = 2130837513;
+			public const int common_google_signin_btn_icon_light = 2130837513;
 			
 			// aapt resource value: 0x7f02000a
-			public const int common_google_signin_btn_icon_light_focused = 2130837514;
+			public const int common_google_signin_btn_icon_light_disabled = 2130837514;
 			
 			// aapt resource value: 0x7f02000b
-			public const int common_google_signin_btn_icon_light_normal = 2130837515;
+			public const int common_google_signin_btn_icon_light_focused = 2130837515;
 			
 			// aapt resource value: 0x7f02000c
-			public const int common_google_signin_btn_icon_light_pressed = 2130837516;
+			public const int common_google_signin_btn_icon_light_normal = 2130837516;
 			
 			// aapt resource value: 0x7f02000d
-			public const int common_google_signin_btn_text_dark = 2130837517;
+			public const int common_google_signin_btn_icon_light_pressed = 2130837517;
 			
 			// aapt resource value: 0x7f02000e
-			public const int common_google_signin_btn_text_dark_disabled = 2130837518;
+			public const int common_google_signin_btn_text_dark = 2130837518;
 			
 			// aapt resource value: 0x7f02000f
-			public const int common_google_signin_btn_text_dark_focused = 2130837519;
+			public const int common_google_signin_btn_text_dark_disabled = 2130837519;
 			
 			// aapt resource value: 0x7f020010
-			public const int common_google_signin_btn_text_dark_normal = 2130837520;
+			public const int common_google_signin_btn_text_dark_focused = 2130837520;
 			
 			// aapt resource value: 0x7f020011
-			public const int common_google_signin_btn_text_dark_pressed = 2130837521;
+			public const int common_google_signin_btn_text_dark_normal = 2130837521;
 			
 			// aapt resource value: 0x7f020012
-			public const int common_google_signin_btn_text_light = 2130837522;
+			public const int common_google_signin_btn_text_dark_pressed = 2130837522;
 			
 			// aapt resource value: 0x7f020013
-			public const int common_google_signin_btn_text_light_disabled = 2130837523;
+			public const int common_google_signin_btn_text_light = 2130837523;
 			
 			// aapt resource value: 0x7f020014
-			public const int common_google_signin_btn_text_light_focused = 2130837524;
+			public const int common_google_signin_btn_text_light_disabled = 2130837524;
 			
 			// aapt resource value: 0x7f020015
-			public const int common_google_signin_btn_text_light_normal = 2130837525;
+			public const int common_google_signin_btn_text_light_focused = 2130837525;
 			
 			// aapt resource value: 0x7f020016
-			public const int common_google_signin_btn_text_light_pressed = 2130837526;
+			public const int common_google_signin_btn_text_light_normal = 2130837526;
 			
 			// aapt resource value: 0x7f020017
-			public const int common_ic_googleplayservices = 2130837527;
+			public const int common_google_signin_btn_text_light_pressed = 2130837527;
 			
 			// aapt resource value: 0x7f020018
-			public const int common_plus_signin_btn_icon_dark = 2130837528;
+			public const int common_ic_googleplayservices = 2130837528;
 			
 			// aapt resource value: 0x7f020019
-			public const int common_plus_signin_btn_icon_dark_disabled = 2130837529;
+			public const int common_plus_signin_btn_icon_dark = 2130837529;
 			
 			// aapt resource value: 0x7f02001a
-			public const int common_plus_signin_btn_icon_dark_focused = 2130837530;
+			public const int common_plus_signin_btn_icon_dark_disabled = 2130837530;
 			
 			// aapt resource value: 0x7f02001b
-			public const int common_plus_signin_btn_icon_dark_normal = 2130837531;
+			public const int common_plus_signin_btn_icon_dark_focused = 2130837531;
 			
 			// aapt resource value: 0x7f02001c
-			public const int common_plus_signin_btn_icon_dark_pressed = 2130837532;
+			public const int common_plus_signin_btn_icon_dark_normal = 2130837532;
 			
 			// aapt resource value: 0x7f02001d
-			public const int common_plus_signin_btn_icon_light = 2130837533;
+			public const int common_plus_signin_btn_icon_dark_pressed = 2130837533;
 			
 			// aapt resource value: 0x7f02001e
-			public const int common_plus_signin_btn_icon_light_disabled = 2130837534;
+			public const int common_plus_signin_btn_icon_light = 2130837534;
 			
 			// aapt resource value: 0x7f02001f
-			public const int common_plus_signin_btn_icon_light_focused = 2130837535;
+			public const int common_plus_signin_btn_icon_light_disabled = 2130837535;
 			
 			// aapt resource value: 0x7f020020
-			public const int common_plus_signin_btn_icon_light_normal = 2130837536;
+			public const int common_plus_signin_btn_icon_light_focused = 2130837536;
 			
 			// aapt resource value: 0x7f020021
-			public const int common_plus_signin_btn_icon_light_pressed = 2130837537;
+			public const int common_plus_signin_btn_icon_light_normal = 2130837537;
 			
 			// aapt resource value: 0x7f020022
-			public const int common_plus_signin_btn_text_dark = 2130837538;
+			public const int common_plus_signin_btn_icon_light_pressed = 2130837538;
 			
 			// aapt resource value: 0x7f020023
-			public const int common_plus_signin_btn_text_dark_disabled = 2130837539;
+			public const int common_plus_signin_btn_text_dark = 2130837539;
 			
 			// aapt resource value: 0x7f020024
-			public const int common_plus_signin_btn_text_dark_focused = 2130837540;
+			public const int common_plus_signin_btn_text_dark_disabled = 2130837540;
 			
 			// aapt resource value: 0x7f020025
-			public const int common_plus_signin_btn_text_dark_normal = 2130837541;
+			public const int common_plus_signin_btn_text_dark_focused = 2130837541;
 			
 			// aapt resource value: 0x7f020026
-			public const int common_plus_signin_btn_text_dark_pressed = 2130837542;
+			public const int common_plus_signin_btn_text_dark_normal = 2130837542;
 			
 			// aapt resource value: 0x7f020027
-			public const int common_plus_signin_btn_text_light = 2130837543;
+			public const int common_plus_signin_btn_text_dark_pressed = 2130837543;
 			
 			// aapt resource value: 0x7f020028
-			public const int common_plus_signin_btn_text_light_disabled = 2130837544;
+			public const int common_plus_signin_btn_text_light = 2130837544;
 			
 			// aapt resource value: 0x7f020029
-			public const int common_plus_signin_btn_text_light_focused = 2130837545;
+			public const int common_plus_signin_btn_text_light_disabled = 2130837545;
 			
 			// aapt resource value: 0x7f02002a
-			public const int common_plus_signin_btn_text_light_normal = 2130837546;
+			public const int common_plus_signin_btn_text_light_focused = 2130837546;
 			
 			// aapt resource value: 0x7f02002b
-			public const int common_plus_signin_btn_text_light_pressed = 2130837547;
+			public const int common_plus_signin_btn_text_light_normal = 2130837547;
 			
 			// aapt resource value: 0x7f02002c
-			public const int ic_account_box_white_24dp = 2130837548;
+			public const int common_plus_signin_btn_text_light_pressed = 2130837548;
 			
 			// aapt resource value: 0x7f02002d
-			public const int ic_cake_white_24dp = 2130837549;
+			public const int event_desc_gift_button = 2130837549;
 			
 			// aapt resource value: 0x7f02002e
-			public const int ic_cake_white_36dp = 2130837550;
+			public const int ic_account_box_white_24dp = 2130837550;
 			
 			// aapt resource value: 0x7f02002f
-			public const int ic_cake_white_48dp = 2130837551;
+			public const int ic_cake_white_24dp = 2130837551;
 			
 			// aapt resource value: 0x7f020030
-			public const int ic_free_breakfast_white_24dp = 2130837552;
+			public const int ic_cake_white_36dp = 2130837552;
 			
 			// aapt resource value: 0x7f020031
-			public const int ic_free_breakfast_white_48dp = 2130837553;
+			public const int ic_cake_white_48dp = 2130837553;
 			
 			// aapt resource value: 0x7f020032
-			public const int ic_lock_outline_white_24dp = 2130837554;
+			public const int ic_free_breakfast_white_24dp = 2130837554;
 			
 			// aapt resource value: 0x7f020033
-			public const int ic_place_white_24dp = 2130837555;
+			public const int ic_free_breakfast_white_48dp = 2130837555;
 			
 			// aapt resource value: 0x7f020034
-			public const int ic_place_white_48dp = 2130837556;
+			public const int ic_lock_outline_white_24dp = 2130837556;
 			
 			// aapt resource value: 0x7f020035
-			public const int Icon = 2130837557;
+			public const int ic_place_white_18dp = 2130837557;
 			
 			// aapt resource value: 0x7f020036
-			public const int sign_in_sign_button = 2130837558;
+			public const int ic_place_white_24dp = 2130837558;
 			
 			// aapt resource value: 0x7f020037
-			public const int sign_in_skip_button = 2130837559;
+			public const int ic_place_white_48dp = 2130837559;
 			
 			// aapt resource value: 0x7f020038
-			public const int Splinter_Cell = 2130837560;
+			public const int Icon = 2130837560;
 			
 			// aapt resource value: 0x7f020039
-			public const int Splinter_Cell_2 = 2130837561;
+			public const int redhat = 2130837561;
 			
 			// aapt resource value: 0x7f02003a
-			public const int top_nav_states = 2130837562;
+			public const int sign_in_sign_button = 2130837562;
+			
+			// aapt resource value: 0x7f02003b
+			public const int sign_in_skip_button = 2130837563;
+			
+			// aapt resource value: 0x7f02003c
+			public const int Splinter_Cell = 2130837564;
+			
+			// aapt resource value: 0x7f02003d
+			public const int Splinter_Cell_2 = 2130837565;
+			
+			// aapt resource value: 0x7f02003e
+			public const int top_nav_states = 2130837566;
 			
 			static Drawable()
 			{
@@ -449,23 +461,68 @@ namespace iCoffe.Droid
 			// aapt resource value: 0x7f08000b
 			public const int dark = 2131230731;
 			
-			// aapt resource value: 0x7f080025
-			public const int etEmail = 2131230757;
+			// aapt resource value: 0x7f080016
+			public const int edAddressesTV = 2131230742;
 			
-			// aapt resource value: 0x7f080029
-			public const int etPassword = 2131230761;
+			// aapt resource value: 0x7f080019
+			public const int edBottomLL = 2131230745;
 			
-			// aapt resource value: 0x7f08000f
-			public const int frListView = 2131230735;
+			// aapt resource value: 0x7f08001a
+			public const int edContactsRL = 2131230746;
 			
-			// aapt resource value: 0x7f08000d
-			public const int frMainLL = 2131230733;
-			
-			// aapt resource value: 0x7f08000e
-			public const int frTextView = 2131230734;
+			// aapt resource value: 0x7f080012
+			public const int edEventImageIV = 2131230738;
 			
 			// aapt resource value: 0x7f080010
-			public const int gdMainLL = 2131230736;
+			public const int edEventNameIV = 2131230736;
+			
+			// aapt resource value: 0x7f08000f
+			public const int edEventNameRL = 2131230735;
+			
+			// aapt resource value: 0x7f080011
+			public const int edEventNameTV = 2131230737;
+			
+			// aapt resource value: 0x7f080013
+			public const int edGiftBtn = 2131230739;
+			
+			// aapt resource value: 0x7f08000d
+			public const int edMainLL = 2131230733;
+			
+			// aapt resource value: 0x7f080014
+			public const int edMiddleLL = 2131230740;
+			
+			// aapt resource value: 0x7f080015
+			public const int edMiddleLeftLL = 2131230741;
+			
+			// aapt resource value: 0x7f080017
+			public const int edMiddleRightLL = 2131230743;
+			
+			// aapt resource value: 0x7f080018
+			public const int edOperTimesTV = 2131230744;
+			
+			// aapt resource value: 0x7f08001c
+			public const int edPhoneTV = 2131230748;
+			
+			// aapt resource value: 0x7f08001b
+			public const int edSiteTV = 2131230747;
+			
+			// aapt resource value: 0x7f08000e
+			public const int edTopLL = 2131230734;
+			
+			// aapt resource value: 0x7f080034
+			public const int etEmail = 2131230772;
+			
+			// aapt resource value: 0x7f080038
+			public const int etPassword = 2131230776;
+			
+			// aapt resource value: 0x7f08001f
+			public const int frListView = 2131230751;
+			
+			// aapt resource value: 0x7f08001d
+			public const int frMainLL = 2131230749;
+			
+			// aapt resource value: 0x7f08001e
+			public const int frTextView = 2131230750;
 			
 			// aapt resource value: 0x7f080000
 			public const int hybrid = 2131230720;
@@ -473,50 +530,50 @@ namespace iCoffe.Droid
 			// aapt resource value: 0x7f080007
 			public const int icon_only = 2131230727;
 			
-			// aapt resource value: 0x7f080017
-			public const int ivGifts = 2131230743;
+			// aapt resource value: 0x7f080033
+			public const int ivIcon1 = 2131230771;
 			
-			// aapt resource value: 0x7f080024
-			public const int ivIcon1 = 2131230756;
+			// aapt resource value: 0x7f080037
+			public const int ivIcon2 = 2131230775;
+			
+			// aapt resource value: 0x7f08002a
+			public const int ivMap = 2131230762;
 			
 			// aapt resource value: 0x7f080028
-			public const int ivIcon2 = 2131230760;
+			public const int ivNets = 2131230760;
 			
-			// aapt resource value: 0x7f080015
-			public const int ivMap = 2131230741;
-			
-			// aapt resource value: 0x7f080013
-			public const int ivNets = 2131230739;
+			// aapt resource value: 0x7f08002c
+			public const int ivUser = 2131230764;
 			
 			// aapt resource value: 0x7f08000c
 			public const int light = 2131230732;
 			
-			// aapt resource value: 0x7f080011
-			public const int linearLayout1 = 2131230737;
+			// aapt resource value: 0x7f080026
+			public const int linearLayout1 = 2131230758;
 			
-			// aapt resource value: 0x7f080018
-			public const int mContentFL = 2131230744;
+			// aapt resource value: 0x7f08002d
+			public const int mContentFL = 2131230765;
 			
-			// aapt resource value: 0x7f080019
-			public const int mvMap = 2131230745;
+			// aapt resource value: 0x7f08002e
+			public const int mvMap = 2131230766;
 			
-			// aapt resource value: 0x7f08001f
-			public const int niImageHasGifts = 2131230751;
+			// aapt resource value: 0x7f080025
+			public const int niImageHasGifts = 2131230757;
 			
-			// aapt resource value: 0x7f08001e
-			public const int niImageHasGiftsRL = 2131230750;
+			// aapt resource value: 0x7f080024
+			public const int niImageHasGiftsRL = 2131230756;
 			
-			// aapt resource value: 0x7f08001b
-			public const int niImageLogo = 2131230747;
+			// aapt resource value: 0x7f080021
+			public const int niImageLogo = 2131230753;
 			
-			// aapt resource value: 0x7f08001a
-			public const int niImageLogoRL = 2131230746;
+			// aapt resource value: 0x7f080020
+			public const int niImageLogoRL = 2131230752;
 			
-			// aapt resource value: 0x7f08001d
-			public const int niText = 2131230749;
+			// aapt resource value: 0x7f080023
+			public const int niText = 2131230755;
 			
-			// aapt resource value: 0x7f08001c
-			public const int niTextRL = 2131230748;
+			// aapt resource value: 0x7f080022
+			public const int niTextRL = 2131230754;
 			
 			// aapt resource value: 0x7f080001
 			public const int none = 2131230721;
@@ -524,44 +581,71 @@ namespace iCoffe.Droid
 			// aapt resource value: 0x7f080002
 			public const int normal = 2131230722;
 			
-			// aapt resource value: 0x7f080020
-			public const int relativeLayout1 = 2131230752;
+			// aapt resource value: 0x7f08002f
+			public const int relativeLayout1 = 2131230767;
 			
-			// aapt resource value: 0x7f080016
-			public const int rlGifts = 2131230742;
+			// aapt resource value: 0x7f080032
+			public const int rlIcon1 = 2131230770;
 			
-			// aapt resource value: 0x7f080023
-			public const int rlIcon1 = 2131230755;
+			// aapt resource value: 0x7f080036
+			public const int rlIcon2 = 2131230774;
+			
+			// aapt resource value: 0x7f080029
+			public const int rlMap = 2131230761;
 			
 			// aapt resource value: 0x7f080027
-			public const int rlIcon2 = 2131230759;
+			public const int rlNets = 2131230759;
 			
-			// aapt resource value: 0x7f080014
-			public const int rlMap = 2131230740;
-			
-			// aapt resource value: 0x7f080012
-			public const int rlNets = 2131230738;
+			// aapt resource value: 0x7f08002b
+			public const int rlUser = 2131230763;
 			
 			// aapt resource value: 0x7f080003
 			public const int satellite = 2131230723;
 			
-			// aapt resource value: 0x7f080021
-			public const int siEdit1 = 2131230753;
+			// aapt resource value: 0x7f080030
+			public const int siEdit1 = 2131230768;
 			
-			// aapt resource value: 0x7f080022
-			public const int siEdit2 = 2131230754;
+			// aapt resource value: 0x7f080031
+			public const int siEdit2 = 2131230769;
 			
-			// aapt resource value: 0x7f080026
-			public const int siSignBtn = 2131230758;
+			// aapt resource value: 0x7f080035
+			public const int siSignBtn = 2131230773;
 			
-			// aapt resource value: 0x7f08002a
-			public const int siSkipBtn = 2131230762;
+			// aapt resource value: 0x7f080039
+			public const int siSkipBtn = 2131230777;
 			
 			// aapt resource value: 0x7f080008
 			public const int standard = 2131230728;
 			
 			// aapt resource value: 0x7f080004
 			public const int terrain = 2131230724;
+			
+			// aapt resource value: 0x7f08003f
+			public const int ufCityIV = 2131230783;
+			
+			// aapt resource value: 0x7f08003e
+			public const int ufCityLL = 2131230782;
+			
+			// aapt resource value: 0x7f080040
+			public const int ufCityTV = 2131230784;
+			
+			// aapt resource value: 0x7f080042
+			public const int ufListView = 2131230786;
+			
+			// aapt resource value: 0x7f08003a
+			public const int ufMainLL = 2131230778;
+			
+			// aapt resource value: 0x7f080041
+			public const int ufTextView = 2131230785;
+			
+			// aapt resource value: 0x7f08003c
+			public const int ufUserAvatarIV = 2131230780;
+			
+			// aapt resource value: 0x7f08003b
+			public const int ufUserInfoRL = 2131230779;
+			
+			// aapt resource value: 0x7f08003d
+			public const int ufUserNameTV = 2131230781;
 			
 			// aapt resource value: 0x7f080009
 			public const int wide = 2131230729;
@@ -596,22 +680,28 @@ namespace iCoffe.Droid
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int fragment = 2130903040;
+			public const int EventDesc = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int GiftDescription = 2130903041;
+			public const int fragment = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int Main = 2130903042;
+			public const int GiftItem = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int MapFragment = 2130903043;
+			public const int Main = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int NetItem = 2130903044;
+			public const int MapFragment = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int SignIn = 2130903045;
+			public const int NetItem = 2130903045;
+			
+			// aapt resource value: 0x7f030006
+			public const int SignIn = 2130903046;
+			
+			// aapt resource value: 0x7f030007
+			public const int UserFragment = 2130903047;
 			
 			static Layout()
 			{

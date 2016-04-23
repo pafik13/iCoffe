@@ -49,14 +49,14 @@
             android:minHeight="25px"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/rlGifts"
+            android:id="@+id/rlUser"
             android:layout_weight="1"
             android:background="@drawable/top_nav_states">
             <ImageView
                 android:src="@drawable/ic_cake_white_48dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ivGifts"
+                android:id="@+id/ivUser"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp" />
