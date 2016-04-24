@@ -436,9 +436,6 @@ namespace iCoffe.Droid
 			// aapt resource value: 0x7f02003e
 			public const int top_nav_states = 2130837566;
 			
-			// aapt resource value: 0x7f02003f
-			public const int travelers_1 = 2130837567;
-			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
