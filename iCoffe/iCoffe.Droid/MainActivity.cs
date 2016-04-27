@@ -18,6 +18,7 @@ using RestSharp;
 using UniversalImageLoader.Core;
 
 using iCoffe.Shared;
+using System.Globalization;
 
 namespace iCoffe.Droid
 {
@@ -286,25 +287,30 @@ namespace iCoffe.Droid
                 //request.AddQueryParameter(@"plat", latitude.ToString());
                 //request.AddQueryParameter(@"plong", longitude.ToString());
                 //request.AddQueryParameter(@"dmax", radius.ToString());
-                request.AddQueryParameter(@"plat", 54.974362.ToString());
-                request.AddQueryParameter(@"plong", 73.418061.ToString());
+                request.AddQueryParameter(@"plat", 54.974362.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
+                request.AddQueryParameter(@"plong", 73.418061.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
                 request.AddQueryParameter(@"dmax", radius.ToString());
                 request.AddQueryParameter(@"grId", 1.ToString());
                 request.AddQueryParameter(@"pgn", null);
                 request.AddQueryParameter(@"pgs", null);
                 var response1 = client.Execute<List<GeolocObj>>(request);
-                Data.Objs = response1.Data;
-                //for(int i = 0; i < Data.Objs.Count; i++)
-                foreach (var obj in Data.Objs)
+                if (response1.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    request = new RestRequest(@"api/Objs/SelComplex", Method.GET);
-                    request.AddQueryParameter(@"objId", obj.Id.ToString());
-                    var response2 = client.Execute<GeolocComplexObj>(request);
-                    Data.ComplexObjs.Add(response2.Data);
+                    Data.Objs = response1.Data;
+                    //for(int i = 0; i < Data.Objs.Count; i++)
+                    foreach (var obj in Data.Objs)
+                    {
+                        request = new RestRequest(@"api/Objs/SelComplex", Method.GET);
+                        request.AddQueryParameter(@"objId", obj.Id.ToString());
+                        var response2 = client.Execute<GeolocComplexObj>(request);
+                        Data.ComplexObjs.Add(response2.Data);
+                    }
                 }
+
                 LoadViews();
                 RunOnUiThread(() => progressDialog.Dismiss());
                 //progressDialog.Dismiss();
+
                 SDiag.Debug.Print("GetNets stopped.");
             });
         }

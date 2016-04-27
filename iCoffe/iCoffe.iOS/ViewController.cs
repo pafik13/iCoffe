@@ -2,6 +2,8 @@
 
 using UIKit;
 
+using iCoffe.Shared;
+
 namespace iCoffe.iOS
 {
 	public partial class ViewController : UIViewController

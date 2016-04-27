@@ -56,6 +56,8 @@ namespace iCoffe.Shared
         {
             ComplexObjs = new List<GeolocComplexObj>();
 
+            Objs = new List<GeolocObj>();
+
             Nets = new List<CoffeeHouseNet>();
             Nets.Add(new CoffeeHouseNet() {
                 Name = @"First Net",
