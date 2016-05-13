@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>a903bfe7-5a27-4e67-94ff-08bcc0c815fd</ProjectGuid>
+    <ProjectGuid>{A903BFE7-5A27-4E67-94FF-08BCC0C815FD}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>iCoffe.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
@@ -22,7 +22,8 @@
     <MtouchArch>i386</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-    <MtouchProfiling>true</MtouchProfiling>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchSdkVersion>9.3</MtouchSdkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -33,7 +34,7 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: lyubin.p@gmail.com (2RZ72YX48A)</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -44,6 +45,7 @@
     <MtouchArch>i386</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <MtouchLink>None</MtouchLink>
+    <CodesignKey>iPhone Developer: lyubin.p@gmail.com (2RZ72YX48A)</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,15 +58,23 @@
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <MtouchProfiling>true</MtouchProfiling>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: lyubin.p@gmail.com (2RZ72YX48A)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
+    <MtouchSdkVersion>9.3</MtouchSdkVersion>
+    <IpaPackageName>
+    </IpaPackageName>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="RestSharp">
+      <HintPath>..\..\packages\RestSharp.105.2.3\lib\Xamarin.iOS10\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SDWebImage">
+      <HintPath>..\..\packages\Xamarin.SDWebImage.3.7.5\lib\Xamarin.iOS\SDWebImage.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json">
@@ -118,6 +128,38 @@
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait%402x.png">
       <InProject>false</InProject>
     </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\Image.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_place_white_48pt.imageset\.DS_Store" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_place_white_48pt.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_place_white_48pt.imageset\ic_place_white_48pt.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_place_white_48pt.imageset\ic_place_white_48pt_2x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_place_white_48pt.imageset\ic_place_white_48pt_3x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_cake_white_48pt.imageset\.DS_Store" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_cake_white_48pt.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_cake_white_48pt.imageset\ic_cake_white_48pt.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_cake_white_48pt.imageset\ic_cake_white_48pt_2x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_cake_white_48pt.imageset\ic_cake_white_48pt_3x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_free_breakfast_white_48pt.imageset\.DS_Store" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_free_breakfast_white_48pt.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_free_breakfast_white_48pt.imageset\ic_free_breakfast_white_48pt.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_free_breakfast_white_48pt.imageset\ic_free_breakfast_white_48pt_2x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_free_breakfast_white_48pt.imageset\ic_free_breakfast_white_48pt_3x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_place_white_18pt.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_place_white_18pt.imageset\ic_place_white_18pt.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_place_white_18pt.imageset\ic_place_white_18pt_2x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_place_white_18pt.imageset\ic_place_white_18pt_3x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_account_box_white_24dp.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_account_box_white_24dp.imageset\ic_account_box_white.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_account_box_white_24dp.imageset\ic_account_box_white_2x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_account_box_white_24dp.imageset\ic_account_box_white_3x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_cake_white_36pt.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_cake_white_36pt.imageset\ic_cake_white_36pt.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_cake_white_36pt.imageset\ic_cake_white_36pt_2x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_cake_white_36pt.imageset\ic_cake_white_36pt_3x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_lock_outline_white_24dp.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_lock_outline_white_24dp.imageset\ic_lock_outline_white.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_lock_outline_white_24dp.imageset\ic_lock_outline_white_2x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_lock_outline_white_24dp.imageset\ic_lock_outline_white_3x.png" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="Resources\ITunesArtwork" />
@@ -130,6 +172,7 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -138,7 +181,49 @@
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="MapViewController.cs" />
+    <Compile Include="MapViewController.designer.cs">
+      <DependentUpon>MapViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GiftsViewController.cs" />
+    <Compile Include="GiftsViewController.designer.cs">
+      <DependentUpon>GiftsViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserViewController.cs" />
+    <Compile Include="UserViewController.designer.cs">
+      <DependentUpon>UserViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GiftsTableSource.cs" />
+    <Compile Include="EventDescViewController.cs" />
+    <Compile Include="EventDescViewController.designer.cs">
+      <DependentUpon>EventDescViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GiftCell.cs" />
+    <Compile Include="GiftCell.designer.cs">
+      <DependentUpon>GiftCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GTableSource.cs" />
+    <Compile Include="SignInViewController.cs" />
+    <Compile Include="SignInViewController.designer.cs">
+      <DependentUpon>SignInViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="..\iCoffe\iCoffe.projitems" Label="Shared" Condition="Exists('..\iCoffe\iCoffe.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <XamarinComponentReference Include="restsharp">
+      <Version>105.2.3</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="sdwebimage">
+      <Version>3.7.5</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Images.xcassets\.DS_Store" />
+    <BundleResource Include="Resources\fon.png" />
+    <BundleResource Include="Resources\29_icon.png" />
+    <BundleResource Include="Resources\redhat.png" />
+  </ItemGroup>
 </Project>
