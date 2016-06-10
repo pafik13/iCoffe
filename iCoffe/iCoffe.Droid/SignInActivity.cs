@@ -15,12 +15,13 @@ using iCoffe.Shared;
 
 namespace iCoffe.Droid
 {
-    [Activity(Label = "iCoffe.Droid", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "SignInActivity")]
     public class SignInActivity : Activity
     {
         // Consts
         public const string C_USER_EMAIL = @"C_USER_EMAIL";
         public const string C_USER = @"C_USER";
+        public const int C_REQUEST_CODE_REGISTER = 1;
 
         //Editors
         EditText userEmail;
@@ -40,11 +41,12 @@ namespace iCoffe.Droid
 
             FindViewById<Button>(Resource.Id.siSignBtn).Click += SignBtn_Click;
             FindViewById<Button>(Resource.Id.siSkipBtn).Click += SkipBtn_Click;
+            FindViewById<Button>(Resource.Id.siRegBtn).Click += RegBtn_Click;
 
             userEmail = FindViewById<EditText>(Resource.Id.siEmailET);
             userPassword = FindViewById<EditText>(Resource.Id.siPasswordET);
 
-            ISharedPreferences prefs = GetSharedPreferences(@"icoffe", FileCreationMode.Private);
+            ISharedPreferences prefs = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
             ISharedPreferencesEditor editor = prefs.Edit();
             editor.PutString(@"lp@m.ru", @"q12345");
             editor.PutString(@"lp@m.ru" + C_USER, Data.SerializeUser(new User() { Email = @"lp@m.ru", FirstName = @"Pavel", LastName = @"Lyubin", City = @"Moscow" }));
@@ -56,6 +58,12 @@ namespace iCoffe.Droid
             editor.PutString(@"ss@m.ru" + C_USER, Data.SerializeUser(new User() { Email = @"ss@m.ru", FirstName = @"Sidr", LastName = @"Sidrov", City = @"Pushino" }));
 
             editor.Apply();
+        }
+
+        private void RegBtn_Click(object sender, EventArgs e)
+        {
+            StartActivityForResult(typeof(RegActivity), C_REQUEST_CODE_REGISTER);
+            //throw new NotImplementedException();
         }
 
         private void SignBtn_Click(object sender, EventArgs e)
@@ -73,55 +81,124 @@ namespace iCoffe.Droid
                 }
                 else
                 {
-                    ISharedPreferences prefs = GetSharedPreferences(@"icoffe", FileCreationMode.Private);
-                    if (prefs.GetString(userEmail.Text, string.Empty).CompareTo(userPassword.Text) == 0)
-                    {
-                        // Progress
-                        string message = @"Проверка введенных данных...";
-                        progressDialog = ProgressDialog.Show(this, @"", message, true);
-                        //progressDialog.Show();
-                        ThreadPool.QueueUserWorkItem(state =>
-                        {
-                            Thread.Sleep(5000);
+                    GetAccessToken();
+                    //string accessToken = Rest.GetAccessToken(userEmail.Text, userPassword.Text);
+                    //if (!String.IsNullOrEmpty(accessToken)) {
+                    //    AlertDialog.Builder builder;
+                    //    builder = new AlertDialog.Builder(this);
+                    //    builder.SetTitle(@"Новый Access Token");
+                    //    builder.SetMessage(accessToken);
+                    //    builder.SetCancelable(false);
+                    //    builder.SetPositiveButton(@"OK", delegate {
+                    //        dialog.Dismiss();
+                    //    });
+                    //    dialog = builder.Show();
 
-                            RunOnUiThread(() =>
-                            {
-                                progressDialog.Dismiss();
-                                Intent intent = new Intent(this, typeof(MainActivity));
-                                intent.PutExtra(MainActivity.C_IS_USER_SIGN_IN, true);
-                                string user = prefs.GetString(userEmail.Text + C_USER, string.Empty);
-                                ISharedPreferencesEditor editor = prefs.Edit();
-                                editor.PutString(C_USER, user);
-                                editor.Apply();
-                                StartActivity(intent);
-                            });
-                        });
-                       
-                    }
-                    else
-                    {
-                        AlertDialog.Builder builder;
-                        builder = new AlertDialog.Builder(this);
-                        builder.SetTitle(Resource.String.error_caption);
-                        builder.SetMessage("Пользователь с такими данными отсутствует!");
-                        builder.SetCancelable(false);
-                        builder.SetPositiveButton(@"OK", delegate {
-                            dialog.Dismiss();
-                        });
-                        dialog = builder.Show();
-                    }
+                    //    ISharedPreferences prefs = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
+                    //    ISharedPreferencesEditor editor = prefs.Edit();
+                    //    editor.PutString(MainActivity.C_ACCESS_TOKEN, accessToken);
+                    //    editor.Apply();
+                    //    Finish();
+                    //    //ISharedPreferences prefs = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
+                    //    //if (prefs.GetString(userEmail.Text, string.Empty).CompareTo(userPassword.Text) == 0)
+                    //    //{
+                    //    //    // Progress
+                    //    //    string message = @"Проверка введенных данных...";
+                    //    //    progressDialog = ProgressDialog.Show(this, @"", message, true);
+                    //    //    //progressDialog.Show();
+                    //    //    ThreadPool.QueueUserWorkItem(state =>
+                    //    //    {
+                    //    //        Thread.Sleep(5000);
+
+                    //    //        RunOnUiThread(() =>
+                    //    //        {
+                    //    //            progressDialog.Dismiss();
+                    //    //            Intent intent = new Intent(this, typeof(MainActivity));
+                    //    //            intent.PutExtra(MainActivity.C_IS_USER_SIGN_IN, true);
+                    //    //            string user = prefs.GetString(userEmail.Text + C_USER, string.Empty);
+                    //    //            ISharedPreferencesEditor editor = prefs.Edit();
+                    //    //            editor.PutString(C_USER, user);
+                    //    //            editor.Apply();
+                    //    //            StartActivity(intent);
+                    //    //        });
+                    //    //    });
+
+                    //}
+                    //else
+                    //{
+                    //    AlertDialog.Builder builder;
+                    //    builder = new AlertDialog.Builder(this);
+                    //    builder.SetTitle(Resource.String.error_caption);
+                    //    builder.SetMessage("Пользователь с такими данными отсутствует!");
+                    //    builder.SetCancelable(false);
+                    //    builder.SetPositiveButton(@"OK", delegate {
+                    //        dialog.Dismiss();
+                    //    });
+                    //    dialog = builder.Show();
+                    //}
                 }
+            }
+        }
+
+        private void GetAccessToken()
+        {
+            string accessToken = Rest.GetAccessToken(userEmail.Text, userPassword.Text);
+            if (!String.IsNullOrEmpty(accessToken))
+            {
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(this);
+                builder.SetTitle(@"Новый Access Token");
+                builder.SetMessage(accessToken);
+                builder.SetCancelable(false);
+                builder.SetPositiveButton(@"OK", delegate {
+                    dialog.Dismiss();
+                });
+                dialog = builder.Show();
+
+                ISharedPreferences prefs = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
+                ISharedPreferencesEditor editor = prefs.Edit();
+                editor.PutString(MainActivity.C_ACCESS_TOKEN, accessToken);
+                editor.Apply();
+                Finish();
+            }
+            else
+            {
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(this);
+                builder.SetTitle(Resource.String.error_caption);
+                builder.SetMessage("Пользователь с такими данными отсутствует!");
+                builder.SetCancelable(false);
+                builder.SetPositiveButton(@"OK", delegate {
+                    dialog.Dismiss();
+                });
+                dialog = builder.Show();
             }
         }
 
         private void SkipBtn_Click(object sender, EventArgs e)
         {
             //throw new NotImplementedException();
-            ISharedPreferences prefs = GetSharedPreferences(@"icoffe", FileCreationMode.Private);
+            ISharedPreferences prefs = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
             ISharedPreferencesEditor editor = prefs.Edit();
             editor.PutString(C_USER, string.Empty);
             editor.Apply();
-            StartActivity(typeof(MainActivity));
+            Finish();
+            //StartActivity(typeof(MainActivity));
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            if (resultCode == Result.Ok)
+            {
+                if (requestCode == C_REQUEST_CODE_REGISTER)
+                {
+                    userEmail.Text = data.GetStringExtra(RegActivity.C_USER_EMAIL);
+                    userPassword.Text = data.GetStringExtra(RegActivity.C_USER_PASSWORD);
+                    GetAccessToken();
+                    return;
+                }               
+            }
         }
     }
 }

@@ -28,6 +28,8 @@ namespace iCoffe.Droid
         // Consts
         public const string C_WAS_STARTED_NEW_ACTIVITY = @"C_WAS_STARTED_NEW_ACTIVITY";
         public const string C_IS_USER_SIGN_IN = @"C_IS_USER_SIGN_IN";
+        public const string C_DEFAULT_PREFS = @"I_COFFEE";
+        public const string C_ACCESS_TOKEN = @"ACCESS_TOKEN";
 
         // Layouts
         RelativeLayout rlNets;
@@ -200,6 +202,14 @@ namespace iCoffe.Droid
             base.OnResume();
             SDiag.Debug.Print("OnResume called");
 
+            ISharedPreferences prefs = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
+            string accessToken = prefs.GetString(C_ACCESS_TOKEN, String.Empty);
+            if (String.IsNullOrEmpty(accessToken))
+            {
+                StartActivity(new Intent(this, typeof(SignInActivity)));
+                return;
+            }
+
             if (!Intent.GetBooleanExtra(C_WAS_STARTED_NEW_ACTIVITY, false))
             {
                 if (IsInternetActive() && IsLocationActive())
@@ -283,6 +293,7 @@ namespace iCoffe.Droid
                 List<CoffeeHouseNet> nets = Data.Nets;
                 //Thread.Sleep(5000);
                 var client = new RestClient(@"http://geolocwebapi.azurewebsites.net/");
+                //client.Default
                 var request = new RestRequest(@"api/Objs/Sel", Method.GET);
                 //request.AddQueryParameter(@"plat", latitude.ToString());
                 //request.AddQueryParameter(@"plong", longitude.ToString());

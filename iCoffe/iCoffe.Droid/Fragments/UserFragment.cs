@@ -37,7 +37,7 @@ namespace iCoffe.Droid.Fragments
 
             user = new User() { City = @"<No City>", FirstName = @"<No First>", LastName = @"<No Last>" };
 
-            ISharedPreferences prefs = Activity.GetSharedPreferences(@"icoffe", FileCreationMode.Private);
+            ISharedPreferences prefs = Activity.GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
             string userSer = prefs.GetString(SignInActivity.C_USER, string.Empty);
             if (!string.IsNullOrEmpty(userSer))
             {

@@ -92,4 +92,13 @@
         p1:layout_marginRight="@dimen/sign_in_edit_margin"
         p1:minHeight="@dimen/sign_in_edit_height"
         p1:background="@drawable/sign_in_skip_button" />
+    <Button
+        p1:text="Регистрация"
+        p1:layout_width="match_parent"
+        p1:layout_height="wrap_content"
+        p1:layout_below="@id/siSkipBtn"
+        p1:id="@+id/siRegBtn"
+        p1:layout_margin="@dimen/sign_in_edit_margin"
+        p1:minHeight="@dimen/sign_in_edit_height"
+        p1:background="@drawable/sign_in_reg_button" />
 </RelativeLayout>

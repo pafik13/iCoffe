@@ -33,6 +33,8 @@ namespace iCoffe.Shared
             }
         }
 
+
+
         public static GeolocComplexObj Get(int id)
         {
             if (ComplexObjs == null)
