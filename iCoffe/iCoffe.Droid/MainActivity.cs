@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading;
+using System.Globalization;
 using System.Collections.Generic;
 using SDiag = System.Diagnostics;
 
@@ -7,7 +9,6 @@ using Android.App;
 using Android.Content;
 using Android.Runtime;
 using Android.Views;
-using System.Threading;
 using Android.Widget;
 using Android.OS;
 using Android.Net;
@@ -18,7 +19,6 @@ using RestSharp;
 using UniversalImageLoader.Core;
 
 using iCoffe.Shared;
-using System.Globalization;
 
 namespace iCoffe.Droid
 {
@@ -75,126 +75,6 @@ namespace iCoffe.Droid
 
             rlUser = FindViewById<RelativeLayout>(Resource.Id.rlUser);
             rlUser.Click += User_Click; ;
-
-
-            //AlertDialog.Builder builder;
-            //builder = new AlertDialog.Builder(this);
-            //builder.SetTitle("Начало");
-            //builder.SetMessage("Необходимо получить данные о Вашем местоположении.");
-            //builder.SetCancelable(false);
-            //builder.SetNegativeButton("Отмена", delegate {
-            //    latitude = 54.974362;
-            //    longitude = 73.418061;
-            //    radius = 2;
-            //    dialog.Dismiss();
-            //    LoadViews();
-            //});
-            //builder.SetPositiveButton("Получить", delegate {
-            //    dialog.Dismiss();
-
-            //    progressDialog = ProgressDialog.Show(this, @"", @"Please wait...", true);
-
-            //    ////progressDialog.Show();
-            //    //ThreadPool.QueueUserWorkItem(state =>
-            //    //{
-            //    //    Thread.Sleep(5000);
-
-            //    //    RunOnUiThread(() => progressDialog.Dismiss());
-            //    //    //progressDialog.Dismiss();
-            //    //});
-            //    //mDialog.Show();
-
-            //});
-            //dialog = builder.Show();
-
-            //FragmentTransaction trans = FragmentManager.BeginTransaction();
-            //gifts = new Fragments.GiftsFragment();
-            //trans.Add(Resource.Id.mContentFL, gifts);
-            //map = new Fragments.MapFragment();
-            //trans.Add(Resource.Id.mContentFL, map);
-            //nets = new Fragments.NetsFragment();
-            //trans.Add(Resource.Id.mContentFL, nets);
-            //trans.Commit();
-            //Map_Click(null, null);
-
-            //Location
-            //locMgr = GetSystemService(Context.LocationService) as LocationManager;
-        }
-
-        private void LoadViews()
-        {
-            //throw new NotImplementedException();
-            // GetData();
-            FragmentTransaction trans = FragmentManager.BeginTransaction();
-            if (user == null)
-            {
-                user = new Fragments.UserFragment();
-                trans.Add(Resource.Id.mContentFL, user);
-            }
-            if (map == null)
-            {
-                map = new Fragments.MapFragment();
-                trans.Add(Resource.Id.mContentFL, map);
-            }
-            if (nets == null)
-            {
-                nets = new Fragments.NetsFragment();
-                trans.Add(Resource.Id.mContentFL, nets);
-            }
-            trans.Commit();
-            if (!rlMap.Selected && !rlNets.Selected && !rlUser.Selected)
-            {
-                Map_Click(null, null);
-            }
-        }
-
-        private void User_Click(object sender, EventArgs e)
-        {
-            //throw new NotImplementedException();
-            //if (gifts == null)
-            //{
-            //gifts = new Fragments.GiftsFragment();
-            //}
-            //FragmentManager.BeginTransaction().Replace(Resource.Id.mContentFL, gifts).Commit();
-            FragmentManager.BeginTransaction().Hide(nets).Hide(map).Show(user).Commit();
-            RunOnUiThread(() => {
-                rlMap.Selected = false;
-                rlNets.Selected = false;
-                rlUser.Selected = true;
-            });
-        }
-
-        private void Map_Click(object sender, EventArgs e)
-        {
-            //throw new NotImplementedException();
-            //if (map == null)
-            //{
-            //map = new Fragments.MapFragment();
-            //}
-            //FragmentManager.BeginTransaction().Replace(Resource.Id.mContentFL, map).Commit(); 
-            FragmentManager.BeginTransaction().Hide(nets).Hide(user).Show(map).Commit();
-            RunOnUiThread(() => { 
-                rlMap.Selected = true;
-                rlNets.Selected = false;
-                rlUser.Selected = false;
-            });
-        }
-
-        private void Nets_Click(object sender, EventArgs e)
-        {
-            //throw new NotImplementedException();
-            //if (list == null)
-            //{
-            //list = new Fragments.NetsFragment();
-            //}
-            //FragmentManager.BeginTransaction().Replace(Resource.Id.mContentFL, list).Commit();
-            //FragmentManager.BeginTransaction().
-            FragmentManager.BeginTransaction().Hide(map).Hide(user).Show(nets).Commit();
-            RunOnUiThread(() => {
-                rlMap.Selected = false;
-                rlNets.Selected = true;
-                rlUser.Selected = false;
-            });
         }
 
         protected override void OnResume()
@@ -290,35 +170,9 @@ namespace iCoffe.Droid
             //progressDialog.Show();
             ThreadPool.QueueUserWorkItem(state =>
             {
-                List<CoffeeHouseNet> nets = Data.Nets;
-                //Thread.Sleep(5000);
-                var client = new RestClient(@"http://geolocwebapi.azurewebsites.net/");
-                //client.Default
-                var request = new RestRequest(@"api/Objs/Sel", Method.GET);
-                //request.AddQueryParameter(@"plat", latitude.ToString());
-                //request.AddQueryParameter(@"plong", longitude.ToString());
-                //request.AddQueryParameter(@"dmax", radius.ToString());
-                request.AddQueryParameter(@"plat", 54.974362.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
-                request.AddQueryParameter(@"plong", 73.418061.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
-                request.AddQueryParameter(@"dmax", radius.ToString());
-                request.AddQueryParameter(@"grId", 1.ToString());
-                request.AddQueryParameter(@"pgn", null);
-                request.AddQueryParameter(@"pgs", null);
-                var response1 = client.Execute<List<GeolocObj>>(request);
-                if (response1.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    Data.Objs = response1.Data;
-                    //for(int i = 0; i < Data.Objs.Count; i++)
-                    foreach (var obj in Data.Objs)
-                    {
-                        request = new RestRequest(@"api/Objs/SelComplex", Method.GET);
-                        request.AddQueryParameter(@"objId", obj.Id.ToString());
-                        var response2 = client.Execute<GeolocComplexObj>(request);
-                        Data.ComplexObjs.Add(response2.Data);
-                    }
-                }
+                Data.BonusOffers = GetBonuses();
 
-                LoadViews();
+                LoadFragments();
                 RunOnUiThread(() => progressDialog.Dismiss());
                 //progressDialog.Dismiss();
 
@@ -405,6 +259,61 @@ namespace iCoffe.Droid
                 dialog = builder.Show();
                 return false;
             }
+        }
+        
+        private void LoadFragments()
+        {
+            FragmentTransaction trans = FragmentManager.BeginTransaction();
+            if (user == null)
+            {
+                user = new Fragments.UserFragment();
+                trans.Add(Resource.Id.mContentFL, user);
+            }
+            if (map == null)
+            {
+                map = new Fragments.MapFragment();
+                trans.Add(Resource.Id.mContentFL, map);
+            }
+            if (nets == null)
+            {
+                nets = new Fragments.NetsFragment();
+                trans.Add(Resource.Id.mContentFL, nets);
+            }
+            trans.Commit();
+            if (!rlMap.Selected && !rlNets.Selected && !rlUser.Selected)
+            {
+                Map_Click(rlMap, null);
+            }
+        }
+
+        private void User_Click(object sender, EventArgs e)
+        {
+            FragmentManager.BeginTransaction().Hide(nets).Hide(map).Show(user).Commit();
+            RunOnUiThread(() => {
+                rlMap.Selected = false;
+                rlNets.Selected = false;
+                rlUser.Selected = true;
+            });
+        }
+
+        private void Map_Click(object sender, EventArgs e)
+        {
+            FragmentManager.BeginTransaction().Hide(nets).Hide(user).Show(map).Commit();
+            RunOnUiThread(() => { 
+                rlMap.Selected = true;
+                rlNets.Selected = false;
+                rlUser.Selected = false;
+            });
+        }
+
+        private void Nets_Click(object sender, EventArgs e)
+        {
+            FragmentManager.BeginTransaction().Hide(map).Hide(user).Show(nets).Commit();
+            RunOnUiThread(() => {
+                rlMap.Selected = false;
+                rlNets.Selected = true;
+                rlUser.Selected = false;
+            });
         }
 
         protected override void OnPause()
