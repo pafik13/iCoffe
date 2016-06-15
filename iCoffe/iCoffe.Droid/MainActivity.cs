@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading;
-using System.Globalization;
 using System.Collections.Generic;
 using SDiag = System.Diagnostics;
 
 using Android.App;
 using Android.Content;
-using Android.Runtime;
-using Android.Views;
+//using Android.Runtime;
+//using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Android.Net;
 using Android.Locations;
-
-using RestSharp;
 
 using UniversalImageLoader.Core;
 
@@ -47,7 +43,7 @@ namespace iCoffe.Droid
         string defaultPlace = String.Empty;
         double latitude;
         double longitude;
-        int radius = 4;
+        int radius = 2;
 
         // Intermedia
         AlertDialog.Builder builder;
@@ -171,8 +167,13 @@ namespace iCoffe.Droid
             ThreadPool.QueueUserWorkItem(state =>
             {
                 //Data.BonusOffers = GetBonuses();
-                if (Rest.GetObjects(0,0,5))
+                if (Rest.GetObjects(0,0, radius))
                 {
+                    string accessToken = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private)
+                                            .GetString(C_ACCESS_TOKEN, String.Empty);
+                    //List<BonusOffer> offers = Rest.GetBonuses(accessToken, 54.974362, 73.418061, 4);
+                    SDiag.Debug.Print("Radius " + radius.ToString());
+                    Data.Offers = Rest.GetBonuses(accessToken, 54.974362, 73.418061, 2);
                     LoadFragments();
                     RunOnUiThread(() => progressDialog.Dismiss());
                     //progressDialog.Dismiss();
@@ -272,15 +273,25 @@ namespace iCoffe.Droid
                 user = new Fragments.UserFragment();
                 trans.Add(Resource.Id.mContentFL, user);
             }
+
             if (map == null)
             {
                 map = new Fragments.MapFragment();
                 trans.Add(Resource.Id.mContentFL, map);
             }
+            else
+            {
+                RunOnUiThread(() => (map as Fragments.MapFragment).RecreateMarkers());
+            }
+
             if (nets == null)
             {
                 nets = new Fragments.NetsFragment();
                 trans.Add(Resource.Id.mContentFL, nets);
+            }
+            else
+            {
+                RunOnUiThread(() => (nets as Fragments.NetsFragment).RecreateAdapter());
             }
             trans.Commit();
             if (!rlMap.Selected && !rlNets.Selected && !rlUser.Selected)
@@ -365,6 +376,7 @@ namespace iCoffe.Droid
             longitude = location.Longitude;
             locMgr.RemoveUpdates(this);
             progressDialog.Hide();
+            radius = 5;
             GetNets();
         }
         public void OnProviderDisabled(string provider)

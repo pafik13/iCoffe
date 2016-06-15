@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\BonusOffersAdapter.cs" />
     <Compile Include="Adapters\ComplexObjsAdapter.cs" />
     <Compile Include="Adapters\GiftsAdapter.cs" />
     <Compile Include="Adapters\NetsAdapter.cs" />

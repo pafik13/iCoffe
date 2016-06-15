@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SDiag = System.Diagnostics;
 
 using Android.App;
 using Android.Content;
@@ -51,8 +52,20 @@ namespace iCoffe.Droid.Fragments
 
             view.FindViewById<TextView>(Resource.Id.ufUserNameTV).Text = user.LastName + @" " + user.FirstName;
             view.FindViewById<TextView>(Resource.Id.ufCityTV).Text = user.City;
-
+            view.FindViewById<ImageView>(Resource.Id.ufUserAvatarIV).Click += UserAvatar_Click;
             return view;
+        }
+
+        private void UserAvatar_Click(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+            SDiag.Debug.Print("UserAvatar_Click called");
+
+            ISharedPreferences prefs = Activity.GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
+            ISharedPreferencesEditor editor = prefs.Edit();
+            editor.PutString(MainActivity.C_ACCESS_TOKEN, string.Empty);
+            editor.Apply();
+            StartActivity(new Intent(Activity, typeof(SignInActivity)));
         }
 
         public override void OnResume()

@@ -60,24 +60,25 @@ namespace iCoffe.Shared
             return string.Empty;
         }
 
-        //public static List<BonusOffer> GetBonuses(int latitude, int longitude, int radius)
-        //{
-        //    List<BonusOffer> results = new List<BonusOffer>();
-        //    var client = new RestClient(Settings.HostUrl);
-        //    var request = new RestRequest(Settings.OffersPath, Method.Get); // api/Bonus/offersSel
-        //    request.AddQueryParameter(@"plat", latitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
-        //    request.AddQueryParameter(@"plong", longitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
-        //    request.AddQueryParameter(@"dmax", radius.ToString());
-        //    var response = client.Execute<List<BonusOffer>>(request);
-        //    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-        //    {
-        //        if (response.Data != null) 
-        //        {
-        //            results = response.Data;
-        //        }
-        //    }
-        //    return results;
-        //}
+        public static List<BonusOffer> GetBonuses(string bearer, double latitude, double longitude, int radius)
+        {
+            List<BonusOffer> results = new List<BonusOffer>();
+            var client = new RestClient(Settings.ApiUrl);
+            var request = new RestRequest(Settings.OffersPath, Method.GET);
+            request.AddHeader(@"Authorization", String.Format(@"Bearer {0}", bearer));
+            request.AddQueryParameter(@"plat", latitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
+            request.AddQueryParameter(@"plong", longitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
+            request.AddQueryParameter(@"dmax", radius.ToString());
+            var response = client.Execute<List<BonusOffer>>(request);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                if (response.Data != null)
+                {
+                    results = response.Data;
+                }
+            }
+            return results;
+        }
 
         public static bool GetObjects(int latitude, int longitude, int radius)
         {

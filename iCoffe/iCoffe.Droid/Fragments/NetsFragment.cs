@@ -25,6 +25,9 @@ namespace iCoffe.Droid.Fragments
         ComplexObjsAdapter objsAdapter;
         IList<GeolocComplexObj> objs;
 
+        BonusOffersAdapter offersAdapter;
+        IList<BonusOffer> offers;
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -58,25 +61,42 @@ namespace iCoffe.Droid.Fragments
         private void NetsListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             //throw new NotImplementedException();
-            //Toast.MakeText(Activity, string.Format(@"id : {0}", objsAdapter[e.Position].Obj.Id), ToastLength.Short).Show();
-            Intent intent = new Intent(Activity, typeof(EventDescActivity));
-            intent.PutExtra(@"ObjId", objsAdapter[e.Position].Obj.Id);
-            StartActivityForResult(intent, 1);
+            Toast.MakeText(Activity, string.Format(@"id : {0}; Descr: {1}", offersAdapter[e.Position].Id, offersAdapter[e.Position].Descr), ToastLength.Short).Show();
+            //Intent intent = new Intent(Activity, typeof(EventDescActivity));
+            //intent.PutExtra(@"ObjId", objsAdapter[e.Position].Obj.Id);
+            //StartActivityForResult(intent, 1);
         }
 
         public override void OnResume()
         {
             base.OnResume();
+            //// get data
+            //nets = Data.Nets;
+            //objs = Data.ComplexObjs;
+
+            //// create our adapter
+            //netsAdapter = new NetsAdapter(Activity, nets);
+            //objsAdapter = new ComplexObjsAdapter(Activity, objs);
+
+            ////Hook up our adapter to our ListView
+            //Activity.RunOnUiThread(() => netsListView.Adapter = objsAdapter);
+            RecreateAdapter();
+        }
+
+        public void RecreateAdapter()
+        {
             // get data
             nets = Data.Nets;
             objs = Data.ComplexObjs;
+            offers = Data.Offers;
 
             // create our adapter
-            netsAdapter = new NetsAdapter(Activity, nets);
-            objsAdapter = new ComplexObjsAdapter(Activity, objs);
+            //netsAdapter = new NetsAdapter(Activity, nets);
+            //objsAdapter = new ComplexObjsAdapter(Activity, objs);
+            offersAdapter = new BonusOffersAdapter(Activity, offers);
 
             //Hook up our adapter to our ListView
-            Activity.RunOnUiThread(() => netsListView.Adapter = objsAdapter);
+            Activity.RunOnUiThread(() => netsListView.Adapter = offersAdapter);
         }
 
         public override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)

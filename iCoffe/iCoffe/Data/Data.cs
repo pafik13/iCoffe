@@ -9,6 +9,7 @@ namespace iCoffe.Shared
     {
         public static List<CoffeeHouseNet> Nets { get; }
         public static List<GeolocObj> Objs { get; set; }
+        public static List<BonusOffer> Offers { get; set; }
         public static List<GeolocComplexObj> ComplexObjs { get; set; }
         public static GeolocPoint center { get; set; }
 

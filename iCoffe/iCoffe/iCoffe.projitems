@@ -9,6 +9,7 @@
     <Import_RootNamespace>iCoffe.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)DataModel\BonusOffer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\CoffeeHouseNet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\GeolocObj.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\GeolocComplexObj.cs" />

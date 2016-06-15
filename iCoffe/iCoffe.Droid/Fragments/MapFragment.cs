@@ -64,21 +64,31 @@ namespace iCoffe.Droid.Fragments
             map = googleMap;
             map.UiSettings.ZoomControlsEnabled = true;  // GetUiSettings().setZoomControlsEnabled(true);
 
-            //LatLng pos = new LatLng(54.974362, 73.418061);
-            LatLng pos = new LatLng(54.9748227, 73.4099986); 
-            map.AddMarker(new MarkerOptions().SetPosition(pos).SetTitle(@"ќмск")); // addMarker(new MarkerOptions().position(/*some location*/));
-
-            foreach (var item in Data.Objs)
-            {
-                //text += string.Format(@"Id:{0}, X:{1}, Y:{2}", item.Id, item.geoloc.x, item.geoloc.y) + System.Environment.NewLine;
-                //pos = ;
-                Marker m = map.AddMarker(new MarkerOptions().SetPosition(new LatLng(item.geoloc.x, item.geoloc.y)).SetTitle(string.Format(@"Id:{0}", item.Id)).SetSnippet(@"snippet"));
-                markers.Add(m.Id, item.Id);
-            }
-
-            map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(pos, 12)); // moveCamera(CameraUpdateFactory.newLatLngZoom(/*some location*/, 10));
+            RecreateMarkers();
 
             map.SetOnMarkerClickListener(this);
+        }
+
+        public void RecreateMarkers()
+        {
+            if (map != null)
+            {
+                map.Clear();
+
+                //LatLng pos = new LatLng(54.974362, 73.418061);
+                LatLng pos = new LatLng(54.9748227, 73.4099986);
+                map.AddMarker(new MarkerOptions().SetPosition(pos).SetTitle(@"ќмск")); // addMarker(new MarkerOptions().position(/*some location*/));
+
+                foreach (var item in Data.Objs)
+                {
+                    //text += string.Format(@"Id:{0}, X:{1}, Y:{2}", item.Id, item.geoloc.x, item.geoloc.y) + System.Environment.NewLine;
+                    //pos = ;
+                    Marker m = map.AddMarker(new MarkerOptions().SetPosition(new LatLng(item.geoloc.x, item.geoloc.y)).SetTitle(string.Format(@"Id:{0}", item.Id)).SetSnippet(@"snippet"));
+                    markers.Add(m.Id, item.Id);
+                }
+
+                map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(pos, 12)); // moveCamera(CameraUpdateFactory.newLatLngZoom(/*some location*/, 10));
+            }
         }
 
         public override void OnResume()
