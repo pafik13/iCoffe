@@ -170,13 +170,16 @@ namespace iCoffe.Droid
             //progressDialog.Show();
             ThreadPool.QueueUserWorkItem(state =>
             {
-                Data.BonusOffers = GetBonuses();
+                //Data.BonusOffers = GetBonuses();
+                if (Rest.GetObjects(0,0,5))
+                {
+                    LoadFragments();
+                    RunOnUiThread(() => progressDialog.Dismiss());
+                    //progressDialog.Dismiss();
 
-                LoadFragments();
-                RunOnUiThread(() => progressDialog.Dismiss());
-                //progressDialog.Dismiss();
+                    SDiag.Debug.Print("GetNets stopped.");
+                }
 
-                SDiag.Debug.Print("GetNets stopped.");
             });
         }
 
