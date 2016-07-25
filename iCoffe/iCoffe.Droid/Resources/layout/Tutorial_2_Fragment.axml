@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:p1="http://schemas.android.com/apk/res/android"
+    p1:orientation="vertical"
+    p1:layout_width="match_parent"
+    p1:layout_height="match_parent"
+    p1:id="@+id/linearLayout1">
+    <TextView
+        p1:text="@string/tutorial_rules"
+        p1:textAppearance="?android:attr/textAppearanceLarge"
+        p1:layout_width="match_parent"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/t2fRules"
+        p1:layout_margin="20dp"
+        p1:padding="10dp"
+        p1:background="@drawable/bg_white_corned" />
+    <Button
+        p1:text="ВСЕ ПОНЯТНО"
+        p1:layout_width="match_parent"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/t2fAllclearB"
+        p1:layout_margin="10dp"
+        p1:background="@drawable/button"
+        p1:textSize="24sp"
+        p1:textStyle="bold"
+        p1:typeface="monospace" />
+</LinearLayout>

@@ -41,10 +41,11 @@ namespace iCoffe.Droid.Adapters
 
             var view = (convertView ??
                                 context.LayoutInflater.Inflate(
-                                Resource.Layout.NetItem,
+                                //Resource.Layout.NetItem,
+                                Resource.Layout.BonusItem,
                                 parent,
                                 false)) as LinearLayout;
-            view.FindViewById<TextView>(Resource.Id.niText).Text = string.IsNullOrEmpty(item.Title) ? "<unknow offer>" : item.Title;
+            view.FindViewById<TextView>(Resource.Id.biText).Text = string.IsNullOrEmpty(item.Title) ? "<unknow offer>" : item.Title;
 
             //Finally return the view
             return view;

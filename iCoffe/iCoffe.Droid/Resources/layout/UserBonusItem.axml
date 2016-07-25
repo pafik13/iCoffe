@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_corned">
+    <RelativeLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ubiImageLogoRL">
+        <ImageView
+            android:src="@drawable/splinter_cell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ubiImageLogo"
+            android:minHeight="96dp"
+            android:minWidth="96dp"
+            android:maxHeight="96dp"
+            android:maxWidth="96dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/ubiTextRL"
+        android:layout_weight="1">
+        <TextView
+            android:text="Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ubiText"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:gravity="center" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/ubiImageHasGiftsRL">
+        <ImageView
+            android:src="@drawable/ic_cake_white_36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ubiImageHasGifts"
+            android:layout_centerVertical="true"
+            android:layout_margin="20dp"
+            android:minHeight="48dp"
+            android:minWidth="48dp"
+            android:maxHeight="48dp"
+            android:maxWidth="48dp" />
+    </RelativeLayout>
+</LinearLayout>

@@ -4,7 +4,7 @@
     p1:minHeight="25px"
     p1:layout_width="match_parent"
     p1:layout_height="match_parent"
-    p1:id="@+id/relativeLayout1"
+    p1:id="@+id/siMainRL"
     p1:background="@drawable/background">
     <LinearLayout
         p1:orientation="horizontal"
@@ -12,16 +12,15 @@
         p1:minHeight="@dimen/sign_in_edit_height"
         p1:layout_width="match_parent"
         p1:layout_height="wrap_content"
-        p1:id="@+id/siEdit1"
-        p1:layout_above="@+id/siEdit2"
+        p1:id="@+id/siEmailLL"
+        p1:layout_above="@+id/siPasswordLL"
         p1:background="@color/white_bg"
         p1:layout_margin="@dimen/sign_in_edit_margin">
         <RelativeLayout
             p1:minWidth="@dimen/sign_in_edit_height"
             p1:minHeight="@dimen/sign_in_edit_height"
             p1:layout_width="wrap_content"
-            p1:layout_height="match_parent"
-            p1:id="@+id/rlIcon1">
+            p1:layout_height="match_parent">
             <ImageView
                 p1:src="@drawable/ic_account_box_white_24dp"
                 p1:layout_width="wrap_content"
@@ -44,10 +43,9 @@
         p1:minHeight="@dimen/sign_in_edit_height"
         p1:layout_width="match_parent"
         p1:layout_height="wrap_content"
-        p1:id="@+id/siEdit2"
-        p1:layout_centerInParent="true"
+        p1:id="@+id/siPasswordLL"
         p1:background="@color/white_bg"
-        p1:layout_above="@+id/siSignBtn"
+        p1:layout_above="@+id/siSigninB"
         p1:layout_marginRight="@dimen/sign_in_edit_margin"
         p1:layout_marginLeft="@dimen/sign_in_edit_margin"
         p1:layout_marginBottom="@dimen/sign_in_edit_margin">
@@ -55,8 +53,7 @@
             p1:minWidth="@dimen/sign_in_edit_height"
             p1:minHeight="@dimen/sign_in_edit_height"
             p1:layout_width="wrap_content"
-            p1:layout_height="match_parent"
-            p1:id="@+id/rlIcon2">
+            p1:layout_height="match_parent">
             <ImageView
                 p1:src="@drawable/ic_lock_outline_white_24dp"
                 p1:layout_width="wrap_content"
@@ -77,28 +74,23 @@
         p1:text="Войти"
         p1:layout_width="match_parent"
         p1:layout_height="wrap_content"
-        p1:id="@+id/siSignBtn"
+        p1:id="@+id/siSigninB"
         p1:layout_margin="@dimen/sign_in_edit_margin"
         p1:minHeight="@dimen/sign_in_edit_height"
-        p1:background="@drawable/sign_in_sign_button"
-        p1:layout_centerInParent="true" />
-    <Button
-        p1:text="Пропустить"
-        p1:layout_width="match_parent"
-        p1:layout_height="wrap_content"
-        p1:layout_below="@id/siSignBtn"
-        p1:id="@+id/siSkipBtn"
-        p1:layout_marginLeft="@dimen/sign_in_edit_margin"
-        p1:layout_marginRight="@dimen/sign_in_edit_margin"
-        p1:minHeight="@dimen/sign_in_edit_height"
-        p1:background="@drawable/sign_in_skip_button" />
+        p1:background="@drawable/button"
+        p1:layout_centerInParent="true"
+        p1:typeface="monospace"
+        p1:textStyle="bold" />
     <Button
         p1:text="Регистрация"
         p1:layout_width="match_parent"
         p1:layout_height="wrap_content"
-        p1:layout_below="@id/siSkipBtn"
-        p1:id="@+id/siRegBtn"
-        p1:layout_margin="@dimen/sign_in_edit_margin"
+        p1:id="@+id/siSignupB"
+        p1:layout_below="@id/siSigninB"
+        p1:layout_marginLeft="@dimen/sign_in_edit_margin"
+        p1:layout_marginRight="@dimen/sign_in_edit_margin"
         p1:minHeight="@dimen/sign_in_edit_height"
-        p1:background="@drawable/sign_in_reg_button" />
+        p1:background="@drawable/button"
+        p1:typeface="monospace"
+        p1:textStyle="bold" />
 </RelativeLayout>

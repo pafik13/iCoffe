@@ -6,7 +6,7 @@ using SDiag = System.Diagnostics;
 using Android.App;
 using Android.Content;
 //using Android.Runtime;
-//using Android.Views;
+using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Android.Net;
@@ -26,14 +26,15 @@ namespace iCoffe.Droid
         public const string C_IS_USER_SIGN_IN = @"C_IS_USER_SIGN_IN";
         public const string C_DEFAULT_PREFS = @"I_COFFEE";
         public const string C_ACCESS_TOKEN = @"ACCESS_TOKEN";
+        public const string C_IS_NEED_TUTORIAL = @"C_IS_NEED_TUTORIAL";
 
         // Layouts
-        RelativeLayout rlNets;
-        RelativeLayout rlMap;
-        RelativeLayout rlUser;
+        LinearLayout BonusTab;
+        LinearLayout MapTab;
+        LinearLayout UserTab;
 
         // Views
-        Fragment nets = null;
+        Fragment bonus = null;
         Fragment map = null;
         Fragment user = null;
 
@@ -58,19 +59,21 @@ namespace iCoffe.Droid
             // Initialize ImageLoader with configuration.
             ImageLoader.Instance.Init(config);
 
+            RequestWindowFeature(WindowFeatures.NoTitle);
+
             // Set our view from the "main" layout resource
-            SetContentView (Resource.Layout.Main);
+            SetContentView(Resource.Layout.Main);
 
             // Get our button from the layout resource,
             // and attach an event to it
-            rlNets = FindViewById<RelativeLayout>(Resource.Id.rlNets);
-            rlNets.Click += Nets_Click;
+            BonusTab = FindViewById<LinearLayout>(Resource.Id.maBonusTabLL);
+            BonusTab.Click += BonusTab_Click;
 
-            rlMap = FindViewById<RelativeLayout>(Resource.Id.rlMap);
-            rlMap.Click += Map_Click; ;
+            MapTab = FindViewById<LinearLayout>(Resource.Id.maMapTabLL);
+            MapTab.Click += MapTab_Click; ;
 
-            rlUser = FindViewById<RelativeLayout>(Resource.Id.rlUser);
-            rlUser.Click += User_Click; ;
+            UserTab = FindViewById<LinearLayout>(Resource.Id.maUserTabLL);
+            UserTab.Click += UserTab_Click; ;
         }
 
         protected override void OnResume()
@@ -78,8 +81,10 @@ namespace iCoffe.Droid
             base.OnResume();
             SDiag.Debug.Print("OnResume called");
 
-            ISharedPreferences prefs = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
-            string accessToken = prefs.GetString(C_ACCESS_TOKEN, String.Empty);
+            var sharedPreferences = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private);
+            string accessToken = sharedPreferences.GetString(C_ACCESS_TOKEN, string.Empty);
+            bool isNeedTutorial = sharedPreferences.GetBoolean(C_IS_NEED_TUTORIAL, true);
+
             if (String.IsNullOrEmpty(accessToken))
             {
                 StartActivity(new Intent(this, typeof(SignInActivity)));
@@ -88,6 +93,12 @@ namespace iCoffe.Droid
 
             if (!Intent.GetBooleanExtra(C_WAS_STARTED_NEW_ACTIVITY, false))
             {
+                if (isNeedTutorial)
+                {
+                    StartActivity(new Intent(this, typeof(TutorialActivity)));
+                    return;
+                }
+
                 if (IsInternetActive() && IsLocationActive())
                 {
 
@@ -169,8 +180,7 @@ namespace iCoffe.Droid
                 //Data.BonusOffers = GetBonuses();
                 if (Rest.GetObjects(0,0, radius))
                 {
-                    string accessToken = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private)
-                                            .GetString(C_ACCESS_TOKEN, String.Empty);
+                    string accessToken = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private).GetString(C_ACCESS_TOKEN, String.Empty);
                     //List<BonusOffer> offers = Rest.GetBonuses(accessToken, 54.974362, 73.418061, 4);
                     SDiag.Debug.Print("Radius " + radius.ToString());
                     Data.Offers = Rest.GetBonuses(accessToken, 54.974362, 73.418061, 2);
@@ -284,49 +294,49 @@ namespace iCoffe.Droid
                 RunOnUiThread(() => (map as Fragments.MapFragment).RecreateMarkers());
             }
 
-            if (nets == null)
+            if (bonus == null)
             {
-                nets = new Fragments.NetsFragment();
-                trans.Add(Resource.Id.mContentFL, nets);
+                bonus = new Fragments.BonusFragment();
+                trans.Add(Resource.Id.mContentFL, bonus);
             }
             else
             {
-                RunOnUiThread(() => (nets as Fragments.NetsFragment).RecreateAdapter());
+                RunOnUiThread(() => (bonus as Fragments.BonusFragment).RecreateAdapter());
             }
             trans.Commit();
-            if (!rlMap.Selected && !rlNets.Selected && !rlUser.Selected)
+            if (!MapTab.Selected && !BonusTab.Selected && !UserTab.Selected)
             {
-                Map_Click(rlMap, null);
+                MapTab_Click(MapTab, null);
             }
         }
 
-        private void User_Click(object sender, EventArgs e)
+        private void UserTab_Click(object sender, EventArgs e)
         {
-            FragmentManager.BeginTransaction().Hide(nets).Hide(map).Show(user).Commit();
+            FragmentManager.BeginTransaction().Hide(bonus).Hide(map).Show(user).Commit();
             RunOnUiThread(() => {
-                rlMap.Selected = false;
-                rlNets.Selected = false;
-                rlUser.Selected = true;
+                MapTab.Selected = false;
+                BonusTab.Selected = false;
+                UserTab.Selected = true;
             });
         }
 
-        private void Map_Click(object sender, EventArgs e)
+        private void MapTab_Click(object sender, EventArgs e)
         {
-            FragmentManager.BeginTransaction().Hide(nets).Hide(user).Show(map).Commit();
+            FragmentManager.BeginTransaction().Hide(bonus).Hide(user).Show(map).Commit();
             RunOnUiThread(() => { 
-                rlMap.Selected = true;
-                rlNets.Selected = false;
-                rlUser.Selected = false;
+                MapTab.Selected = true;
+                BonusTab.Selected = false;
+                UserTab.Selected = false;
             });
         }
 
-        private void Nets_Click(object sender, EventArgs e)
+        private void BonusTab_Click(object sender, EventArgs e)
         {
-            FragmentManager.BeginTransaction().Hide(map).Hide(user).Show(nets).Commit();
+            FragmentManager.BeginTransaction().Hide(map).Hide(user).Show(bonus).Commit();
             RunOnUiThread(() => {
-                rlMap.Selected = false;
-                rlNets.Selected = true;
-                rlUser.Selected = false;
+                MapTab.Selected = false;
+                BonusTab.Selected = true;
+                UserTab.Selected = false;
             });
         }
 

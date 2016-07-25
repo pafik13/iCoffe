@@ -21,9 +21,9 @@ namespace iCoffe.Droid
         // Consts
         public const string C_USER_EMAIL = @"C_USER_EMAIL";
         public const string C_USER = @"C_USER";
-        public const int C_REQUEST_CODE_REGISTER = 1;
+        public const int C_REQUEST_CODE_SING_UP = 1;
 
-        //Editors
+        // Editors
         EditText userEmail;
         EditText userPassword;
 
@@ -36,112 +36,45 @@ namespace iCoffe.Droid
         {
             base.OnCreate(savedInstanceState);
 
+            RequestWindowFeature(WindowFeatures.NoTitle);
+
             // Create your application here
             SetContentView(Resource.Layout.SignIn);
 
-            FindViewById<Button>(Resource.Id.siSignBtn).Click += SignBtn_Click;
-            FindViewById<Button>(Resource.Id.siSkipBtn).Click += SkipBtn_Click;
-            FindViewById<Button>(Resource.Id.siRegBtn).Click += RegBtn_Click;
+            FindViewById<Button>(Resource.Id.siSigninB).Click += SigninB_Click;
+            FindViewById<Button>(Resource.Id.siSignupB).Click += SingupB_Click;
 
             userEmail = FindViewById<EditText>(Resource.Id.siEmailET);
             userPassword = FindViewById<EditText>(Resource.Id.siPasswordET);
-
-            //ISharedPreferences prefs = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
-            //ISharedPreferencesEditor editor = prefs.Edit();
-            //editor.PutString(@"lp@m.ru", @"q12345");
-            //editor.PutString(@"lp@m.ru" + C_USER, Data.SerializeUser(new User() { Email = @"lp@m.ru", FirstName = @"Pavel", LastName = @"Lyubin", City = @"Moscow" }));
-            //editor.PutString(@"ii@m.ru", @"q12345");
-            //editor.PutString(@"ii@m.ru" + C_USER, Data.SerializeUser(new User() { Email = @"ii@m.ru", FirstName = @"Ivan", LastName = @"Ivanov", City = @"Tver'" }));
-            //editor.PutString(@"pp@m.ru", @"q12345");
-            //editor.PutString(@"pp@m.ru" + C_USER, Data.SerializeUser(new User() { Email = @"pp@m.ru", FirstName = @"Petr", LastName = @"Petrov", City = @"Tula" }));
-            //editor.PutString(@"ss@m.ru", @"q12345");
-            //editor.PutString(@"ss@m.ru" + C_USER, Data.SerializeUser(new User() { Email = @"ss@m.ru", FirstName = @"Sidr", LastName = @"Sidrov", City = @"Pushino" }));
-
-            //editor.Apply();
         }
 
-        private void RegBtn_Click(object sender, EventArgs e)
+        private void SingupB_Click(object sender, EventArgs e)
         {
-            StartActivityForResult(typeof(RegActivity), C_REQUEST_CODE_REGISTER);
+            StartActivityForResult(typeof(SignUpActivity), C_REQUEST_CODE_SING_UP);
             //throw new NotImplementedException();
         }
 
-        private void SignBtn_Click(object sender, EventArgs e)
+        private void SigninB_Click(object sender, EventArgs e)
         {
             //throw new NotImplementedException();
             if (string.IsNullOrEmpty(userEmail.Text))
             {
-                Toast.MakeText(this, @"Введите свой E-mail!", ToastLength.Short).Show();
+                Toast.MakeText(this, @"Р’РІРµРґРёС‚Рµ, РїРѕР¶Р°Р»СѓР№СЃС‚Р°, <E-mail>", ToastLength.Short).Show();
             }
             else
             {
                 if (string.IsNullOrEmpty(userPassword.Text))
                 {
-                    Toast.MakeText(this, @"Введите свой Password!", ToastLength.Short).Show();
+                    Toast.MakeText(this, @"Р’РІРµРґРёС‚Рµ, РїРѕР¶Р°Р»СѓР№СЃС‚Р°, <РџР°СЂРѕР»СЊ>", ToastLength.Short).Show();
                 }
                 else
                 {
-                    string message = @"Проверка введенных данных...";
+                    string message = @"Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ РІС…РѕРґ...";
                     progressDialog = ProgressDialog.Show(this, @"", message, true);
                     ThreadPool.QueueUserWorkItem(state =>
                     {
                         GetAccessToken();
                     });
-                    
-                    //string accessToken = Rest.GetAccessToken(userEmail.Text, userPassword.Text);
-                    //if (!String.IsNullOrEmpty(accessToken)) {
-                    //    AlertDialog.Builder builder;
-                    //    builder = new AlertDialog.Builder(this);
-                    //    builder.SetTitle(@"Новый Access Token");
-                    //    builder.SetMessage(accessToken);
-                    //    builder.SetCancelable(false);
-                    //    builder.SetPositiveButton(@"OK", delegate {
-                    //        dialog.Dismiss();
-                    //    });
-                    //    dialog = builder.Show();
-
-                    //    ISharedPreferences prefs = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
-                    //    ISharedPreferencesEditor editor = prefs.Edit();
-                    //    editor.PutString(MainActivity.C_ACCESS_TOKEN, accessToken);
-                    //    editor.Apply();
-                    //    Finish();
-                    //    //ISharedPreferences prefs = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
-                    //    //if (prefs.GetString(userEmail.Text, string.Empty).CompareTo(userPassword.Text) == 0)
-                    //    //{
-                    //    //    // Progress
-                    //    //    string message = @"Проверка введенных данных...";
-                    //    //    progressDialog = ProgressDialog.Show(this, @"", message, true);
-                    //    //    //progressDialog.Show();
-                    //    //    ThreadPool.QueueUserWorkItem(state =>
-                    //    //    {
-                    //    //        Thread.Sleep(5000);
-
-                    //    //        RunOnUiThread(() =>
-                    //    //        {
-                    //    //            progressDialog.Dismiss();
-                    //    //            Intent intent = new Intent(this, typeof(MainActivity));
-                    //    //            intent.PutExtra(MainActivity.C_IS_USER_SIGN_IN, true);
-                    //    //            string user = prefs.GetString(userEmail.Text + C_USER, string.Empty);
-                    //    //            ISharedPreferencesEditor editor = prefs.Edit();
-                    //    //            editor.PutString(C_USER, user);
-                    //    //            editor.Apply();
-                    //    //            StartActivity(intent);
-                    //    //        });
-                    //    //    });
-
-                    //}
-                    //else
-                    //{
-                    //    AlertDialog.Builder builder;
-                    //    builder = new AlertDialog.Builder(this);
-                    //    builder.SetTitle(Resource.String.error_caption);
-                    //    builder.SetMessage("Пользователь с такими данными отсутствует!");
-                    //    builder.SetCancelable(false);
-                    //    builder.SetPositiveButton(@"OK", delegate {
-                    //        dialog.Dismiss();
-                    //    });
-                    //    dialog = builder.Show();
-                    //}
                 }
             }
         }
@@ -157,17 +90,20 @@ namespace iCoffe.Droid
                 {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(this);
-                    builder.SetTitle(@"Новый Access Token");
+                    builder.SetTitle(@"РќРѕРІС‹Р№ Access Token");
                     builder.SetMessage(accessToken);
                     builder.SetCancelable(false);
                     builder.SetPositiveButton(@"OK", delegate {
                         dialog.Dismiss();
                         Finish();
                     });
-                
+
                     ISharedPreferences prefs = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
+                    bool isSignedLater = prefs.GetBoolean(userEmail.Text, false);
+
                     ISharedPreferencesEditor editor = prefs.Edit();
                     editor.PutString(MainActivity.C_ACCESS_TOKEN, accessToken);
+                    editor.PutBoolean(MainActivity.C_IS_NEED_TUTORIAL, !isSignedLater);
                     editor.Apply();
 
                     dialog = builder.Show();
@@ -177,7 +113,7 @@ namespace iCoffe.Droid
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(this);
                     builder.SetTitle(Resource.String.error_caption);
-                    builder.SetMessage("Пользователь с такими данными отсутствует!");
+                    builder.SetMessage("РќРµ РЅР°Р№РґРµРЅС‹ РґР°РЅРЅС‹Рµ. РџРѕР¶Р°Р»СѓР№СЃС‚Р°, Р·Р°СЂРµРіРµСЃС‚СЂРёСЂСѓР№С‚РµСЃСЊ!");
                     builder.SetCancelable(false);
                     builder.SetPositiveButton(@"OK", delegate {
                         dialog.Dismiss();
@@ -187,29 +123,20 @@ namespace iCoffe.Droid
             });
         }
 
-        private void SkipBtn_Click(object sender, EventArgs e)
-        {
-            //throw new NotImplementedException();
-            ISharedPreferences prefs = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
-            ISharedPreferencesEditor editor = prefs.Edit();
-            editor.PutString(C_USER, string.Empty);
-            editor.Apply();
-            Finish();
-            //StartActivity(typeof(MainActivity));
-        }
-
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
             if (resultCode == Result.Ok)
             {
-                if (requestCode == C_REQUEST_CODE_REGISTER)
+                if (requestCode == C_REQUEST_CODE_SING_UP)
                 {
-                    userEmail.Text = data.GetStringExtra(RegActivity.C_USER_EMAIL);
-                    userPassword.Text = data.GetStringExtra(RegActivity.C_USER_PASSWORD);
+                    userEmail.Text = data.GetStringExtra(SignUpActivity.C_USER_EMAIL);
+                    userPassword.Text = data.GetStringExtra(SignUpActivity.C_USER_PASSWORD);
+                    string message = @"Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ РІС…РѕРґ...";
+                    progressDialog = ProgressDialog.Show(this, @"", message, true);
                     GetAccessToken();
                     return;
-                }               
+                }
             }
         }
     }

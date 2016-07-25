@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="3">
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:weightSum="5">
+        <View
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/red_main"
+            android:layout_gravity="center" />
+        <TextView
+            android:text="Акции действующие сегодня"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@color/red_main"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:textSize="14sp"
+            android:textColor="@android:color/white" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:weightSum="5">
+        <View
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="@color/red_main"
+            android:layout_gravity="center" />
+        <TextView
+            android:text="Адреса кафе"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@color/red_main"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:textColor="@android:color/white" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:weightSum="5">
+        <View
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:background="@color/red_main"
+            android:layout_gravity="center" />
+        <TextView
+            android:text="Купленные подарки"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@color/red_main"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:typeface="monospace"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="@android:color/white" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

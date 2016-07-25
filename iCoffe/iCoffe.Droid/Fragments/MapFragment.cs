@@ -128,8 +128,9 @@ namespace iCoffe.Droid.Fragments
             if (markers.ContainsKey(marker.Id))
             {
                 SDiag.Debug.Print(string.Format(@"markerId : {0}", markers[marker.Id]));
-                
-                Intent intent = new Intent(Activity, typeof(EventDescActivity));
+
+                //Intent intent = new Intent(Activity, typeof(EventDescActivity));
+                Intent intent = new Intent(Activity, typeof(BonusActivity));
                 intent.PutExtra(@"ObjId", markers[marker.Id]);
                 StartActivityForResult(intent, 1);
             }

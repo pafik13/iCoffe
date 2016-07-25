@@ -42,6 +42,17 @@ namespace iCoffe.Shared
             }
         }
 
+        public static HttpStatusCode SignUp(string email, string password, string confirm)
+        {
+            var client = new RestClient(Settings.ApiUrl);
+            var request = new RestRequest(Settings.RegisterPath, Method.POST);
+            request.AddParameter(@"Email", email);
+            request.AddParameter(@"Password", password);
+            request.AddParameter(@"ConfirmPassword", confirm);
+            var response = client.Execute(request);
+            return response.StatusCode;
+        }
+
         public static string GetAccessToken(string username, string password)
         {
             var client = new RestClient(Settings.HostUrl);

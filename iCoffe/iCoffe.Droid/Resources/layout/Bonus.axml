@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/baMainLL"
+        android:background="@drawable/background">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/baTopLL"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_white_corned">
+            <RelativeLayout
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/baCafeNameRL"
+                android:layout_margin="8dp">
+                <ImageView
+                    android:src="@android:drawable/ic_menu_gallery"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:id="@+id/baCafeNameIV" />
+                <TextView
+                    android:text="Large Text"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/baCafeNameTV"
+                    android:gravity="center"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+            <ImageView
+                android:src="@android:drawable/ic_menu_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:id="@+id/baCafeImageIV"
+                android:scaleType="fitXY" />
+            <TextView
+                android:text="10 "
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/baPriceTV"
+                android:textColor="@color/red_main"
+                android:layout_gravity="right"
+                android:layout_margin="8dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:drawableRight="@drawable/ic_star_red_24dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/baMiddleLL">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/baMiddleLeftLL"
+                android:layout_weight="1"
+                android:minHeight="144dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+                <TextView
+                    android:text="Описание"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:typeface="monospace"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp" />
+                <TextView
+                    android:text="ОПИСАНИЕ АКЦИИ"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/baBonusDescrTV"
+                    android:background="@drawable/bg_white_corned" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:minHeight="144dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/baMiddleRightLL"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+                <TextView
+                    android:text="Адрес"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:typeface="monospace"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp" />
+                <TextView
+                    android:text="- Герцена, 12"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/baAddressTV"
+                    android:background="@drawable/bg_white_corned" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/baBottomLL">
+            <RelativeLayout
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <Button
+                    android:text="ХОЧУ!"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/baWantB"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:minHeight="@dimen/sign_in_edit_height"
+                    android:background="@drawable/button"
+                    android:typeface="monospace"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/sign_in_edit_margin" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/locker"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/translucent_black"
+        android:minWidth="25px"
+        android:minHeight="25px">
+        <TextView
+            android:text="Large Text"
+            android:minHeight="@dimen/sign_in_edit_height"
+            android:padding="@dimen/sign_in_edit_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lock_message"
+            android:layout_centerInParent="true"
+            android:background="@drawable/bg_white_70_corned"
+            android:textColor="@color/red_main"
+            android:textSize="36sp" />
+    </RelativeLayout>
+</RelativeLayout>

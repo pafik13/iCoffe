@@ -10,50 +10,46 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ufUserInfoRL"
-        android:background="@color/white_bg"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp">
-        <ImageView
-            android:src="@drawable/redhat"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:id="@+id/ufUserAvatarIV"
-            android:minHeight="64dp"
-            android:minWidth="64dp"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:scaleType="fitXY" />
+        android:background="@drawable/bg_white_corned"
+        android:layout_margin="10dp">
+        <TextView
+            android:text="UserID"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ufUserIDTV"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:layout_centerHorizontal="true" />
         <TextView
             android:text="UserName"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ufUserAvatarIV"
+            android:layout_below="@+id/ufUserIDTV"
             android:id="@+id/ufUserNameTV"
             android:layout_centerHorizontal="true" />
-        <LinearLayout
-            android:orientation="horizontal"
-            android:minWidth="25px"
-            android:minHeight="25px"
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/ufUserMap"
+            android:layout_below="@+id/ufUserNameTV"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:padding="10dp"
+            android:layout_centerHorizontal="true" />
+        <Button
+            android:text="Выйти"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ufUserNameTV"
-            android:id="@+id/ufCityLL"
-            android:layout_centerHorizontal="true">
-            <ImageView
-                android:src="@drawable/ic_place_white_18dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/ufCityIV"
-                android:layout_margin="2dp" />
-            <TextView
-                android:text="City"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/ufCityTV"
-                android:gravity="center" />
-        </LinearLayout>
+            android:id="@+id/ufExitB"
+            android:layout_below="@id/ufUserMap"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="@drawable/button"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:layout_margin="10dp"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
     <TextView
         android:text="Мои подарки:"
@@ -61,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ufTextView"
-        android:gravity="center" />
+        android:gravity="left" />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
