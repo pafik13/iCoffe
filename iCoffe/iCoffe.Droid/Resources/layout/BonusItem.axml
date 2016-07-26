@@ -9,16 +9,13 @@
         android:minHeight="25px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/biImageLogoRL">
+        android:id="@+id/biLogoRL">
         <ImageView
             android:src="@drawable/ic_bonus_logo_demo_120dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/biImageLogo"
-            android:minHeight="120dp"
-            android:minWidth="120dp"
-            android:maxHeight="120dp"
-            android:maxWidth="120dp" />
+            android:layout_height="120dp"
+            android:layout_width="132dp"
+            android:id="@+id/biLogoIV"
+            android:scaleType="fitXY" />
     </RelativeLayout>
     <RelativeLayout
         android:minWidth="25px"
@@ -46,14 +43,10 @@
         android:id="@+id/biImageHasGiftsRL">
         <ImageView
             android:src="@drawable/ic_bonus_red_60dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:id="@+id/biImageHasGifts"
             android:layout_centerVertical="true"
-            android:layout_margin="20dp"
-            android:minHeight="60dp"
-            android:minWidth="60dp"
-            android:maxHeight="60dp"
-            android:maxWidth="60dp" />
+            android:layout_margin="20dp" />
     </RelativeLayout>
 </LinearLayout>

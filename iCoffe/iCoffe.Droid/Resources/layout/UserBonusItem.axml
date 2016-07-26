@@ -9,16 +9,13 @@
         android:minHeight="25px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ubiImageLogoRL">
+        android:id="@+id/ubiLogoRL">
         <ImageView
-            android:src="@drawable/splinter_cell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ubiImageLogo"
-            android:minHeight="96dp"
-            android:minWidth="96dp"
-            android:maxHeight="96dp"
-            android:maxWidth="96dp" />
+            android:src="@drawable/ic_bonus_logo_demo_96dp"
+            android:layout_width="102dp"
+            android:layout_height="96dp"
+            android:id="@+id/ubiLogoIV"
+            android:scaleType="fitXY" />
     </RelativeLayout>
     <RelativeLayout
         android:minWidth="25px"
@@ -45,15 +42,11 @@
         android:layout_height="match_parent"
         android:id="@+id/ubiImageHasGiftsRL">
         <ImageView
-            android:src="@drawable/ic_cake_white_36dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bonus_red_48dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:id="@+id/ubiImageHasGifts"
             android:layout_centerVertical="true"
-            android:layout_margin="20dp"
-            android:minHeight="48dp"
-            android:minWidth="48dp"
-            android:maxHeight="48dp"
-            android:maxWidth="48dp" />
+            android:layout_margin="20dp" />
     </RelativeLayout>
 </LinearLayout>

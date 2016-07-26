@@ -582,10 +582,10 @@ namespace iCoffe.Droid
 			public const int biImageHasGiftsRL = 2131296289;
 			
 			// aapt resource value: 0x7f09001e
-			public const int biImageLogo = 2131296286;
+			public const int biLogoIV = 2131296286;
 			
 			// aapt resource value: 0x7f09001d
-			public const int biImageLogoRL = 2131296285;
+			public const int biLogoRL = 2131296285;
 			
 			// aapt resource value: 0x7f090020
 			public const int biText = 2131296288;
@@ -795,10 +795,10 @@ namespace iCoffe.Droid
 			public const int ubiImageHasGiftsRL = 2131296349;
 			
 			// aapt resource value: 0x7f09005a
-			public const int ubiImageLogo = 2131296346;
+			public const int ubiLogoIV = 2131296346;
 			
 			// aapt resource value: 0x7f090059
-			public const int ubiImageLogoRL = 2131296345;
+			public const int ubiLogoRL = 2131296345;
 			
 			// aapt resource value: 0x7f09005c
 			public const int ubiText = 2131296348;
