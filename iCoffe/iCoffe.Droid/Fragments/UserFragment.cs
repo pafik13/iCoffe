@@ -71,7 +71,8 @@ namespace iCoffe.Droid.Fragments
         public void OnMapReady(GoogleMap googleMap)
         {
             map = googleMap;
-            map.UiSettings.ZoomControlsEnabled = true;  // GetUiSettings().setZoomControlsEnabled(true);
+            map.UiSettings.ZoomControlsEnabled = false;
+            map.MyLocationEnabled = true;
             RecreateMarkers();
         }
 

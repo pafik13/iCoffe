@@ -42,11 +42,12 @@
         android:layout_height="match_parent"
         android:id="@+id/biImageHasGiftsRL">
         <ImageView
-            android:src="@drawable/ic_bonus_red_60dp"
+            android:src="@drawable/ic_bonus_red_48dp"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/biImageHasGifts"
             android:layout_centerVertical="true"
-            android:layout_margin="20dp" />
+            android:layout_marginRight="20dp"
+            android:scaleType="fitXY" />
     </RelativeLayout>
 </LinearLayout>
