@@ -10,7 +10,7 @@ namespace iCoffe.iOS
 	partial class UserViewController : UIViewController
 	{
 		IList<Gift> gifts;
-		GTableSource source;
+		UserBonusTableSource source;
 
 		public UserViewController (IntPtr handle) : base (handle)
 		{
@@ -45,7 +45,7 @@ namespace iCoffe.iOS
 			gifts.Add(new Gift() { Name = @"Gift4" });
 			gifts.Add(new Gift() { Name = @"Gift5" });
 
-			source = new GTableSource (this, gifts);
+			source = new UserBonusTableSource (this, gifts);
 
 			GiftsTable.Source = source;
 			// Gifts end

@@ -20,7 +20,6 @@ namespace iCoffe.iOS
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-
 //			string[] data = new string[]{"Blue", "Red", "Green", "Brown"};
 			//this.ParentViewController.NavigationController.PushViewController
 			source = new GiftsTableSource (this, Data.Objs);

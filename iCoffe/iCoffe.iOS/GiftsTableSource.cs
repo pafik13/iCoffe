@@ -12,9 +12,9 @@ namespace iCoffe.iOS
 {
 	public class GiftsTableSource: UITableViewSource
 	{
-		IList<GeolocObj> TableItems;
-		string CellIdentifier = "GiftTableCell";
-		UIViewController Controller;
+		readonly UIViewController Controller;
+		readonly IList<GeolocObj> TableItems;
+		string CellIdentifier = "BonusCell";
 
 		public GiftsTableSource (UIViewController controller, IList<GeolocObj> cObjs)
 		{
@@ -24,21 +24,15 @@ namespace iCoffe.iOS
 
 		public override nint RowsInSection (UITableView tableview, nint section)
 		{
-			return (nint) TableItems.Count;
+			return TableItems.Count;
 		}
 
 		public override UITableViewCell GetCell (UITableView tableView, Foundation.NSIndexPath indexPath)
 		{
-			UITableViewCell cell = tableView.DequeueReusableCell (CellIdentifier);
-			if (cell == null) {
-				cell = new UITableViewCell (UITableViewCellStyle.Default, CellIdentifier);
-			}
-//			var image = new UIImageView ();
-//			image.Image
-			cell.ImageView.SetImage(new NSUrl(@"http://www.icon100.com/up/3997/72/36-Coffee.png")); 
-			cell.TextLabel.Text = TableItems[indexPath.Row].Title;
-			cell.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.4f);
-			return cell;
+			var bonusCell = tableView.DequeueReusableCell(CellIdentifier) as BonusRow ?? new BonusRow((NSString)CellIdentifier);
+			bonusCell.SetRowData(UIImage.FromBundle("ic_bonus_logo_120pt"), TableItems[indexPath.Row].Title);
+			bonusCell.BackgroundColor = UIColor.Clear; //UIColor.White.ColorWithAlpha(0.4f);
+			return bonusCell;
 
 		}
 

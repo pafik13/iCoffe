@@ -143,11 +143,13 @@ namespace iCoffe.iOS
 				0.5,
 				() => {
 					ContainerGifts.Alpha = 1;
-					vGifts.BackgroundColor = Selected;
+					ivGifts.Image = UIImage.FromBundle("ic_bonus_red_48pt");
+
 					ContainerMap.Alpha = 0;
-					vMap.BackgroundColor = NonSelected;
+					ivMap.Image = UIImage.FromBundle("ic_map_white_48pt");
+
 					ContainerUser.Alpha = 0;
-					vUser.BackgroundColor = NonSelected;
+					ivUser.Image = UIImage.FromBundle("ic_user_white_48pt");
 				},
 				() => {
 					Console.WriteLine("Gifts_Click ended");
@@ -163,11 +165,13 @@ namespace iCoffe.iOS
 				0.5,
 				() => {
 					ContainerGifts.Alpha = 0;
-					vGifts.BackgroundColor = NonSelected;
+					ivGifts.Image = UIImage.FromBundle("ic_bonus_white_48pt");
+
 					ContainerMap.Alpha = 1;
-					vMap.BackgroundColor = Selected;
+					ivMap.Image = UIImage.FromBundle("ic_map_red_48pt");
+
 					ContainerUser.Alpha = 0;
-					vUser.BackgroundColor = NonSelected;
+					ivUser.Image = UIImage.FromBundle("ic_user_white_48pt");
 				},
 				() => {
 					Console.WriteLine("Map_Click ended");
@@ -187,11 +191,13 @@ namespace iCoffe.iOS
 				0.5,
 				() => {
 					ContainerGifts.Alpha = 0;
-					vGifts.BackgroundColor = NonSelected;
+					ivGifts.Image = UIImage.FromBundle("ic_bonus_white_48pt");
+
 					ContainerMap.Alpha = 0;
-					vMap.BackgroundColor = NonSelected;
+					ivMap.Image = UIImage.FromBundle("ic_map_white_48pt");
+
 					ContainerUser.Alpha = 1;
-					vUser.BackgroundColor = Selected;
+					ivUser.Image = UIImage.FromBundle("ic_user_red_48pt");
 				},
 				() => {
 					Console.WriteLine("User_Click ended");
