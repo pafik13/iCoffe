@@ -16,18 +16,6 @@ namespace iCoffe.iOS
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIImageView CityImage { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel CityLabel { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIView CityView { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton ExitButton { get; set; }
 
         [Outlet]
@@ -36,11 +24,11 @@ namespace iCoffe.iOS
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIImageView UserAvatar { get; set; }
+        UIKit.UIView UserInfo { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIView UserInfo { get; set; }
+        MapKit.MKMapView UserMap { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -53,21 +41,6 @@ namespace iCoffe.iOS
 
         void ReleaseDesignerOutlets ()
         {
-            if (CityImage != null) {
-                CityImage.Dispose ();
-                CityImage = null;
-            }
-
-            if (CityLabel != null) {
-                CityLabel.Dispose ();
-                CityLabel = null;
-            }
-
-            if (CityView != null) {
-                CityView.Dispose ();
-                CityView = null;
-            }
-
             if (ExitButton != null) {
                 ExitButton.Dispose ();
                 ExitButton = null;
@@ -78,14 +51,14 @@ namespace iCoffe.iOS
                 GiftsTable = null;
             }
 
-            if (UserAvatar != null) {
-                UserAvatar.Dispose ();
-                UserAvatar = null;
-            }
-
             if (UserInfo != null) {
                 UserInfo.Dispose ();
                 UserInfo = null;
+            }
+
+            if (UserMap != null) {
+                UserMap.Dispose ();
+                UserMap = null;
             }
 
             if (UserName != null) {

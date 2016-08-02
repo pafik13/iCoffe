@@ -41,12 +41,13 @@ namespace iCoffe.iOS
 			TopView.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.4f);
 
 			MiddleLeftView.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.0f);
-			Addresses.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.4f);
+			Description.BackgroundColor = UIColor.White.ColorWithAlpha((nfloat)0.4f);
 
 			MiddleRightView.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.0f);
-			OperTimes.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.4f);
+			Addresses.BackgroundColor = UIColor.White.ColorWithAlpha((nfloat)0.4f);
 
-			Contacts.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.4f);
+
+			//Contacts.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.4f);
 
 			EventNameImage.SetImage(
 				url: new NSUrl (Obj.Label), 
@@ -68,13 +69,32 @@ namespace iCoffe.iOS
 				EventImage.SetImage (new NSUrl (@"https://pixabay.com/static/uploads/photo/2015/02/18/12/17/coffee-640647_960_720.jpg"));
 			}
 
+			if (string.IsNullOrEmpty(Obj.Descr)) {
+				Description.Text = Obj.Descr;
+			}
+
 			Addresses.Text = Obj.Adress != string.Empty ? Obj.Adress : @"<No address>";
 
-			OperTimes.Text = @"<No OperTimes>";
+			//OperTimes.Text = @"<No OperTimes>";
 
-			Contacts.Text = Obj.Descr;
+			//Contacts.Text = Obj.Descr;
+			Want.Layer.CornerRadius = 8.0f;
+			Want.Layer.MasksToBounds = true;
 		}
 
 		#endregion
+
+		partial void WantTouchDown(UIButton sender)
+		{
+			//throw new NotImplementedException();
+			ShowMessage(@"Приобретено!");
+		}
+
+		void ShowMessage(string message)
+		{
+			var msgBox = UIAlertController.Create("Поздравляем", message, UIAlertControllerStyle.Alert);
+			msgBox.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
+			PresentViewController(msgBox, true, null);
+		}
 	}
 }

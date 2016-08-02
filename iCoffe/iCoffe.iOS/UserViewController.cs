@@ -35,7 +35,13 @@ namespace iCoffe.iOS
 			GiftsTable.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.0f); 
 
 			UserInfo.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.4f);
-			CityView.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.0f);
+			//CityView.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.0f);
+
+			UserMap.Layer.CornerRadius = 8.0f;
+			UserMap.Layer.MasksToBounds = true;
+
+			ExitButton.Layer.CornerRadius = 8.0f;
+			ExitButton.Layer.MasksToBounds = true;
 
 			// Gifts
 			gifts = new List<Gift>();
@@ -61,10 +67,10 @@ namespace iCoffe.iOS
 			if (isSigned && !string.IsNullOrEmpty(storedUserInfo)) {
 				User user = Data.DeserializeUser (storedUserInfo);
 				UserName.Text = user.LastName + @" " + user.FirstName;
-				CityLabel.Text = user.City;;
+				//CityLabel.Text = user.City;;
 			} else {
 				UserName.Text = @"<Unknown User>";
-				CityLabel.Text = @"<Unknown City>";
+				//CityLabel.Text = @"<Unknown City>";
 			}
 		}
 

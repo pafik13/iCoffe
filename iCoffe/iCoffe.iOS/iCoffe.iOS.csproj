@@ -304,6 +304,18 @@
       <DependentUpon>UserBonusRow.cs</DependentUpon>
     </Compile>
     <Compile Include="BonusRow.cs" />
+    <Compile Include="Tutor1ViewController.cs" />
+    <Compile Include="Tutor1ViewController.designer.cs">
+      <DependentUpon>Tutor1ViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tutor2ViewController.cs" />
+    <Compile Include="Tutor2ViewController.designer.cs">
+      <DependentUpon>Tutor2ViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SignUpController.cs" />
+    <Compile Include="SignUpController.designer.cs">
+      <DependentUpon>SignUpController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="..\iCoffe\iCoffe.projitems" Label="Shared" Condition="Exists('..\iCoffe\iCoffe.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

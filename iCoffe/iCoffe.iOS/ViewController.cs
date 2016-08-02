@@ -17,10 +17,19 @@ namespace iCoffe.iOS
 
 	public partial class ViewController : UIViewController
 	{
-		int count = 1;
+		// Consts
+		public const string C_WAS_STARTED_NEW_ACTIVITY = @"C_WAS_STARTED_NEW_ACTIVITY";
+		public const string C_IS_USER_SIGN_IN = @"C_IS_USER_SIGN_IN";
+		public const string C_DEFAULT_PREFS = @"I_COFFEE";
+		public const string C_ACCESS_TOKEN = @"ACCESS_TOKEN";
+		public const string C_IS_NEED_TUTORIAL = @"C_IS_NEED_TUTORIAL";
 
-		UIColor Selected = UIColor.White.ColorWithAlpha ((nfloat)0.3f);
-		UIColor NonSelected = UIColor.White.ColorWithAlpha ((nfloat)0.6f);
+		bool CanClick;
+
+		//int count = 1;
+
+		//UIColor Selected = UIColor.White.ColorWithAlpha ((nfloat)0.3f);
+		UIColor NonSelected = UIColor.White.ColorWithAlpha ((nfloat)0.4f);
 
 		AvailbleTabs currentTab;
 
@@ -75,7 +84,18 @@ namespace iCoffe.iOS
 			vGifts.BackgroundColor = NonSelected;
 			vMap.BackgroundColor = NonSelected;
 			vUser.BackgroundColor = NonSelected;
-			Map_Click ();
+			bool isNeedTutorial = NSUserDefaults.StandardUserDefaults.BoolForKey(C_IS_NEED_TUTORIAL)|| true;
+			if (isNeedTutorial) {
+				CanClick = false;
+				ContainerTutor1.Alpha = 1;
+				ContainerTutor2.Alpha = 0;
+				ContainerGifts.Alpha = 0;
+				ContainerMap.Alpha = 0;
+				ContainerUser.Alpha = 0;
+			} else {
+				CanClick = true;
+				Map_Click();
+			}
 			ContainerGifts.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.2f);
 			//ContainerGifts.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.2f);
 
@@ -139,6 +159,11 @@ namespace iCoffe.iOS
 
 		void Gifts_Click()
 		{
+			if (!CanClick) return;
+
+			ContainerTutor1.Alpha = 0;
+			ContainerTutor2.Alpha = 0;
+
 			UIView.Animate (
 				0.5,
 				() => {
@@ -161,6 +186,11 @@ namespace iCoffe.iOS
 
 		public void Map_Click()
 		{
+			if (!CanClick) return;
+
+			ContainerTutor1.Alpha = 0;
+			ContainerTutor2.Alpha = 0;
+
 			UIView.Animate (
 				0.5,
 				() => {
@@ -183,6 +213,11 @@ namespace iCoffe.iOS
 
 		void User_Click()
 		{
+			if (!CanClick) return;
+
+			ContainerTutor1.Alpha = 0;
+			ContainerTutor2.Alpha = 0;
+
 			if (UserVC != null) {
 				UserVC.UpdateUserInfo ();
 			}
@@ -206,13 +241,54 @@ namespace iCoffe.iOS
 			currentTab = AvailbleTabs.atUser;
 		}
 
-		void ShowMessage()
+		void ShowMessage(string message)
 		{
 			UIAlertView alert = new UIAlertView () { 
-				Title = "alert title", Message = string.Format ("{0} clicks!", count++)
+				Title = "alert title", Message = message//string.Format ("{0} clicks!", count++)
 			};
 			alert.AddButton("OK");
 			alert.Show ();
+		}
+
+		public void Tutor1_Next_Click()
+		{
+			UIView.Animate(
+				0.5,
+				() =>
+				{
+					ContainerTutor1.Alpha = 0;
+					ContainerTutor2.Alpha = 1;
+				},
+				() =>
+				{
+					Console.WriteLine("User_Click ended");
+				}
+			);
+		}
+
+		public void Tutor2_AllClear_Click()
+		{
+			CanClick = true;
+			Map_Click();
+		}
+
+		public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
+		{
+			base.PrepareForSegue(segue, sender);
+			//Console.WriteLine(@"PrepareForSegue in ViewController: " + (segue.DestinationViewController is Tutor2ViewController));
+			if (segue.DestinationViewController is Tutor1ViewController) {
+				(segue.DestinationViewController as Tutor1ViewController).Parent = this;
+			}
+
+			if (segue.DestinationViewController is Tutor2ViewController)
+			{
+				(segue.DestinationViewController as Tutor2ViewController).Parent = this;
+			}
+
+			if (segue.DestinationViewController is SignInViewController)
+			{
+				(segue.DestinationViewController as SignInViewController).Parent = this;
+			}
 		}
 	}
 }

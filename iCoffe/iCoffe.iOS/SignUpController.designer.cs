@@ -11,16 +11,24 @@ using UIKit;
 
 namespace iCoffe.iOS
 {
-    [Register ("SignInViewController")]
-    partial class SignInViewController
+    [Register ("SignUpController")]
+    partial class SignUpController
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextField Email { get; set; }
+        UIKit.UIButton Back { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIImageView EmailImage { get; set; }
+        UIKit.UITextField Confirm { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView ConfirmView { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITextField Email { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -32,40 +40,40 @@ namespace iCoffe.iOS
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIImageView PasswordImage { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIView PasswordView { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton SignIn { get; set; }
+        UIKit.UIButton Register { get; set; }
 
-        [Outlet]
+        [Action ("RegisterTouchDown:")]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton SignUp { get; set; }
+        partial void RegisterTouchDown (UIKit.UIButton sender);
 
-
-        [Action ("SignButtonTouchDown:")]
+        [Action ("BackTouchDown:")]
         [GeneratedCode ("iOS Designer", "1.0")]
-        partial void SignButtonTouchDown (UIButton sender);
-
-
-        [Action ("SkipButtonTouchDown:")]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        partial void SkipButtonTouchDown (UIButton sender);
+        partial void BackTouchDown (UIKit.UIButton sender);
 
         void ReleaseDesignerOutlets ()
         {
+            if (Back != null) {
+                Back.Dispose ();
+                Back = null;
+            }
+
+            if (Confirm != null) {
+                Confirm.Dispose ();
+                Confirm = null;
+            }
+
+            if (ConfirmView != null) {
+                ConfirmView.Dispose ();
+                ConfirmView = null;
+            }
+
             if (Email != null) {
                 Email.Dispose ();
                 Email = null;
-            }
-
-            if (EmailImage != null) {
-                EmailImage.Dispose ();
-                EmailImage = null;
             }
 
             if (EmailView != null) {
@@ -78,24 +86,14 @@ namespace iCoffe.iOS
                 Password = null;
             }
 
-            if (PasswordImage != null) {
-                PasswordImage.Dispose ();
-                PasswordImage = null;
-            }
-
             if (PasswordView != null) {
                 PasswordView.Dispose ();
                 PasswordView = null;
             }
 
-            if (SignIn != null) {
-                SignIn.Dispose ();
-                SignIn = null;
-            }
-
-            if (SignUp != null) {
-                SignUp.Dispose ();
-                SignUp = null;
+            if (Register != null) {
+                Register.Dispose ();
+                Register = null;
             }
         }
     }

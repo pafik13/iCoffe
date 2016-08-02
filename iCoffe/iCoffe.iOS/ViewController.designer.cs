@@ -11,99 +11,127 @@ using UIKit;
 
 namespace iCoffe.iOS
 {
-	[Register ("ViewController")]
-	partial class ViewController
-	{
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIView ContainerGifts { get; set; }
+    [Register ("ViewController")]
+    partial class ViewController
+    {
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView ContainerGifts { get; set; }
 
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIView ContainerMap { get; set; }
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView ContainerMap { get; set; }
 
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIView ContainerUser { get; set; }
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView ContainerTutor1 { get; set; }
 
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIImageView ivGifts { get; set; }
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView ContainerTutor2 { get; set; }
 
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIImageView ivMap { get; set; }
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView ContainerUser { get; set; }
 
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIImageView ivUser { get; set; }
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIImageView ivGifts { get; set; }
 
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UINavigationItem Title { get; set; }
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIImageView ivMap { get; set; }
 
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIView vGifts { get; set; }
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIImageView ivUser { get; set; }
 
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIView vMain { get; set; }
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UINavigationItem Title { get; set; }
 
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIView vMap { get; set; }
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView vGifts { get; set; }
 
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIView vUser { get; set; }
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView vMain { get; set; }
 
-		void ReleaseDesignerOutlets ()
-		{
-			if (ContainerGifts != null) {
-				ContainerGifts.Dispose ();
-				ContainerGifts = null;
-			}
-			if (ContainerMap != null) {
-				ContainerMap.Dispose ();
-				ContainerMap = null;
-			}
-			if (ContainerUser != null) {
-				ContainerUser.Dispose ();
-				ContainerUser = null;
-			}
-			if (ivGifts != null) {
-				ivGifts.Dispose ();
-				ivGifts = null;
-			}
-			if (ivMap != null) {
-				ivMap.Dispose ();
-				ivMap = null;
-			}
-			if (ivUser != null) {
-				ivUser.Dispose ();
-				ivUser = null;
-			}
-			if (Title != null) {
-				Title.Dispose ();
-				Title = null;
-			}
-			if (vGifts != null) {
-				vGifts.Dispose ();
-				vGifts = null;
-			}
-			if (vMain != null) {
-				vMain.Dispose ();
-				vMain = null;
-			}
-			if (vMap != null) {
-				vMap.Dispose ();
-				vMap = null;
-			}
-			if (vUser != null) {
-				vUser.Dispose ();
-				vUser = null;
-			}
-		}
-	}
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView vMap { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView vUser { get; set; }
+
+        void ReleaseDesignerOutlets ()
+        {
+            if (ContainerGifts != null) {
+                ContainerGifts.Dispose ();
+                ContainerGifts = null;
+            }
+
+            if (ContainerMap != null) {
+                ContainerMap.Dispose ();
+                ContainerMap = null;
+            }
+
+            if (ContainerTutor1 != null) {
+                ContainerTutor1.Dispose ();
+                ContainerTutor1 = null;
+            }
+
+            if (ContainerTutor2 != null) {
+                ContainerTutor2.Dispose ();
+                ContainerTutor2 = null;
+            }
+
+            if (ContainerUser != null) {
+                ContainerUser.Dispose ();
+                ContainerUser = null;
+            }
+
+            if (ivGifts != null) {
+                ivGifts.Dispose ();
+                ivGifts = null;
+            }
+
+            if (ivMap != null) {
+                ivMap.Dispose ();
+                ivMap = null;
+            }
+
+            if (ivUser != null) {
+                ivUser.Dispose ();
+                ivUser = null;
+            }
+
+            if (Title != null) {
+                Title.Dispose ();
+                Title = null;
+            }
+
+            if (vGifts != null) {
+                vGifts.Dispose ();
+                vGifts = null;
+            }
+
+            if (vMain != null) {
+                vMain.Dispose ();
+                vMain = null;
+            }
+
+            if (vMap != null) {
+                vMap.Dispose ();
+                vMap = null;
+            }
+
+            if (vUser != null) {
+                vUser.Dispose ();
+                vUser = null;
+            }
+        }
+    }
 }

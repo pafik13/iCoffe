@@ -9,7 +9,7 @@ namespace iCoffe.iOS
 {
 	public class UserBonusTableSource: UITableViewSource
 	{
-		readonly UIViewController Controller;
+		//readonly UIViewController Controller;
 		readonly IList<Gift> TableItems;
 		string CellIdentifier = "UserBonusCell";
 
