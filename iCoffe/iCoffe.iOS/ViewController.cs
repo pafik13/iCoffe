@@ -169,12 +169,15 @@ namespace iCoffe.iOS
 				() => {
 					ContainerGifts.Alpha = 1;
 					ivGifts.Image = UIImage.FromBundle("ic_bonus_red_48pt");
+					BonusLabel.TextColor = UIColor.Red;
 
 					ContainerMap.Alpha = 0;
 					ivMap.Image = UIImage.FromBundle("ic_map_white_48pt");
-
+					MapLabel.TextColor = UIColor.White;
+					
 					ContainerUser.Alpha = 0;
 					ivUser.Image = UIImage.FromBundle("ic_user_white_48pt");
+					UserLabel.TextColor = UIColor.White;
 				},
 				() => {
 					Console.WriteLine("Gifts_Click ended");
@@ -196,12 +199,15 @@ namespace iCoffe.iOS
 				() => {
 					ContainerGifts.Alpha = 0;
 					ivGifts.Image = UIImage.FromBundle("ic_bonus_white_48pt");
+					BonusLabel.TextColor = UIColor.White;
 
 					ContainerMap.Alpha = 1;
 					ivMap.Image = UIImage.FromBundle("ic_map_red_48pt");
+					MapLabel.TextColor = UIColor.Red;
 
 					ContainerUser.Alpha = 0;
 					ivUser.Image = UIImage.FromBundle("ic_user_white_48pt");
+					UserLabel.TextColor = UIColor.White;
 				},
 				() => {
 					Console.WriteLine("Map_Click ended");
@@ -227,12 +233,15 @@ namespace iCoffe.iOS
 				() => {
 					ContainerGifts.Alpha = 0;
 					ivGifts.Image = UIImage.FromBundle("ic_bonus_white_48pt");
+					BonusLabel.TextColor = UIColor.White;
 
 					ContainerMap.Alpha = 0;
 					ivMap.Image = UIImage.FromBundle("ic_map_white_48pt");
+					MapLabel.TextColor = UIColor.White;
 
 					ContainerUser.Alpha = 1;
 					ivUser.Image = UIImage.FromBundle("ic_user_red_48pt");
+					UserLabel.TextColor = UIColor.Red;
 				},
 				() => {
 					Console.WriteLine("User_Click ended");

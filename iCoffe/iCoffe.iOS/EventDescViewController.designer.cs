@@ -20,7 +20,7 @@ namespace iCoffe.iOS
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextView Description { get; set; }
+        UIKit.UITextView EventDesc { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -61,9 +61,9 @@ namespace iCoffe.iOS
                 Addresses = null;
             }
 
-            if (Description != null) {
-                Description.Dispose ();
-                Description = null;
+            if (EventDesc != null) {
+                EventDesc.Dispose ();
+                EventDesc = null;
             }
 
             if (EventImage != null) {

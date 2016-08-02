@@ -16,6 +16,10 @@ namespace iCoffe.iOS
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel BonusLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIView ContainerGifts { get; set; }
 
         [Outlet]
@@ -48,7 +52,15 @@ namespace iCoffe.iOS
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UINavigationItem Title { get; set; }
+        UIKit.UILabel MapLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UINavigationItem NavBar { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel UserLabel { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -68,6 +80,11 @@ namespace iCoffe.iOS
 
         void ReleaseDesignerOutlets ()
         {
+            if (BonusLabel != null) {
+                BonusLabel.Dispose ();
+                BonusLabel = null;
+            }
+
             if (ContainerGifts != null) {
                 ContainerGifts.Dispose ();
                 ContainerGifts = null;
@@ -108,9 +125,19 @@ namespace iCoffe.iOS
                 ivUser = null;
             }
 
-            if (Title != null) {
-                Title.Dispose ();
-                Title = null;
+            if (MapLabel != null) {
+                MapLabel.Dispose ();
+                MapLabel = null;
+            }
+
+            if (NavBar != null) {
+                NavBar.Dispose ();
+                NavBar = null;
+            }
+
+            if (UserLabel != null) {
+                UserLabel.Dispose ();
+                UserLabel = null;
             }
 
             if (vGifts != null) {

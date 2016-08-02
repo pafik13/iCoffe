@@ -41,7 +41,7 @@ namespace iCoffe.iOS
 			TopView.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.4f);
 
 			MiddleLeftView.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.0f);
-			Description.BackgroundColor = UIColor.White.ColorWithAlpha((nfloat)0.4f);
+			EventDesc.BackgroundColor = UIColor.White.ColorWithAlpha((nfloat)0.4f);
 
 			MiddleRightView.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.0f);
 			Addresses.BackgroundColor = UIColor.White.ColorWithAlpha((nfloat)0.4f);
@@ -70,7 +70,7 @@ namespace iCoffe.iOS
 			}
 
 			if (string.IsNullOrEmpty(Obj.Descr)) {
-				Description.Text = Obj.Descr;
+				EventDesc.Text = Obj.Descr;
 			}
 
 			Addresses.Text = Obj.Adress != string.Empty ? Obj.Adress : @"<No address>";

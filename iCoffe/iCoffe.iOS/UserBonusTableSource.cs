@@ -15,7 +15,7 @@ namespace iCoffe.iOS
 
 		public UserBonusTableSource (UIViewController controller, IList<Gift> gifts)
 		{
-			Controller = controller;
+			//Controller = controller;
 			TableItems = gifts;
 		}
 
