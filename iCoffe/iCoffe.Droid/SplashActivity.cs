@@ -13,7 +13,7 @@ using Android.Widget;
 namespace iCoffe.Droid
 {
     //https://forums.xamarin.com/discussion/19362/xamarin-forms-splashscreen-in-android
-    [Activity(Label = "iCoffee", Theme = "@style/MyTheme.Splash", Icon = "@drawable/Icon", MainLauncher = true, NoHistory = true)]
+    [Activity(Label = "iCoffee", Theme = "@style/MyTheme.Splash", Icon = "@drawable/NewIcon", MainLauncher = true, NoHistory = true)]
     public class SplashActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

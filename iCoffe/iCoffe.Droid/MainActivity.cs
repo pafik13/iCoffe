@@ -41,7 +41,7 @@ namespace iCoffe.Droid
         // Location
         LocationManager locMgr;
         bool isLocationFound = false;
-        string defaultPlace = String.Empty;
+        string defaultPlace = string.Empty;
         double latitude;
         double longitude;
         int radius = 2;
@@ -85,7 +85,7 @@ namespace iCoffe.Droid
             string accessToken = sharedPreferences.GetString(C_ACCESS_TOKEN, string.Empty);
             bool isNeedTutorial = sharedPreferences.GetBoolean(C_IS_NEED_TUTORIAL, true);
 
-            if (String.IsNullOrEmpty(accessToken))
+            if (!string.IsNullOrEmpty(accessToken))
             {
                 StartActivity(new Intent(this, typeof(SignInActivity)));
                 return;
@@ -102,7 +102,7 @@ namespace iCoffe.Droid
                 if (IsInternetActive() && IsLocationActive())
                 {
 
-                    if (defaultPlace == String.Empty)
+                    if (defaultPlace == string.Empty)
                     {
                         // pass in the provider (GPS), 
                         // the minimum time between updates (in seconds), 

@@ -6,52 +6,95 @@
     android:minWidth="25px"
     android:minHeight="25px"
     android:id="@+id/ufMainLL">
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ufUserInfoRL"
+        android:id="@+id/ufUserInfoLL"
         android:background="@drawable/bg_white_corned"
-        android:layout_margin="10dp">
-        <TextView
-            android:text="UserID"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ufUserIDTV"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:typeface="monospace"
-            android:layout_centerHorizontal="true" />
-        <TextView
-            android:text="UserName"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="wrap_content"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="4dp">
+            <TextView
+                android:text="UserID"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ufUserIDTV"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:typeface="monospace"
+                android:layout_centerInParent="true" />
+            <TextView
+                android:text="10 "
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ufUserPointsTV"
+                android:textColor="@color/red_main"
+                android:layout_gravity="right"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:drawableRight="@drawable/ic_star_red_24dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ufUserIDTV"
-            android:id="@+id/ufUserNameTV"
-            android:layout_centerHorizontal="true" />
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/ufUserMap"
-            android:layout_below="@+id/ufUserNameTV"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:text="UserName"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ufUserNameTV"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_centerHorizontal="true" />
-        <Button
-            android:text="Выйти"
-            android:layout_width="wrap_content"
+            android:layout_marginRight="10dp">
+          
+          <com.google.android.gms.maps.MapView
+              android:id="@+id/ufUserMap"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" 
+              android:layout_margin="3dp"/>
+          
+          <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bg_transparent_corned" />        
+        </FrameLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ufExitB"
-            android:layout_below="@id/ufUserMap"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:background="@drawable/button"
-            android:textStyle="bold"
-            android:typeface="monospace"
-            android:layout_margin="10dp"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
+            <Button
+                android:text="Выйти"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ufExitB"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/button"
+                android:textStyle="bold"
+                android:typeface="monospace"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+    </LinearLayout>
     <TextView
         android:text="Мои подарки:"
         android:textAppearance="?android:attr/textAppearanceMedium"

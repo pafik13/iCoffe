@@ -224,38 +224,102 @@
     <ImageAsset Include="Resources\Images.xcassets\ic_lock_outline_white_24dp.imageset\ic_lock_outline_white_3x.png">
       <InProject>false</InProject>
     </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\ic_map_white_48pt.imageset\Contents.json" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_map_white_48pt.imageset\ic_map_red_48pt.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_map_white_48pt.imageset\ic_map_white_48pt_2x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_map_white_48pt.imageset\ic_map_white_48pt_3x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_map_red_48pt.imageset\Contents.json" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_map_red_48pt.imageset\ic_map_red_48pt.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_map_red_48pt.imageset\ic_map_red_48pt_2x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_map_red_48pt.imageset\ic_map_red_48pt_3x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_user_white_48pt.imageset\Contents.json" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_user_white_48pt.imageset\ic_user_white_48pt.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_user_white_48pt.imageset\ic_user_white_48pt_ 2x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_user_white_48pt.imageset\ic_user_white_48pt 3x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_user_red_48pt.imageset\Contents.json" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_user_red_48pt.imageset\ic_user_red_48pt.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_user_red_48pt.imageset\ic_user_red_48pt_ 2x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_user_red_48pt.imageset\ic_user_red_48pt _3x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_white_48pt.imageset\Contents.json" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_white_48pt.imageset\ic_bonus_white_48pt.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_white_48pt.imageset\ic_bonus_white_48pt_3x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_white_48pt.imageset\ic_bonus_white_48pt_2x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_red_48pt.imageset\Contents.json" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_red_48pt.imageset\ic_bonus_red_48pt.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_red_48pt.imageset\ic_bonus_red_48pt_2x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_red_48pt.imageset\ic_bonus_red_48pt_3x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_96pt.imageset\Contents.json" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_96pt.imageset\ic_bonus_logo_demo_96pt.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_96pt.imageset\ic_bonus_logo_demo_96pt_2x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_96pt.imageset\ic_bonus_logo_demo_96pt_3x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_120pt.imageset\Contents.json" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_120pt.imageset\ic_bonus_logo_demo_120pt.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_120pt.imageset\ic_bonus_logo_demo_120pt_2x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_120pt.imageset\ic_bonus_logo_demo_120pt_3x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_map_white_48pt.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_map_white_48pt.imageset\ic_map_red_48pt.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_map_white_48pt.imageset\ic_map_white_48pt_2x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_map_white_48pt.imageset\ic_map_white_48pt_3x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_map_red_48pt.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_map_red_48pt.imageset\ic_map_red_48pt.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_map_red_48pt.imageset\ic_map_red_48pt_2x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_map_red_48pt.imageset\ic_map_red_48pt_3x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_user_white_48pt.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_user_white_48pt.imageset\ic_user_white_48pt.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_user_white_48pt.imageset\ic_user_white_48pt_ 2x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_user_white_48pt.imageset\ic_user_white_48pt 3x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_user_red_48pt.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_user_red_48pt.imageset\ic_user_red_48pt.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_user_red_48pt.imageset\ic_user_red_48pt_ 2x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_user_red_48pt.imageset\ic_user_red_48pt _3x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_white_48pt.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_white_48pt.imageset\ic_bonus_white_48pt.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_white_48pt.imageset\ic_bonus_white_48pt_3x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_white_48pt.imageset\ic_bonus_white_48pt_2x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_red_48pt.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_red_48pt.imageset\ic_bonus_red_48pt.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_red_48pt.imageset\ic_bonus_red_48pt_2x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_red_48pt.imageset\ic_bonus_red_48pt_3x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_96pt.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_96pt.imageset\ic_bonus_logo_demo_96pt.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_96pt.imageset\ic_bonus_logo_demo_96pt_2x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_96pt.imageset\ic_bonus_logo_demo_96pt_3x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_120pt.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_120pt.imageset\ic_bonus_logo_demo_120pt.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_120pt.imageset\ic_bonus_logo_demo_120pt_2x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_120pt.imageset\ic_bonus_logo_demo_120pt_3x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="Resources\ITunesArtwork" />
