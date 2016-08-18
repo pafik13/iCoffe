@@ -12,7 +12,9 @@ namespace iCoffe.Shared
         public static List<BonusOffer> Offers { get; set; }
         public static List<GeolocComplexObj> ComplexObjs { get; set; }
         public static GeolocPoint center { get; set; }
-
+        
+        public static UserInfo User { get; set; }
+        
         public static string SerializeUser(User user)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(User));

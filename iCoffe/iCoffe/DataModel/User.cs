@@ -14,4 +14,13 @@
 
         public string City { set; get; }
     }
+    
+    public class UserInfo
+    {
+        public string FullUserName { set; get; }
+
+        public string Login { set; get; }
+
+        public int Points { set; get; }
+    }
 }
