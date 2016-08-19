@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-
-using RestSharp;
 
 using iCoffe.Shared;
 using System.Net;
@@ -62,25 +56,25 @@ namespace iCoffe.Droid
 
         private bool IsInputAccepted()
         {
-            if (String.IsNullOrEmpty(userEmail.Text))
+            if (string.IsNullOrEmpty(userEmail.Text))
             {
                 Toast.MakeText(this, @"Введите, пожалуйста, <E-mail>.", ToastLength.Short).Show();
                 return false;
             }
 
-            if (String.IsNullOrEmpty(userPassword.Text))
+            if (string.IsNullOrEmpty(userPassword.Text))
             {
                 Toast.MakeText(this, @"Введите, пожалуйста, <Пароль>.", ToastLength.Short).Show();
                 return false;
             }
 
-            if (String.IsNullOrEmpty(userConfirm.Text))
+            if (string.IsNullOrEmpty(userConfirm.Text))
             {
                 Toast.MakeText(this, @"Введите, пожалуйста, <Подтверждение>.", ToastLength.Short).Show();
                 return false;
             }
 
-            if (String.Compare(userConfirm.Text, userPassword.Text) != 0)
+            if (string.Compare(userConfirm.Text, userPassword.Text) != 0)
             {
                 Toast.MakeText(this, @"<Пароль> и <Подтверждение> не совпадают.", ToastLength.Short).Show();
                 return false;

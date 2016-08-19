@@ -78,7 +78,7 @@ namespace iCoffe.Shared
             List<BonusOffer> results = new List<BonusOffer>();
             var client = new RestClient(Settings.ApiUrl);
             var request = new RestRequest(Settings.OffersPath, Method.GET);
-            request.AddHeader(@"Authorization", String.Format(@"Bearer {0}", bearer));
+            request.AddHeader(@"Authorization", string.Format(@"Bearer {0}", bearer));
             request.AddQueryParameter(@"plat", latitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
             request.AddQueryParameter(@"plong", longitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
             request.AddQueryParameter(@"dmax", radius.ToString());
@@ -96,20 +96,27 @@ namespace iCoffe.Shared
         
         public static string GetBasicToken(string username, string password)
         {
-            var client = new RestClient(Settings.HostUrl);
-            var request = new RestRequest(Settings.UserInfoPath, Method.GET);
             var authData = string.Format("{0}:{1}", username, password);
-            var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
-            request.AddHeader(@"Authorization", String.Format(@"Basic {0}", authHeaderValue));
+            var authHeaderValue = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(authData));
+
+            if (GetUserInfo(authHeaderValue)) {
+                return authHeaderValue;
+            }
+            return string.Empty;
+        }
+
+        public static bool GetUserInfo(string basic)
+        {
+            var client = new RestClient(Settings.ApiUrl);
+            var request = new RestRequest(Settings.UserInfoPath, Method.GET);
+            request.AddHeader(@"Authorization", string.Format(@"Basic {0}", basic));
             var response = client.Execute<UserInfo>(request);
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                //UserInfo ui = response.Data;
-                Data.User = response.Data;
-                return authHeaderValue;
+                Data.UserInfo = response.Data;
+                return true;
             }
-
-            return string.Empty;
+            return false;
         }
 
         public static List<BonusOffer> GetBonusOffers(string basic, double latitude, double longitude, int radius)
@@ -117,19 +124,53 @@ namespace iCoffe.Shared
             List<BonusOffer> results = new List<BonusOffer>();
             var client = new RestClient(Settings.ApiUrl);
             var request = new RestRequest(Settings.BonusOffersPath, Method.GET);
-            request.AddHeader(@"Authorization", String.Format(@"Basic {0}", basic));
+            request.AddHeader(@"Authorization", string.Format(@"Basic {0}", basic));
             request.AddUrlSegment(@"latitude", latitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
             request.AddUrlSegment(@"longitude", longitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
             request.AddUrlSegment(@"radius", radius.ToString());
             var response = client.Execute<List<BonusOffer>>(request);
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                if (response.Data != null)
-                {
-                    results = response.Data;
-                }
+                results = response.Data;
             }
             return results;
+        }
+
+        public static List<Cafe> GetCafes(string basic, double latitude, double longitude, int radius)
+        {
+            List<Cafe> results = new List<Cafe>();
+            var client = new RestClient(Settings.ApiUrl);
+            var request = new RestRequest(Settings.CafesPath, Method.GET);
+            request.AddHeader(@"Authorization", string.Format(@"Basic {0}", basic));
+            request.AddUrlSegment(@"latitude", latitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
+            request.AddUrlSegment(@"longitude", longitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
+            request.AddUrlSegment(@"radius", radius.ToString());
+            var response = client.Execute<List<Cafe>>(request);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                results = response.Data;
+                foreach (var cafe in results)
+                {
+                    request = new RestRequest(Settings.GeoLocationPath, Method.GET);
+                    request.AddHeader(@"Authorization", string.Format(@"Basic {0}", basic));
+                    request.AddUrlSegment(@"id", cafe.GeoLocationId.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
+                    var responseGeoLocation = client.Execute<GeoLocation>(request);
+                    if (responseGeoLocation.StatusCode == HttpStatusCode.OK) {
+                        cafe.GeoLocation = responseGeoLocation.Data;
+                    }
+                };
+            }
+            return results;
+        }
+
+        public static bool RequestOffer(string basic, Guid id)
+        {
+            var client = new RestClient(Settings.ApiUrl);
+            var request = new RestRequest(Settings.BonusOfferRequestPath, Method.POST);
+            request.AddHeader(@"Authorization", string.Format(@"Basic {0}", basic));
+            request.AddUrlSegment(@"id", id.ToString());
+            var response = client.Execute(request);
+            return (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.NoContent);
         }
 
         public static bool GetObjects(int latitude, int longitude, int radius)

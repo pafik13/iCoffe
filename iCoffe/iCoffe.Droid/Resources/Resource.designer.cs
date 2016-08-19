@@ -503,25 +503,28 @@ namespace iCoffe.Droid
 			public const int Splash = 2130837581;
 			
 			// aapt resource value: 0x7f02004e
-			public const int splash_screen = 2130837582;
+			public const int Splash2 = 2130837582;
 			
 			// aapt resource value: 0x7f02004f
-			public const int Splinter_Cell = 2130837583;
+			public const int splash_screen = 2130837583;
 			
 			// aapt resource value: 0x7f020050
-			public const int Splinter_Cell_2 = 2130837584;
+			public const int Splinter_Cell = 2130837584;
 			
 			// aapt resource value: 0x7f020051
-			public const int top_nav_states = 2130837585;
+			public const int Splinter_Cell_2 = 2130837585;
 			
 			// aapt resource value: 0x7f020052
-			public const int tutorial_1 = 2130837586;
+			public const int top_nav_states = 2130837586;
 			
 			// aapt resource value: 0x7f020053
-			public const int tutorial_2 = 2130837587;
+			public const int tutorial_1 = 2130837587;
 			
 			// aapt resource value: 0x7f020054
-			public const int user_tab = 2130837588;
+			public const int tutorial_2 = 2130837588;
+			
+			// aapt resource value: 0x7f020055
+			public const int user_tab = 2130837589;
 			
 			static Drawable()
 			{

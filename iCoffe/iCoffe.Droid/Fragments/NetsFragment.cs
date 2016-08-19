@@ -61,7 +61,7 @@ namespace iCoffe.Droid.Fragments
         private void NetsListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             //throw new NotImplementedException();
-            Toast.MakeText(Activity, string.Format(@"id : {0}; Descr: {1}", offersAdapter[e.Position].Id, offersAdapter[e.Position].Descr), ToastLength.Short).Show();
+            Toast.MakeText(Activity, string.Format(@"id : {0}; Descr: {1}", offersAdapter[e.Position].Id, offersAdapter[e.Position].Description), ToastLength.Short).Show();
             //Intent intent = new Intent(Activity, typeof(EventDescActivity));
             //intent.PutExtra(@"ObjId", objsAdapter[e.Position].Obj.Id);
             //StartActivityForResult(intent, 1);

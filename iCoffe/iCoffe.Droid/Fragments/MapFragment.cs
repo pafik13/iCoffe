@@ -80,11 +80,11 @@ namespace iCoffe.Droid.Fragments
                 LatLng pos = new LatLng(54.9748227, 73.4099986);
                 map.AddMarker(new MarkerOptions().SetPosition(pos).SetTitle(@"ќмск")); // addMarker(new MarkerOptions().position(/*some location*/));
 
-                foreach (var item in Data.Objs)
+                foreach (var item in Data.Cafes)
                 {
                     //text += string.Format(@"Id:{0}, X:{1}, Y:{2}", item.Id, item.geoloc.x, item.geoloc.y) + System.Environment.NewLine;
-                    //pos = ;
-                    Marker m = map.AddMarker(new MarkerOptions().SetPosition(new LatLng(item.geoloc.x, item.geoloc.y)).SetTitle(string.Format(@"Id:{0}", item.Id)).SetSnippet(@"snippet"));
+                    var position = new LatLng(item.GeoLocation.GeoPoint.Latitude, item.GeoLocation.GeoPoint.Longitude);
+                    Marker m = map.AddMarker(new MarkerOptions().SetPosition(position).SetTitle(string.Format(@"Id:{0}", item.Id)).SetSnippet(@"snippet"));
                     markers.Add(m.Id, item.Id);
                 }
 
@@ -128,11 +128,11 @@ namespace iCoffe.Droid.Fragments
             SDiag.Debug.Print(string.Format(@"markerTitle : {0}", marker.Title));
             if (markers.ContainsKey(marker.Id))
             {
-                SDiag.Debug.Print(string.Format(@"markerId : {0}", markers[marker.Id]));
+                SDiag.Debug.Print(string.Format(@"cafeId : {0}", markers[marker.Id]));
 
-                //Intent intent = new Intent(Activity, typeof(EventDescActivity));
                 Intent intent = new Intent(Activity, typeof(BonusActivity));
-                intent.PutExtra(@"ObjId", markers[marker.Id]);
+                BonusOffer offer = Data.GetBonusOffer(markers[marker.Id]);
+                intent.PutExtra(MainActivity.C_BONUS_ID, offer.Id.ToString());
                 StartActivityForResult(intent, 1);
             }
             else

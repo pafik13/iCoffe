@@ -10,10 +10,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\BonusOffer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataModel\Cafe.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\CoffeeHouseNet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataModel\GeoLocation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\GeolocObj.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\GeolocComplexObj.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\GeolocPoint.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataModel\GeoPoint.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\Gift.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Data.cs" />

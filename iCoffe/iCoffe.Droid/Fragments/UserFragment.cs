@@ -23,7 +23,7 @@ namespace iCoffe.Droid.Fragments
 {
     public class UserFragment : Fragment, IOnMapReadyCallback
     {
-        User user;
+        View MainLayout;
 
         MapView mapView;
         GoogleMap map;
@@ -41,31 +41,25 @@ namespace iCoffe.Droid.Fragments
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            // Use this to return your custom view for this Fragment
-            // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
+            MainLayout = inflater.Inflate(Resource.Layout.UserFragment, container, false);
+            bonusListView = MainLayout.FindViewById<ListView>(Resource.Id.ufListView);
 
-            user = new User() { City = @"<No City>", FirstName = @"<No First>", LastName = @"<No Last>" };
+            RefreshUserInfo();
 
-            ISharedPreferences prefs = Activity.GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
-            string userSer = prefs.GetString(SignInActivity.C_USER, string.Empty);
-            if (!string.IsNullOrEmpty(userSer))
-            {
-                user = Data.DeserializeUser(userSer);
-            }
+            MainLayout.FindViewById<Button>(Resource.Id.ufExitB).Click += ExitButton_Click;
 
-            //return base.OnCreateView(inflater, container, savedInstanceState);
-
-            View view = inflater.Inflate(Resource.Layout.UserFragment, container, false);
-            bonusListView = view.FindViewById<ListView>(Resource.Id.ufListView);
-
-            view.FindViewById<TextView>(Resource.Id.ufUserNameTV).Text = user.LastName + @" " + user.FirstName;
-            view.FindViewById<Button>(Resource.Id.ufExitB).Click += ExitButton_Click;
-
-            mapView = view.FindViewById<MapView>(Resource.Id.ufUserMap);
+            mapView = MainLayout.FindViewById<MapView>(Resource.Id.ufUserMap);
             mapView.OnCreate(savedInstanceState);
             mapView.GetMapAsync(this); //this is important
 
-            return view;
+            return MainLayout;
+        }
+
+        public void RefreshUserInfo()
+        {
+            MainLayout.FindViewById<TextView>(Resource.Id.ufUserIDTV).Text = Data.UserInfo.Login;
+            MainLayout.FindViewById<TextView>(Resource.Id.ufUserNameTV).Text = Data.UserInfo.FullUserName;
+            MainLayout.FindViewById<TextView>(Resource.Id.ufUserPointsTV).Text = Data.UserInfo.Points.ToString();
         }
 
         public void OnMapReady(GoogleMap googleMap)
@@ -137,7 +131,8 @@ namespace iCoffe.Droid.Fragments
         public void RecreateAdapter()
         {
             // get data
-            bonuses = Data.Offers.Take(5).ToList();
+            // bonuses = Data.Offers.Take(5).ToList();
+            bonuses = Data.BonusOffers.Take(5).ToList();
 
             // create our adapter
             bonusAdapter = new UserBonusAdapter(Activity, bonuses);

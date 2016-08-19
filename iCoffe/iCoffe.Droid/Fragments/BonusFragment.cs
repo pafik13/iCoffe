@@ -41,10 +41,10 @@ namespace iCoffe.Droid.Fragments
         private void NetsListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             //throw new NotImplementedException();
-            Toast.MakeText(Activity, string.Format(@"id : {0}; Descr: {1}", offersAdapter[e.Position].Id, offersAdapter[e.Position].Descr), ToastLength.Short).Show();
-            //Intent intent = new Intent(Activity, typeof(EventDescActivity));
-            //intent.PutExtra(@"ObjId", objsAdapter[e.Position].Obj.Id);
-            //StartActivityForResult(intent, 1);
+            Toast.MakeText(Activity, string.Format(@"id : {0}; Descr: {1}", offersAdapter[e.Position].Id, offersAdapter[e.Position].Description), ToastLength.Short).Show();
+            Intent intent = new Intent(Activity, typeof(BonusActivity));
+            intent.PutExtra(MainActivity.C_BONUS_ID, offersAdapter[e.Position].Id.ToString());
+            StartActivityForResult(intent, 1);
         }
 
         public override void OnResume()
@@ -57,7 +57,8 @@ namespace iCoffe.Droid.Fragments
         public void RecreateAdapter()
         {
             // get data
-            offers = Data.Offers;
+            // offers = Data.Offers;
+            offers = Data.BonusOffers;
 
             // create our adapter
             offersAdapter = new BonusOffersAdapter(Activity, offers);

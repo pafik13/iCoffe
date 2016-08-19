@@ -1,15 +1,14 @@
 using System;
 using System.Threading;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+
+using iCoffe.Shared;
+using UniversalImageLoader.Core;
 
 namespace iCoffe.Droid
 {
@@ -17,6 +16,9 @@ namespace iCoffe.Droid
     public class BonusActivity : Activity
     {
         bool IgnoreBackPress;
+        string BonusId;
+        BonusOffer Bonus;
+        Cafe Cafe;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -26,6 +28,20 @@ namespace iCoffe.Droid
 
             // Create your application here
             SetContentView(Resource.Layout.Bonus);
+
+            BonusId = Intent.GetStringExtra(MainActivity.C_BONUS_ID);
+            Bonus = Data.GetBonusOffer(new Guid(BonusId));
+            Cafe = Data.GetCafe(Bonus.CafeId);
+
+            FindViewById<TextView>(Resource.Id.baBonusDescrTV).Text = Bonus.Description;
+            FindViewById<TextView>(Resource.Id.baAddressTV).Text = Cafe.FullAddress;
+            FindViewById<TextView>(Resource.Id.baCafeNameTV).Text = Cafe.Name;
+            FindViewById<TextView>(Resource.Id.baPriceTV).Text = Bonus.Price.ToString();
+
+            // TODO: Load image
+            ImageLoader imageLoader = ImageLoader.Instance;
+            //imageLoader.DisplayImage(Cafe.Logo, FindViewById<ImageView>(Resource.Id.baCafeNameIV));
+            //imageLoader.DisplayImage(Cafe.Image, FindViewById<ImageView>(Resource.Id.baCafeImageIV));
 
             var want = FindViewById<Button>(Resource.Id.baWantB);
             want.Click += Want_Click;
@@ -43,18 +59,31 @@ namespace iCoffe.Droid
         {
             IgnoreBackPress = true;
 
+            var sharedPreferences = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
+            string accessToken = sharedPreferences.GetString(MainActivity.C_ACCESS_TOKEN, string.Empty);
+
+            if (Rest.RequestOffer(accessToken, Bonus.Id)) {
+                Data.UserInfo.Points -= (int)Bonus.Price;
+                ShowMessage(@"Приобретено");
+            } else {
+                ShowMessage(@"Неудача!");
+            }
+        }
+
+        void ShowMessage(string message)
+        {
             var locker = FindViewById<RelativeLayout>(Resource.Id.locker);
             locker.Visibility = ViewStates.Visible;
 
             var lock_message = FindViewById<TextView>(Resource.Id.lock_message);
-            lock_message.Text = @"Приобретено";
+            lock_message.Text = message;
 
             var want = FindViewById<Button>(Resource.Id.baWantB);
             want.Enabled = false;
 
             ThreadPool.QueueUserWorkItem(state =>
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(2000);
 
                 RunOnUiThread(() =>
                 {

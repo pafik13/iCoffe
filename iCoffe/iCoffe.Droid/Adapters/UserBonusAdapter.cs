@@ -6,6 +6,8 @@ using Android.Widget;
 
 using iCoffe.Shared;
 
+using UniversalImageLoader.Core;
+
 namespace iCoffe.Droid.Adapters
 {
     public class UserBonusAdapter : BaseAdapter<BonusOffer>
@@ -46,6 +48,10 @@ namespace iCoffe.Droid.Adapters
                                 parent,
                                 false)) as LinearLayout;
             view.FindViewById<TextView>(Resource.Id.ubiText).Text = string.IsNullOrEmpty(item.Title) ? "<unknow offer>" : item.Title;
+
+            // TODO: Load image
+            ImageLoader imageLoader = ImageLoader.Instance;
+            //imageLoader.DisplayImage(item.Logo, view.FindViewById<ImageView>(Resource.Id.ubiLogoIV));
 
             //Finally return the view
             return view;

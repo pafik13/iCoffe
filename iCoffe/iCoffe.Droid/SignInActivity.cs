@@ -81,12 +81,13 @@ namespace iCoffe.Droid
 
         private void GetAccessToken()
         {
-            string accessToken = Rest.GetAccessToken(userEmail.Text, userPassword.Text);
+            //string accessToken = Rest.GetAccessToken(userEmail.Text, userPassword.Text);
+            string accessToken = Rest.GetBasicToken(userEmail.Text, userPassword.Text);
             RunOnUiThread(() =>
             {
-                progressDialog.Dismiss();
+                if (progressDialog != null) progressDialog.Dismiss();
 
-                if (!String.IsNullOrEmpty(accessToken))
+                if (!string.IsNullOrEmpty(accessToken))
                 {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(this);

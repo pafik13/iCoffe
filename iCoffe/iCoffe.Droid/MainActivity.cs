@@ -28,6 +28,9 @@ namespace iCoffe.Droid
         public const string C_ACCESS_TOKEN = @"ACCESS_TOKEN";
         public const string C_IS_NEED_TUTORIAL = @"C_IS_NEED_TUTORIAL";
 
+        public const string C_BONUS_ID = @"C_BONUS_ID";
+
+
         // Layouts
         LinearLayout BonusTab;
         LinearLayout MapTab;
@@ -85,7 +88,7 @@ namespace iCoffe.Droid
             string accessToken = sharedPreferences.GetString(C_ACCESS_TOKEN, string.Empty);
             bool isNeedTutorial = sharedPreferences.GetBoolean(C_IS_NEED_TUTORIAL, true);
 
-            if (!string.IsNullOrEmpty(accessToken))
+            if (string.IsNullOrEmpty(accessToken))
             {
                 StartActivity(new Intent(this, typeof(SignInActivity)));
                 return;
@@ -97,6 +100,10 @@ namespace iCoffe.Droid
                 {
                     StartActivity(new Intent(this, typeof(TutorialActivity)));
                     return;
+                }
+                else
+                {
+                    Rest.GetUserInfo(accessToken);
                 }
 
                 if (IsInternetActive() && IsLocationActive())
@@ -162,34 +169,31 @@ namespace iCoffe.Droid
                     }
                     else
                     {
-                        GetNets();
+                        GetCafesAndBonusOffers();
                     }
                 }
             }
         }
 
-        private void GetNets()
+        private void GetCafesAndBonusOffers()
         {
             /* throw new NotImplementedException();*/
-            string message = defaultPlace == string.Empty ? @"Получение данных..." : "Получение данных. В качестве основной точки используется: " + defaultPlace;
+            string message = string.IsNullOrEmpty(defaultPlace) ? @"Получение данных..." : "Получение данных. В качестве основной точки используется: " + defaultPlace;
             progressDialog = ProgressDialog.Show(this, @"", message, true);
 
-            //progressDialog.Show();
             ThreadPool.QueueUserWorkItem(state =>
             {
-                //Data.BonusOffers = GetBonuses();
-                if (Rest.GetObjects(0,0, radius))
-                {
-                    string accessToken = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private).GetString(C_ACCESS_TOKEN, String.Empty);
-                    //List<BonusOffer> offers = Rest.GetBonuses(accessToken, 54.974362, 73.418061, 4);
-                    SDiag.Debug.Print("Radius " + radius.ToString());
-                    Data.Offers = Rest.GetBonuses(accessToken, 54.974362, 73.418061, 2);
-                    LoadFragments();
-                    RunOnUiThread(() => progressDialog.Dismiss());
-                    //progressDialog.Dismiss();
+                SDiag.Debug.Print("Radius " + radius.ToString());
+                string accessToken = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private).GetString(C_ACCESS_TOKEN, string.Empty);
+                SDiag.Debug.Print("accessToken " + accessToken);
+                Data.BonusOffers = Rest.GetBonusOffers(accessToken, 54.974362, 73.418061, 10);
+                Data.Cafes = Rest.GetCafes(accessToken, 54.974362, 73.418061, 10);
+                LoadFragments();
 
-                    SDiag.Debug.Print("GetNets stopped.");
-                }
+                RunOnUiThread(() => progressDialog.Dismiss());
+
+                SDiag.Debug.Print("GetCafesAndBonusOffers stopped.");
+
 
             });
         }
@@ -222,7 +226,7 @@ namespace iCoffe.Droid
                     latitude = 54.974362;
                     longitude = 73.418061;
                     radius = 4;
-                    GetNets();
+                    GetCafesAndBonusOffers();
                 });
 
                 dialog = builder.Show();
@@ -283,6 +287,10 @@ namespace iCoffe.Droid
                 user = new Fragments.UserFragment();
                 trans.Add(Resource.Id.mContentFL, user);
             }
+            else
+            {
+                RunOnUiThread(() => (user as Fragments.UserFragment).RefreshUserInfo());
+            }
 
             if (map == null)
             {
@@ -317,6 +325,7 @@ namespace iCoffe.Droid
                 MapTab.Selected = false;
                 BonusTab.Selected = false;
                 UserTab.Selected = true;
+                (user as Fragments.UserFragment).RefreshUserInfo();
             });
         }
 
@@ -387,7 +396,7 @@ namespace iCoffe.Droid
             locMgr.RemoveUpdates(this);
             progressDialog.Hide();
             radius = 5;
-            GetNets();
+            GetCafesAndBonusOffers();
         }
         public void OnProviderDisabled(string provider)
         {

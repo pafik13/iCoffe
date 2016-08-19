@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -13,8 +15,10 @@ namespace iCoffe.Shared
         public static List<GeolocComplexObj> ComplexObjs { get; set; }
         public static GeolocPoint center { get; set; }
         
-        public static UserInfo User { get; set; }
-        
+        public static UserInfo UserInfo { get; set; }
+        public static List<BonusOffer> BonusOffers { get; internal set; }
+        public static List<Cafe> Cafes { get; internal set; }
+
         public static string SerializeUser(User user)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(User));
@@ -26,6 +30,22 @@ namespace iCoffe.Shared
             }
         }
 
+        internal static Cafe GetCafe(int cafeId)
+        {
+            return Cafes.FirstOrDefault(cafe => cafe.Id == cafeId);
+
+        }
+
+        internal static BonusOffer GetBonusOffer(int cafeId)
+        {
+            return BonusOffers.FirstOrDefault(offer => offer.CafeId == cafeId);
+        }
+
+        internal static BonusOffer GetBonusOffer(Guid guid)
+        {
+            return BonusOffers.FirstOrDefault(offer => offer.Id == guid);
+        }
+
         public static User DeserializeUser(string user)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(User));
@@ -35,8 +55,6 @@ namespace iCoffe.Shared
                 return (User)xmlSerializer.Deserialize(reader);
             }
         }
-
-
 
         public static GeolocComplexObj Get(int id)
         {
