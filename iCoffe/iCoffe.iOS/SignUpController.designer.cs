@@ -46,13 +46,13 @@ namespace iCoffe.iOS
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton Register { get; set; }
 
-        [Action ("RegisterTouchDown:")]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        partial void RegisterTouchDown (UIKit.UIButton sender);
-
         [Action ("BackTouchDown:")]
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void BackTouchDown (UIKit.UIButton sender);
+
+        [Action ("RegisterTouchDown:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void RegisterTouchDown (UIKit.UIButton sender);
 
         void ReleaseDesignerOutlets ()
         {

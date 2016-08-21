@@ -18,12 +18,15 @@ namespace iCoffe.iOS
 
 	public partial class ViewController : UIViewController
 	{
+		MessageOverlay loadingOverlay;
+
 		// Consts
-		public const string C_WAS_STARTED_NEW_ACTIVITY = @"C_WAS_STARTED_NEW_ACTIVITY";
+		public const string C_WAS_BONUS_DESCRIPTION = @"C_WAS_STARTED_NEW_ACTIVITY";
 		public const string C_IS_USER_SIGN_IN = @"C_IS_USER_SIGN_IN";
 		public const string C_DEFAULT_PREFS = @"I_COFFEE";
 		public const string C_ACCESS_TOKEN = @"ACCESS_TOKEN";
 		public const string C_IS_NEED_TUTORIAL = @"C_IS_NEED_TUTORIAL";
+		public const string C_IS_NEED_UPDATE_USERINFO = @"C_IS_NEED_UPDATE_USERINFO";
 
 		bool CanClick;
 
@@ -33,7 +36,8 @@ namespace iCoffe.iOS
 		UIColor NonSelected = UIColor.White.ColorWithAlpha ((nfloat)0.4f);
 
 		AvailbleTabs currentTab;
-
+		GiftsViewController BonusesVC;
+		MapViewController MapVC;
 		UserViewController UserVC;
 
 		public ViewController (IntPtr handle) : base (handle)
@@ -49,8 +53,58 @@ namespace iCoffe.iOS
 			bool isSigned = NSUserDefaults.StandardUserDefaults.BoolForKey ("isSigned");
 			bool isSkiped = NSUserDefaults.StandardUserDefaults.BoolForKey ("isSkiped");
 
-			if (!isSigned && !isSkiped) {
-				PerformSegue ("SignInSegue", this);
+			if (!isSigned && !isSkiped)
+			{
+				PerformSegue("SignInSegue", this);
+			}
+			else
+			{
+				bool isNeedTutorial = NSUserDefaults.StandardUserDefaults.BoolForKey(C_IS_NEED_TUTORIAL);
+				if (isNeedTutorial)
+				{
+					CanClick = false;
+					ContainerTutor1.Alpha = 1;
+					ContainerTutor2.Alpha = 0;
+					ContainerGifts.Alpha = 0;
+					ContainerMap.Alpha = 0;
+					ContainerUser.Alpha = 0;
+
+					// Data Update
+					UpdateGlobalData();
+					NSUserDefaults.StandardUserDefaults.SetBool(false, C_IS_NEED_TUTORIAL);
+				}
+				else {
+					CanClick = true;
+
+					bool wasBonusDescription = NSUserDefaults.StandardUserDefaults.BoolForKey(C_WAS_BONUS_DESCRIPTION);
+
+					if (!wasBonusDescription)
+					{
+						// show the loading overlay on the UI thread using the correct orientation sizing
+						loadingOverlay = new MessageOverlay(UIScreen.MainScreen.Bounds, @"Обновление данных, ждите...");
+						View.Add(loadingOverlay);
+
+						// Data Update
+						UpdateGlobalData();
+
+						Map_Click();
+					}
+
+					NSUserDefaults.StandardUserDefaults.SetBool(false, C_WAS_BONUS_DESCRIPTION);
+
+					bool isNeedUpdateUserinfo = NSUserDefaults.StandardUserDefaults.BoolForKey(C_IS_NEED_UPDATE_USERINFO);
+
+					if (isNeedUpdateUserinfo)
+					{
+						if (UserVC != null)
+						{
+							UserVC.UpdateUserInfo();
+						}
+					}
+
+					NSUserDefaults.StandardUserDefaults.SetBool(false, C_IS_NEED_UPDATE_USERINFO);
+				}
+				NSUserDefaults.StandardUserDefaults.Synchronize();
 			}
 		}
 
@@ -85,41 +139,70 @@ namespace iCoffe.iOS
 			vGifts.BackgroundColor = NonSelected;
 			vMap.BackgroundColor = NonSelected;
 			vUser.BackgroundColor = NonSelected;
-			bool isNeedTutorial = NSUserDefaults.StandardUserDefaults.BoolForKey(C_IS_NEED_TUTORIAL)|| true;
-			if (isNeedTutorial) {
-				CanClick = false;
-				ContainerTutor1.Alpha = 1;
-				ContainerTutor2.Alpha = 0;
-				ContainerGifts.Alpha = 0;
-				ContainerMap.Alpha = 0;
-				ContainerUser.Alpha = 0;
-			} else {
-				CanClick = true;
-				Map_Click();
-			}
-			ContainerGifts.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.2f);
-			//ContainerGifts.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.2f);
 
+			ContainerGifts.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.2f);
 
 			foreach (var item in ChildViewControllers) {
 				if (item is UserViewController) {
 					UserVC = (item as UserViewController);
 				}
+				if (item is GiftsViewController)
+				{
+					BonusesVC = (item as GiftsViewController);
+				}
+				if (item is MapViewController)
+				{
+					MapVC = (item as MapViewController);
+				}
 			}
-
-            System.Threading.ThreadPool.QueueUserWorkItem(state =>
-            {
-                int radius = 5; // in km
-                SDiag.Debug.Print("Radius " + radius.ToString());
-                string accessToken = NSUserDefaults.StandardUserDefaults.StringForKey(C_ACCESS_TOKEN);
-                SDiag.Debug.Print("accessToken " + accessToken);
-                Data.BonusOffers = Rest.GetBonusOffers(accessToken, 54.974362, 73.418061, radius);
-                Data.Cafes = Rest.GetCafes(accessToken, 54.974362, 73.418061, radius);
-                SDiag.Debug.Print("GetCafesAndBonusOffers stopped.");
-
-
-            });
         }
+
+		public void UpdateGlobalData()
+		{
+			System.Threading.ThreadPool.QueueUserWorkItem(state =>
+			{
+				string accessToken = NSUserDefaults.StandardUserDefaults.StringForKey(C_ACCESS_TOKEN);
+				int radius = 5; // in km
+
+				SDiag.Debug.Print("Radius " + radius);
+				SDiag.Debug.Print("accessToken " + accessToken);
+
+				Data.BonusOffers = Rest.GetBonusOffers(accessToken, 54.974362, 73.418061, radius);
+				SDiag.Debug.Print("Data.BonusOffers: " + Data.BonusOffers.Count);
+
+				Data.Cafes = Rest.GetCafes(accessToken, 54.974362, 73.418061, radius);
+				SDiag.Debug.Print("Data.Cafes: " + Data.Cafes.Count);
+
+				Data.UserBonusOffers = Rest.GetUserBonusOffers(accessToken);
+				SDiag.Debug.Print("Data.UserBonusOffers: " + Data.UserBonusOffers.Count);
+
+				if (BonusesVC != null)
+				{
+					InvokeOnMainThread(() => BonusesVC.UpdateBonuses());
+				}
+
+				if (MapVC != null)
+				{
+					InvokeOnMainThread(() => MapVC.UpdateAnnotations());
+				}
+
+				if (UserVC != null)
+				{
+					InvokeOnMainThread(() =>
+					{
+						UserVC.UpdateUserInfo();
+						UserVC.UpdateUserBonuses();
+					});
+				}
+
+				SDiag.Debug.Print("GetCafesAndBonusOffers ended.");
+
+				if (loadingOverlay != null)
+				{
+					InvokeOnMainThread(() => loadingOverlay.Hide());
+				}
+			});
+		}
 
 		public override void DidReceiveMemoryWarning ()
 		{
@@ -175,6 +258,8 @@ namespace iCoffe.iOS
 		{
 			if (!CanClick) return;
 
+			//BonusesVC.UpdateBonuses();
+
 			ContainerTutor1.Alpha = 0;
 			ContainerTutor2.Alpha = 0;
 
@@ -204,6 +289,8 @@ namespace iCoffe.iOS
 		public void Map_Click()
 		{
 			if (!CanClick) return;
+
+			//MapVC.UpdateAnnotations();
 
 			ContainerTutor1.Alpha = 0;
 			ContainerTutor2.Alpha = 0;
@@ -240,6 +327,7 @@ namespace iCoffe.iOS
 
 			if (UserVC != null) {
 				UserVC.UpdateUserInfo ();
+				//UserVC.ViewWillAppear(false);
 			}
 
 			UIView.Animate (
@@ -299,7 +387,8 @@ namespace iCoffe.iOS
 		{
 			base.PrepareForSegue(segue, sender);
 			//Console.WriteLine(@"PrepareForSegue in ViewController: " + (segue.DestinationViewController is Tutor2ViewController));
-			if (segue.DestinationViewController is Tutor1ViewController) {
+			if (segue.DestinationViewController is Tutor1ViewController)
+			{
 				(segue.DestinationViewController as Tutor1ViewController).Parent = this;
 			}
 

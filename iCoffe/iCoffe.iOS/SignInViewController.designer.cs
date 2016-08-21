@@ -46,15 +46,13 @@ namespace iCoffe.iOS
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton SignUp { get; set; }
 
-
         [Action ("SignButtonTouchDown:")]
         [GeneratedCode ("iOS Designer", "1.0")]
-        partial void SignButtonTouchDown (UIButton sender);
-
+        partial void SignButtonTouchDown (UIKit.UIButton sender);
 
         [Action ("SkipButtonTouchDown:")]
         [GeneratedCode ("iOS Designer", "1.0")]
-        partial void SkipButtonTouchDown (UIButton sender);
+        partial void SkipButtonTouchDown (UIKit.UIButton sender);
 
         void ReleaseDesignerOutlets ()
         {

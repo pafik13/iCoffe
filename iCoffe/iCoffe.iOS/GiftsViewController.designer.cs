@@ -11,19 +11,19 @@ using UIKit;
 
 namespace iCoffe.iOS
 {
-	[Register ("GiftsViewController")]
-	partial class GiftsViewController
-	{
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UITableView Table { get; set; }
+    [Register ("GiftsViewController")]
+    partial class GiftsViewController
+    {
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITableView Table { get; set; }
 
-		void ReleaseDesignerOutlets ()
-		{
-			if (Table != null) {
-				Table.Dispose ();
-				Table = null;
-			}
-		}
-	}
+        void ReleaseDesignerOutlets ()
+        {
+            if (Table != null) {
+                Table.Dispose ();
+                Table = null;
+            }
+        }
+    }
 }

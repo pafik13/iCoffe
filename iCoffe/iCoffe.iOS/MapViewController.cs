@@ -66,16 +66,9 @@ namespace iCoffe.iOS
 
 			detailButton.TouchUpInside += (s, e) => { 
 				Console.WriteLine ("Clicked");
-				//Create Alert
-//				var detailAlert = UIAlertController.Create ("Annotation Clicked", "You clicked on " + 
-//					(annotation as MKAnnotation).Coordinate.Latitude.ToString() + ", " +
-//					(annotation as MKAnnotation).Coordinate.Longitude.ToString(), UIAlertControllerStyle.Alert);
-//				detailAlert.AddAction (UIAlertAction.Create ("OK", UIAlertActionStyle.Default, null));
-//				parent.PresentViewController (detailAlert, true, null); 
 				if (parent.ParentViewController.NavigationController != null) {
-					EventDescViewController vc = parent.Storyboard.InstantiateViewController ("EventDescVC") as EventDescViewController;
-                    //vc.ObjId = (annotation as BasicMapAnnotation).ObjId;
-                    vc.Bonus = Data.GetBonusOffer((annotation as BasicMapAnnotation).ObjId); // ObjId == CafeId
+					var vc = parent.Storyboard.InstantiateViewController ("BonusVC") as BonusViewController;
+                    vc.Bonus = Data.GetBonusOffer((annotation as BasicMapAnnotation).ObjId);
                     parent.ParentViewController.NavigationController.PushViewController (vc, true);
 					parent.ParentViewController.NavigationController.SetNavigationBarHidden(false, true);
 				}
@@ -98,6 +91,13 @@ namespace iCoffe.iOS
 		{
 		}
 
+		public override void ViewDidAppear(bool animated)
+		{
+			base.ViewDidAppear(animated);
+
+			//UpdateAnnotations();
+		}
+
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
@@ -110,13 +110,22 @@ namespace iCoffe.iOS
 			var span = new MKCoordinateSpan(MilesToLatitudeDegrees(4), MilesToLongitudeDegrees(4, coords.Latitude));
 			Map.Region = new MKCoordinateRegion(coords, span);
 
-			foreach (var cafe in Data.Cafes)
-			{
-                var coordinate = new CLLocationCoordinate2D(cafe.GeoLocation.GeoPoint.Latitude, cafe.GeoLocation.GeoPoint.Latitude);
+			Map.Delegate = new MapDelegate(this);
 
-                var ann = new BasicMapAnnotation (coordinate, string.Format("Id: {0}", cafe.Id), cafe.FullAddress, cafe.Id);
-				Map.AddAnnotation(ann);
-				Map.Delegate = new MapDelegate (this);
+		}
+
+		public void UpdateAnnotations()
+		{
+			if (Data.Cafes != null)
+			{
+				Map.RemoveAnnotations();
+				foreach (var cafe in Data.Cafes)
+				{
+					var coordinate = new CLLocationCoordinate2D(cafe.GeoLocation.GeoPoint.Latitude, cafe.GeoLocation.GeoPoint.Longitude);
+
+					var ann = new BasicMapAnnotation(coordinate, string.Format("Id: {0}", cafe.Id), cafe.FullAddress, cafe.Id);
+					Map.AddAnnotation(ann);
+				}
 			}
 		}
 

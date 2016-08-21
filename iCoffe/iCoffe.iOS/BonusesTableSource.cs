@@ -10,13 +10,13 @@ using iCoffe.Shared;
 
 namespace iCoffe.iOS
 {
-	public class GiftsTableSource: UITableViewSource
+	public class BonusesTableSource: UITableViewSource
 	{
 		readonly UIViewController Controller;
 		readonly IList<BonusOffer> TableItems;
 		string CellIdentifier = "BonusCell";
 
-		public GiftsTableSource (UIViewController controller, IList<BonusOffer> offers)
+		public BonusesTableSource (UIViewController controller, IList<BonusOffer> offers)
 		{
 			Controller = controller;
 			TableItems = offers;
@@ -39,10 +39,8 @@ namespace iCoffe.iOS
 
 		public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
 		{
-			//throw new System.NotImplementedException ();
 			if (Controller.ParentViewController.NavigationController != null) {
-				EventDescViewController vc = Controller.Storyboard.InstantiateViewController ("EventDescVC") as EventDescViewController;
-                //vc.Obj = TableItems [indexPath.Row];
+				var vc = Controller.Storyboard.InstantiateViewController ("BonusVC") as BonusViewController;
                 vc.Bonus = TableItems[indexPath.Row];
                 Controller.ParentViewController.NavigationController.PushViewController (vc, true);
 				Controller.ParentViewController.NavigationController.SetNavigationBarHidden(false, true);

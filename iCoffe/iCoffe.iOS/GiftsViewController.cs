@@ -1,5 +1,6 @@
 using Foundation;
 using System;
+using System.Collections.Generic;
 using System.CodeDom.Compiler;
 using UIKit;
 
@@ -9,7 +10,10 @@ namespace iCoffe.iOS
 {
 	partial class GiftsViewController : UIViewController
 	{
-		GiftsTableSource source;
+		BonusesTableSource source;
+
+		public string AccessToken;
+		public bool IsDataUpdating;
 
 		public GiftsViewController (IntPtr handle) : base (handle)
 		{
@@ -20,18 +24,23 @@ namespace iCoffe.iOS
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-//			string[] data = new string[]{"Blue", "Red", "Green", "Brown"};
-			//this.ParentViewController.NavigationController.PushViewController
-			source = new GiftsTableSource (this, Data.Objs);
-
-			Table.Source = source;
 
 			View.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.0f);
-			Table.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.0f); 
+			Table.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.0f);
 
-			//Table.ContentInset = new UIEdgeInsets ((nfloat)0.0f, (nfloat)20.0f, (nfloat)0.0f, (nfloat)20.0f);
+			UpdateBonuses();
 		}
 
 		#endregion
+
+		public void UpdateBonuses()
+		{
+			//if (Data.BonusOffers != null)
+			//{
+				source = new BonusesTableSource(this, Data.BonusOffers ?? new List<BonusOffer>());
+
+				Table.Source = source;
+			//}
+		}
 	}
 }

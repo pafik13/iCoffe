@@ -24,6 +24,14 @@ namespace iCoffe.iOS
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel Points { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel UserID { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIView UserInfo { get; set; }
 
         [Outlet]
@@ -34,10 +42,9 @@ namespace iCoffe.iOS
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UILabel UserName { get; set; }
 
-
         [Action ("ExitButtonTouchDown:")]
         [GeneratedCode ("iOS Designer", "1.0")]
-        partial void ExitButtonTouchDown (UIButton sender);
+        partial void ExitButtonTouchDown (UIKit.UIButton sender);
 
         void ReleaseDesignerOutlets ()
         {
@@ -49,6 +56,16 @@ namespace iCoffe.iOS
             if (GiftsTable != null) {
                 GiftsTable.Dispose ();
                 GiftsTable = null;
+            }
+
+            if (Points != null) {
+                Points.Dispose ();
+                Points = null;
+            }
+
+            if (UserID != null) {
+                UserID.Dispose ();
+                UserID = null;
             }
 
             if (UserInfo != null) {

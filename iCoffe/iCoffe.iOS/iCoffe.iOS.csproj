@@ -320,6 +320,19 @@
     <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_120pt.imageset\ic_bonus_logo_demo_120pt_3x.png">
       <InProject>false</InProject>
     </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_29.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_58.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_87.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_80.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_120.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_57.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_114.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_180.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\ic_star_red_24dp.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\ic_star_red_24pt.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\ic_star_red_24pt_x2.png" />
+    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\ic_star_red_24pt_x3.png" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="Resources\ITunesArtwork" />
@@ -353,11 +366,7 @@
     <Compile Include="UserViewController.designer.cs">
       <DependentUpon>UserViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="GiftsTableSource.cs" />
-    <Compile Include="EventDescViewController.cs" />
-    <Compile Include="EventDescViewController.designer.cs">
-      <DependentUpon>EventDescViewController.cs</DependentUpon>
-    </Compile>
+    <Compile Include="BonusesTableSource.cs" />
     <Compile Include="UserBonusTableSource.cs" />
     <Compile Include="SignInViewController.cs" />
     <Compile Include="SignInViewController.designer.cs">
@@ -380,16 +389,17 @@
     <Compile Include="SignUpController.designer.cs">
       <DependentUpon>SignUpController.cs</DependentUpon>
     </Compile>
+    <Compile Include="MessageOverlay.cs" />
+    <Compile Include="BonusViewController.cs" />
+    <Compile Include="BonusViewController.designer.cs">
+      <DependentUpon>BonusViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="..\iCoffe\iCoffe.projitems" Label="Shared" Condition="Exists('..\iCoffe\iCoffe.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <XamarinComponentReference Include="restsharp">
       <Version>105.2.3</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-    <XamarinComponentReference Include="sdwebimage">
-      <Version>3.7.5</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>
@@ -403,6 +413,7 @@
     <BundleResource Include="Resources\Images.xcassets\ic_bonus_logo_demo_96pt.imageset\ic_bonus_logo_demo_96pt.png" />
     <BundleResource Include="Resources\Images.xcassets\ic_bonus_logo_demo_96pt.imageset\ic_bonus_logo_demo_96pt_2x.png" />
     <BundleResource Include="Resources\Images.xcassets\ic_bonus_logo_demo_96pt.imageset\ic_bonus_logo_demo_96pt_3x.png" />
+    <BundleResource Include="Resources\NewSplash2.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Images.xcassets\ic_map_white_48pt.imageset\" />
@@ -414,5 +425,6 @@
     <Folder Include="Resources\Images.xcassets\ic_.imageset\" />
     <Folder Include="Resources\Images.xcassets\ic_bonus_logo_96pt.imageset\" />
     <Folder Include="Resources\Images.xcassets\ic_bonus_logo_120pt.imageset\" />
+    <Folder Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\" />
   </ItemGroup>
 </Project>

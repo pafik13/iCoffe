@@ -11,28 +11,32 @@ using UIKit;
 
 namespace iCoffe.iOS
 {
-    [Register ("EventDescViewController")]
-    partial class EventDescViewController
+    [Register ("BonusViewController")]
+    partial class BonusViewController
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextView Addresses { get; set; }
+        UIKit.UITextView BonusDescription { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextView EventDesc { get; set; }
+        UIKit.UILabel BonusPrice { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIImageView EventImage { get; set; }
+        UIKit.UITextView CafeAddress { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIImageView EventNameImage { get; set; }
+        UIKit.UIImageView CafeImage { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel EventNameLabel { get; set; }
+        UIKit.UIImageView CafeLogo { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel CafeName { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -56,29 +60,34 @@ namespace iCoffe.iOS
 
         void ReleaseDesignerOutlets ()
         {
-            if (Addresses != null) {
-                Addresses.Dispose ();
-                Addresses = null;
+            if (BonusDescription != null) {
+                BonusDescription.Dispose ();
+                BonusDescription = null;
             }
 
-            if (EventDesc != null) {
-                EventDesc.Dispose ();
-                EventDesc = null;
+            if (BonusPrice != null) {
+                BonusPrice.Dispose ();
+                BonusPrice = null;
             }
 
-            if (EventImage != null) {
-                EventImage.Dispose ();
-                EventImage = null;
+            if (CafeAddress != null) {
+                CafeAddress.Dispose ();
+                CafeAddress = null;
             }
 
-            if (EventNameImage != null) {
-                EventNameImage.Dispose ();
-                EventNameImage = null;
+            if (CafeImage != null) {
+                CafeImage.Dispose ();
+                CafeImage = null;
             }
 
-            if (EventNameLabel != null) {
-                EventNameLabel.Dispose ();
-                EventNameLabel = null;
+            if (CafeLogo != null) {
+                CafeLogo.Dispose ();
+                CafeLogo = null;
+            }
+
+            if (CafeName != null) {
+                CafeName.Dispose ();
+                CafeName = null;
             }
 
             if (MiddleLeftView != null) {

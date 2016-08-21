@@ -25,15 +25,7 @@ namespace iCoffe.iOS
 		public override void ViewWillAppear (bool animated)
 		{
 			base.ViewWillAppear (animated);
-			//NSUserDefaults.StandardUserDefaults.SetString(@"q12345", @"lp@m.ru");
-			//NSUserDefaults.StandardUserDefaults.SetString(Data.SerializeUser(new User() { Email = @"lp@m.ru", FirstName = @"Pavel", LastName = @"Lyubin", City = @"Moscow" }), @"lp@m.ru" + C_USER);
-			//NSUserDefaults.StandardUserDefaults.SetString(@"q12345", @"ii@m.ru");
-			//NSUserDefaults.StandardUserDefaults.SetString(Data.SerializeUser(new User() { Email = @"ii@m.ru", FirstName = @"Ivan", LastName = @"Ivanov", City = @"Tver'" }), @"ii@m.ru" + C_USER);
-			//NSUserDefaults.StandardUserDefaults.SetString(@"q12345", @"pp@m.ru");
-			//NSUserDefaults.StandardUserDefaults.SetString(Data.SerializeUser(new User() { Email = @"pp@m.ru", FirstName = @"Petr", LastName = @"Petrov", City = @"Tula" }),@"pp@m.ru" + C_USER);
-			//NSUserDefaults.StandardUserDefaults.SetString(@"q12345", @"ss@m.ru");
-			//NSUserDefaults.StandardUserDefaults.SetString(Data.SerializeUser(new User() { Email = @"ss@m.ru", FirstName = @"Sidr", LastName = @"Sidrov", City = @"Pushino" }), @"ss@m.ru" + C_USER);
-			//NSUserDefaults.StandardUserDefaults.Synchronize();
+
 			if (string.IsNullOrEmpty(EmailText) && string.IsNullOrEmpty(PasswordText)) return;
 
 			Email.Text = EmailText;
@@ -55,8 +47,8 @@ namespace iCoffe.iOS
 
 			View.BackgroundColor = UIColor.FromPatternImage(i);
 
-			EmailView.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.4f);
-			PasswordView.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.4f);
+			EmailView.BackgroundColor = UIColor.White.ColorWithAlpha (0.4f);
+			PasswordView.BackgroundColor = UIColor.White.ColorWithAlpha (0.4f);
 
 			SignIn.Layer.CornerRadius = 8.0f;
 			SignIn.Layer.MasksToBounds = true;
@@ -104,6 +96,7 @@ namespace iCoffe.iOS
 						NSUserDefaults.StandardUserDefaults.SetString(accessToken, ViewController.C_ACCESS_TOKEN);
 						NSUserDefaults.StandardUserDefaults.SetBool(true, "isSigned");
 						NSUserDefaults.StandardUserDefaults.SetBool(!isSignedLater, ViewController.C_IS_NEED_TUTORIAL);
+						NSUserDefaults.StandardUserDefaults.SetBool(true, Email.Text);
 						NSUserDefaults.StandardUserDefaults.Synchronize();
 
 						if (Parent != null)

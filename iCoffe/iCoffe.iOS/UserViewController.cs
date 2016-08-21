@@ -10,8 +10,10 @@ namespace iCoffe.iOS
 {
 	partial class UserViewController : UIViewController
 	{
-		IList<Gift> gifts;
 		UserBonusTableSource source;
+
+		public string AccessToken;
+		public bool IsDataUpdating;
 
 		public UserViewController (IntPtr handle) : base (handle)
 		{
@@ -19,13 +21,10 @@ namespace iCoffe.iOS
 
 		public override void ViewWillAppear (bool animated)
 		{
-//			this.InvokeOnMainThread (delegate {
-//				this.View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("fon"));
-//			});;
-
 			base.ViewWillAppear (animated);
-			//UserInfo
-			UpdateUserInfo();
+
+			//UpdateUserInfo();
+			//UpdateUserBonuses();
 		}
 
 		public override void ViewDidLoad ()
@@ -44,21 +43,26 @@ namespace iCoffe.iOS
 			ExitButton.Layer.CornerRadius = 8.0f;
 			ExitButton.Layer.MasksToBounds = true;
 
-			source = new UserBonusTableSource (this, Data.BonusOffers.Take(5).ToList());
+		}
 
-			GiftsTable.Source = source;
-			// Gifts end
+		public void UpdateUserBonuses()
+		{
+			if (Data.UserBonusOffers != null)
+			{
+				source = new UserBonusTableSource(this, Data.UserBonusOffers);
 
-
+				GiftsTable.Source = source;
+			}
 		}
 
 		public void UpdateUserInfo()
 		{
-			bool isSigned = NSUserDefaults.StandardUserDefaults.BoolForKey("isSigned");
-
-            UserId.Text = string.IsNullOrEmpty(Data.UserInfo.Login) ? @"<No Login>" : Data.UserInfo.Login;
-            UserName.Text = string.IsNullOrEmpty(Data.UserInfo.FullUserName) ? @"<No FullUserName>" : Data.UserInfo.Login;
-            Count.Text = Data.UserInfo == null ? @"<No Points>" : Data.UserInfo.Points.ToString();
+			if (Data.UserInfo != null)
+			{
+				UserID.Text = string.IsNullOrEmpty(Data.UserInfo.Login) ? @"<No Login>" : Data.UserInfo.Login;
+				UserName.Text = string.IsNullOrEmpty(Data.UserInfo.FullUserName) ? @"<No FullUserName>" : Data.UserInfo.Login;
+				Points.Text = Data.UserInfo == null ? @"<No Points>" : Data.UserInfo.Points.ToString();
+			}
 		}
 
 		partial void ExitButtonTouchDown (UIButton sender)

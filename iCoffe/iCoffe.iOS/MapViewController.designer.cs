@@ -11,35 +11,19 @@ using UIKit;
 
 namespace iCoffe.iOS
 {
-	[Register ("MapViewController")]
-	partial class MapViewController
-	{
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIImageView ivPlace { get; set; }
+    [Register ("MapViewController")]
+    partial class MapViewController
+    {
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        MapKit.MKMapView Map { get; set; }
 
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		MapKit.MKMapView Map { get; set; }
-
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UILabel MapLabel { get; set; }
-
-		void ReleaseDesignerOutlets ()
-		{
-			if (ivPlace != null) {
-				ivPlace.Dispose ();
-				ivPlace = null;
-			}
-			if (Map != null) {
-				Map.Dispose ();
-				Map = null;
-			}
-			if (MapLabel != null) {
-				MapLabel.Dispose ();
-				MapLabel = null;
-			}
-		}
-	}
+        void ReleaseDesignerOutlets ()
+        {
+            if (Map != null) {
+                Map.Dispose ();
+                Map = null;
+            }
+        }
+    }
 }
