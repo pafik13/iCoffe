@@ -188,7 +188,10 @@ namespace iCoffe.Droid
                 SDiag.Debug.Print("accessToken " + accessToken);
                 Data.BonusOffers = Rest.GetBonusOffers(accessToken, 54.974362, 73.418061, 10);
                 Data.Cafes = Rest.GetCafes(accessToken, 54.974362, 73.418061, 10);
+                Data.UserBonusOffers = Rest.GetUserBonusOffers(accessToken);
+
                 LoadFragments();
+                MapTab_Click(MapTab, EventArgs.Empty);
 
                 RunOnUiThread(() => progressDialog.Dismiss());
 
@@ -289,7 +292,11 @@ namespace iCoffe.Droid
             }
             else
             {
-                RunOnUiThread(() => (user as Fragments.UserFragment).RefreshUserInfo());
+                RunOnUiThread(() =>
+                {
+                    (user as Fragments.UserFragment).RefreshUserInfo();
+                    (user as Fragments.UserFragment).RecreateAdapter();
+                });
             }
 
             if (map == null)

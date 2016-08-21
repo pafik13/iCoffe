@@ -13,13 +13,13 @@ namespace iCoffe.iOS
 	public class GiftsTableSource: UITableViewSource
 	{
 		readonly UIViewController Controller;
-		readonly IList<GeolocObj> TableItems;
+		readonly IList<BonusOffer> TableItems;
 		string CellIdentifier = "BonusCell";
 
-		public GiftsTableSource (UIViewController controller, IList<GeolocObj> cObjs)
+		public GiftsTableSource (UIViewController controller, IList<BonusOffer> offers)
 		{
 			Controller = controller;
-			TableItems = cObjs;
+			TableItems = offers;
 		}
 
 		public override nint RowsInSection (UITableView tableview, nint section)
@@ -27,22 +27,24 @@ namespace iCoffe.iOS
 			return TableItems.Count;
 		}
 
-		public override UITableViewCell GetCell (UITableView tableView, Foundation.NSIndexPath indexPath)
+		public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
 		{
 			var bonusCell = tableView.DequeueReusableCell(CellIdentifier) as BonusRow ?? new BonusRow((NSString)CellIdentifier);
-			bonusCell.SetRowData(UIImage.FromBundle("ic_bonus_logo_120pt"), TableItems[indexPath.Row].Title);
+            var item = TableItems[indexPath.Row];
+            bonusCell.SetRowData(UIImage.FromBundle("ic_bonus_logo_120pt"), string.IsNullOrEmpty(item.Title) ? "<unknow offer>" : item.Title);
 			bonusCell.BackgroundColor = UIColor.Clear; //UIColor.White.ColorWithAlpha(0.4f);
 			return bonusCell;
 
 		}
 
-		public override void RowSelected (UITableView tableView, Foundation.NSIndexPath indexPath)
+		public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
 		{
 			//throw new System.NotImplementedException ();
 			if (Controller.ParentViewController.NavigationController != null) {
 				EventDescViewController vc = Controller.Storyboard.InstantiateViewController ("EventDescVC") as EventDescViewController;
-				vc.Obj = TableItems [indexPath.Row];
-				Controller.ParentViewController.NavigationController.PushViewController (vc, true);
+                //vc.Obj = TableItems [indexPath.Row];
+                vc.Bonus = TableItems[indexPath.Row];
+                Controller.ParentViewController.NavigationController.PushViewController (vc, true);
 				Controller.ParentViewController.NavigationController.SetNavigationBarHidden(false, true);
 			}
 

@@ -10,13 +10,13 @@ namespace iCoffe.iOS
 	public class UserBonusTableSource: UITableViewSource
 	{
 		//readonly UIViewController Controller;
-		readonly IList<Gift> TableItems;
+		readonly IList<BonusOffer> TableItems;
 		string CellIdentifier = "UserBonusCell";
 
-		public UserBonusTableSource (UIViewController controller, IList<Gift> gifts)
+		public UserBonusTableSource (UIViewController controller, IList<BonusOffer> userOffers)
 		{
 			//Controller = controller;
-			TableItems = gifts;
+			TableItems = userOffers;
 		}
 
 		public override nint RowsInSection (UITableView tableview, nint section)
@@ -24,16 +24,17 @@ namespace iCoffe.iOS
 			return TableItems.Count;
 		}
 
-		public override UITableViewCell GetCell (UITableView tableView, Foundation.NSIndexPath indexPath)
+		public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
 		{
 			var bonusCell = tableView.DequeueReusableCell(CellIdentifier) as UserBonusRow ?? new UserBonusRow((NSString)CellIdentifier);
-			bonusCell.SetRowData(UIImage.FromBundle("ic_bonus_logo_96pt"), TableItems[indexPath.Row].Name);
-			bonusCell.BackgroundColor = UIColor.Clear; //UIColor.White.ColorWithAlpha(0.4f);
+            var item = TableItems[indexPath.Row];
+            bonusCell.SetRowData(UIImage.FromBundle("ic_bonus_logo_96pt"), string.IsNullOrEmpty(item.Title) ? "<unknow offer>" : item.Title);
+            bonusCell.BackgroundColor = UIColor.Clear; //UIColor.White.ColorWithAlpha(0.4f);
 			return bonusCell;
 
 		}
 
-		public override void RowSelected (UITableView tableView, Foundation.NSIndexPath indexPath)
+		public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
 		{
 			//throw new System.NotImplementedException ();
 			//if (Controller.ParentViewController.NavigationController != null) {

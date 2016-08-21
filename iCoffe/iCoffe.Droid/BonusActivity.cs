@@ -40,8 +40,11 @@ namespace iCoffe.Droid
 
             // TODO: Load image
             ImageLoader imageLoader = ImageLoader.Instance;
-            //imageLoader.DisplayImage(Cafe.Logo, FindViewById<ImageView>(Resource.Id.baCafeNameIV));
-            //imageLoader.DisplayImage(Cafe.Image, FindViewById<ImageView>(Resource.Id.baCafeImageIV));
+            if (!string.IsNullOrEmpty(Cafe.LogoUrl))
+                imageLoader.DisplayImage(Cafe.LogoUrl, FindViewById<ImageView>(Resource.Id.baCafeNameIV));
+
+            if (!string.IsNullOrEmpty(Cafe.ImageUrl))
+                imageLoader.DisplayImage(Cafe.ImageUrl, FindViewById<ImageView>(Resource.Id.baCafeImageIV));
 
             var want = FindViewById<Button>(Resource.Id.baWantB);
             want.Click += Want_Click;
@@ -64,7 +67,8 @@ namespace iCoffe.Droid
 
             if (Rest.RequestOffer(accessToken, Bonus.Id)) {
                 Data.UserInfo.Points -= (int)Bonus.Price;
-                ShowMessage(@"Приобретено");
+                Data.UserBonusOffers.Add(Bonus);
+                ShowMessage(@"Приобретено"); 
             } else {
                 ShowMessage(@"Неудача!");
             }

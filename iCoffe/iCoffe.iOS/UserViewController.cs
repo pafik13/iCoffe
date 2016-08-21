@@ -1,5 +1,6 @@
 using Foundation;
 using System;
+using System.Linq;
 using System.CodeDom.Compiler;
 using UIKit;
 using System.Collections.Generic;
@@ -31,10 +32,10 @@ namespace iCoffe.iOS
 		{
 			base.ViewDidLoad ();
 
-			View.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.0f);
-			GiftsTable.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.0f); 
+			View.BackgroundColor = UIColor.White.ColorWithAlpha (0.0f);
+			GiftsTable.BackgroundColor = UIColor.White.ColorWithAlpha (0.0f); 
 
-			UserInfo.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.4f);
+			UserInfo.BackgroundColor = UIColor.White.ColorWithAlpha (0.4f);
 			//CityView.BackgroundColor = UIColor.White.ColorWithAlpha ((nfloat)0.0f);
 
 			UserMap.Layer.CornerRadius = 8.0f;
@@ -43,15 +44,7 @@ namespace iCoffe.iOS
 			ExitButton.Layer.CornerRadius = 8.0f;
 			ExitButton.Layer.MasksToBounds = true;
 
-			// Gifts
-			gifts = new List<Gift>();
-			gifts.Add(new Gift() { Name = @"Gift1" });
-			gifts.Add(new Gift() { Name = @"Gift2" });
-			gifts.Add(new Gift() { Name = @"Gift3" });
-			gifts.Add(new Gift() { Name = @"Gift4" });
-			gifts.Add(new Gift() { Name = @"Gift5" });
-
-			source = new UserBonusTableSource (this, gifts);
+			source = new UserBonusTableSource (this, Data.BonusOffers.Take(5).ToList());
 
 			GiftsTable.Source = source;
 			// Gifts end
@@ -62,22 +55,14 @@ namespace iCoffe.iOS
 		public void UpdateUserInfo()
 		{
 			bool isSigned = NSUserDefaults.StandardUserDefaults.BoolForKey("isSigned");
-			string storedUserInfo = NSUserDefaults.StandardUserDefaults.StringForKey (SignInViewController.C_USER);
 
-			if (isSigned && !string.IsNullOrEmpty(storedUserInfo)) {
-				User user = Data.DeserializeUser (storedUserInfo);
-				UserName.Text = user.LastName + @" " + user.FirstName;
-				//CityLabel.Text = user.City;;
-			} else {
-				UserName.Text = @"<Unknown User>";
-				//CityLabel.Text = @"<Unknown City>";
-			}
+            UserId.Text = string.IsNullOrEmpty(Data.UserInfo.Login) ? @"<No Login>" : Data.UserInfo.Login;
+            UserName.Text = string.IsNullOrEmpty(Data.UserInfo.FullUserName) ? @"<No FullUserName>" : Data.UserInfo.Login;
+            Count.Text = Data.UserInfo == null ? @"<No Points>" : Data.UserInfo.Points.ToString();
 		}
 
 		partial void ExitButtonTouchDown (UIButton sender)
 		{
-			//throw new NotImplementedException ();
-			NSUserDefaults.StandardUserDefaults.SetString(string.Empty, SignInViewController.C_USER);
 			NSUserDefaults.StandardUserDefaults.SetBool(false, "isSigned");
 			NSUserDefaults.StandardUserDefaults.Synchronize();
 			ParentViewController.PerformSegue ("SignInSegue", ParentViewController);

@@ -31,5 +31,8 @@
 		/// Контактные данные
 		/// </summary>
 		public string Contact { get; set; }
-	}
+
+        public string LogoUrl { get; set; }
+        public string ImageUrl { get; set; }
+    }
 }

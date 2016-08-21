@@ -40,18 +40,16 @@ namespace iCoffe.Droid.Adapters
         {
             // Get our object for position
             var item = offers[position];
+            var cafe = Data.GetCafe(item.CafeId);
 
-            var view = (convertView ??
-                                context.LayoutInflater.Inflate(
-                                //Resource.Layout.NetItem,
-                                Resource.Layout.UserBonusItem,
-                                parent,
-                                false)) as LinearLayout;
+            var view = (convertView ?? context.LayoutInflater.Inflate(Resource.Layout.UserBonusItem, parent,false)) as LinearLayout;
+
             view.FindViewById<TextView>(Resource.Id.ubiText).Text = string.IsNullOrEmpty(item.Title) ? "<unknow offer>" : item.Title;
 
             // TODO: Load image
             ImageLoader imageLoader = ImageLoader.Instance;
-            //imageLoader.DisplayImage(item.Logo, view.FindViewById<ImageView>(Resource.Id.ubiLogoIV));
+            if (!string.IsNullOrEmpty(cafe.LogoUrl))
+                imageLoader.DisplayImage(cafe.LogoUrl, view.FindViewById<ImageView>(Resource.Id.ubiLogoIV));
 
             //Finally return the view
             return view;

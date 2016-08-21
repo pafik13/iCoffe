@@ -18,6 +18,7 @@ namespace iCoffe.Shared
         public static UserInfo UserInfo { get; set; }
         public static List<BonusOffer> BonusOffers { get; internal set; }
         public static List<Cafe> Cafes { get; internal set; }
+        public static List<BonusOffer> UserBonusOffers { get; internal set; }
 
         public static string SerializeUser(User user)
         {

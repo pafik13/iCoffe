@@ -96,7 +96,7 @@ namespace iCoffe.iOS
 				}
 				else
 				{
-					string accessToken = Rest.GetAccessToken(Email.Text, Password.Text);
+					string accessToken = Rest.GetBasicToken(Email.Text, Password.Text);
 					if (!string.IsNullOrEmpty(accessToken))
 					{
 						//ShowMessage(@"Новый AccessToken:", accessToken);

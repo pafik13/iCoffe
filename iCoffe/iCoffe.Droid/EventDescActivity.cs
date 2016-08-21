@@ -19,7 +19,9 @@ namespace iCoffe.Droid
     [Activity(Label = "EventDescActivity")]
     public class EventDescActivity : Activity
     {
-        int  objId;
+        int objId;
+        string BonusId;
+
         GeolocComplexObj complexObj;
 
         // Event info

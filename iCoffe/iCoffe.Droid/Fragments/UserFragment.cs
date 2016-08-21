@@ -132,7 +132,7 @@ namespace iCoffe.Droid.Fragments
         {
             // get data
             // bonuses = Data.Offers.Take(5).ToList();
-            bonuses = Data.BonusOffers.Take(5).ToList();
+            bonuses = Data.UserBonusOffers;
 
             // create our adapter
             bonusAdapter = new UserBonusAdapter(Activity, bonuses);

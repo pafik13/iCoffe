@@ -1,4 +1,5 @@
 ﻿using System;
+using SDiag = System.Diagnostics;
 
 using UIKit;
 
@@ -105,7 +106,20 @@ namespace iCoffe.iOS
 					UserVC = (item as UserViewController);
 				}
 			}
-		}
+
+            System.Threading.ThreadPool.QueueUserWorkItem(state =>
+            {
+                int radius = 5; // in km
+                SDiag.Debug.Print("Radius " + radius.ToString());
+                string accessToken = NSUserDefaults.StandardUserDefaults.StringForKey(C_ACCESS_TOKEN);
+                SDiag.Debug.Print("accessToken " + accessToken);
+                Data.BonusOffers = Rest.GetBonusOffers(accessToken, 54.974362, 73.418061, radius);
+                Data.Cafes = Rest.GetCafes(accessToken, 54.974362, 73.418061, radius);
+                SDiag.Debug.Print("GetCafesAndBonusOffers stopped.");
+
+
+            });
+        }
 
 		public override void DidReceiveMemoryWarning ()
 		{

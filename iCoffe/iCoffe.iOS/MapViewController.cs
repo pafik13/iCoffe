@@ -74,8 +74,9 @@ namespace iCoffe.iOS
 //				parent.PresentViewController (detailAlert, true, null); 
 				if (parent.ParentViewController.NavigationController != null) {
 					EventDescViewController vc = parent.Storyboard.InstantiateViewController ("EventDescVC") as EventDescViewController;
-					vc.ObjId = (annotation as BasicMapAnnotation).ObjId;
-					parent.ParentViewController.NavigationController.PushViewController (vc, true);
+                    //vc.ObjId = (annotation as BasicMapAnnotation).ObjId;
+                    vc.Bonus = Data.GetBonusOffer((annotation as BasicMapAnnotation).ObjId); // ObjId == CafeId
+                    parent.ParentViewController.NavigationController.PushViewController (vc, true);
 					parent.ParentViewController.NavigationController.SetNavigationBarHidden(false, true);
 				}
 			};
@@ -106,40 +107,14 @@ namespace iCoffe.iOS
 			Map.AddAnnotation(annotation);
 
 			var coords = new CLLocationCoordinate2D(54.9771215,73.3842507);
-			var span = new MKCoordinateSpan(MilesToLatitudeDegrees(2), MilesToLongitudeDegrees(2, coords.Latitude));
+			var span = new MKCoordinateSpan(MilesToLatitudeDegrees(4), MilesToLongitudeDegrees(4, coords.Latitude));
 			Map.Region = new MKCoordinateRegion(coords, span);
 
-			var client = new RestClient(@"http://geolocwebapi.azurewebsites.net/");
-			var request = new RestRequest(@"api/Objs/Sel", Method.GET);
-			//request.AddQueryParameter(@"plat", latitude.ToString());
-			//request.AddQueryParameter(@"plong", longitude.ToString());
-			//request.AddQueryParameter(@"dmax", radius.ToString());
-			request.AddQueryParameter(@"plat", 54.9771215.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
-			request.AddQueryParameter(@"plong", 73.3842507.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
-			request.AddQueryParameter(@"dmax", 4.ToString());
-			request.AddQueryParameter(@"grId", 1.ToString());
-			request.AddQueryParameter(@"pgn", null);
-			request.AddQueryParameter(@"pgs", null);
-			var response1 = client.Execute<List<GeolocObj>>(request);
-//			if (response1.StatusCode == System.Net.HttpStatusCode.OK)
-//			{
-//				//Data.Objs = response1.Data;
-//				//for(int i = 0; i < Data.Objs.Count; i++)
-//				foreach (var obj in Data.Objs)
-//				{
-////					request = new RestRequest(@"api/Objs/SelComplex", Method.GET);
-////					request.AddQueryParameter(@"objId", obj.Id.ToString());
-////					var response2 = client.Execute<GeolocComplexObj>(request);
-////					Data.ComplexObjs.Add(response2.Data);
-//
-//					var ann = new BasicMapAnnotation (new CLLocationCoordinate2D(obj.geoloc.x, obj.geoloc.y), string.Format("Id: {0}", obj.Id), obj.Adress);
-//					Map.AddAnnotation(ann);
-//				}
-//			}
-			foreach (var obj in Data.Objs)
+			foreach (var cafe in Data.Cafes)
 			{
-				var ann = new BasicMapAnnotation (new CLLocationCoordinate2D(obj.geoloc.x, obj.geoloc.y), string.Format("Id: {0}", obj.Id), obj.Adress, obj.Id);
-//				ann.
+                var coordinate = new CLLocationCoordinate2D(cafe.GeoLocation.GeoPoint.Latitude, cafe.GeoLocation.GeoPoint.Latitude);
+
+                var ann = new BasicMapAnnotation (coordinate, string.Format("Id: {0}", cafe.Id), cafe.FullAddress, cafe.Id);
 				Map.AddAnnotation(ann);
 				Map.Delegate = new MapDelegate (this);
 			}

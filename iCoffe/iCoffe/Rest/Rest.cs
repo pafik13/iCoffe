@@ -136,6 +136,20 @@ namespace iCoffe.Shared
             return results;
         }
 
+        public static List<BonusOffer> GetUserBonusOffers(string basic)
+        {
+            List<BonusOffer> results = new List<BonusOffer>();
+            var client = new RestClient(Settings.ApiUrl);
+            var request = new RestRequest(Settings.UserBonusOffersPath, Method.GET);
+            request.AddHeader(@"Authorization", string.Format(@"Basic {0}", basic));
+            var response = client.Execute<List<BonusOffer>>(request);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                results = response.Data;
+            }
+            return results;
+        }
+
         public static List<Cafe> GetCafes(string basic, double latitude, double longitude, int radius)
         {
             List<Cafe> results = new List<Cafe>();

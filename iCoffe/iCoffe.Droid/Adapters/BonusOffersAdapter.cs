@@ -40,6 +40,7 @@ namespace iCoffe.Droid.Adapters
         {
             // Get our object for position
             var item = offers[position];
+            var cafe = Data.GetCafe(item.CafeId);
 
             var view = (convertView ??
                                 context.LayoutInflater.Inflate(
@@ -51,7 +52,8 @@ namespace iCoffe.Droid.Adapters
 
             // TODO: Load image
             ImageLoader imageLoader = ImageLoader.Instance;
-            //imageLoader.DisplayImage(item.Logo, FindViewById<ImageView>(Resource.Id.biLogoIV));
+            if (!string.IsNullOrEmpty(cafe.LogoUrl))
+                imageLoader.DisplayImage(cafe.LogoUrl, view.FindViewById<ImageView>(Resource.Id.biLogoIV));
 
             //Finally return the view
             return view;

@@ -105,6 +105,7 @@ namespace iCoffe.Droid
                     ISharedPreferencesEditor editor = prefs.Edit();
                     editor.PutString(MainActivity.C_ACCESS_TOKEN, accessToken);
                     editor.PutBoolean(MainActivity.C_IS_NEED_TUTORIAL, !isSignedLater);
+                    editor.PutBoolean(userEmail.Text, true);
                     editor.Apply();
 
                     dialog = builder.Show();
