@@ -320,19 +320,45 @@
     <ImageAsset Include="Resources\Images.xcassets\ic_bonus_logo_120pt.imageset\ic_bonus_logo_demo_120pt_3x.png">
       <InProject>false</InProject>
     </ImageAsset>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_29.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_58.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_87.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_80.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_120.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_57.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_114.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_180.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\Contents.json" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\ic_star_red_24dp.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\ic_star_red_24pt.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\ic_star_red_24pt_x2.png" />
-    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\ic_star_red_24pt_x3.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_29.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_58.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_87.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_80.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_120.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_57.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_114.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\NewIcon_180.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\ic_star_red_24dp.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\ic_star_red_24pt.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\ic_star_red_24pt_x2.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\ic_star_red_24pt.imageset\ic_star_red_24pt_x3.png">
+      <InProject>false</InProject>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="Resources\ITunesArtwork" />

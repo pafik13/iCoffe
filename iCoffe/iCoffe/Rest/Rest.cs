@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 
 using RestSharp;
+using System.Threading.Tasks;
 
 namespace iCoffe.Shared
 {
@@ -136,6 +137,24 @@ namespace iCoffe.Shared
             return results;
         }
 
+        public static async Task<List<BonusOffer>> GetBonusOffersAsync(string basic, double latitude, double longitude, int radius)
+        {
+            List<BonusOffer> results = new List<BonusOffer>();
+            var client = new RestClient(Settings.ApiUrl);
+            var request = new RestRequest(Settings.BonusOffersPath, Method.GET);
+            request.AddHeader(@"Authorization", string.Format(@"Basic {0}", basic));
+            request.AddUrlSegment(@"latitude", latitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
+            request.AddUrlSegment(@"longitude", longitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
+            request.AddUrlSegment(@"radius", radius.ToString());
+            var response = await client.ExecuteGetTaskAsync<List<BonusOffer>>(request);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                results = response.Data;
+                    
+            }
+            return results;
+        }
+
         public static List<BonusOffer> GetUserBonusOffers(string basic)
         {
             List<BonusOffer> results = new List<BonusOffer>();
@@ -143,6 +162,20 @@ namespace iCoffe.Shared
             var request = new RestRequest(Settings.UserBonusOffersPath, Method.GET);
             request.AddHeader(@"Authorization", string.Format(@"Basic {0}", basic));
             var response = client.Execute<List<BonusOffer>>(request);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                results = response.Data;
+            }
+            return results;
+        }
+
+        public static async Task<List<BonusOffer>> GetUserBonusOffersAsync(string basic)
+        {
+            List<BonusOffer> results = new List<BonusOffer>();
+            var client = new RestClient(Settings.ApiUrl);
+            var request = new RestRequest(Settings.UserBonusOffersPath, Method.GET);
+            request.AddHeader(@"Authorization", string.Format(@"Basic {0}", basic));
+            var response = await client.ExecuteTaskAsync<List<BonusOffer>>(request);
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 results = response.Data;
@@ -170,6 +203,34 @@ namespace iCoffe.Shared
                     request.AddUrlSegment(@"id", cafe.GeoLocationId.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
                     var responseGeoLocation = client.Execute<GeoLocation>(request);
                     if (responseGeoLocation.StatusCode == HttpStatusCode.OK) {
+                        cafe.GeoLocation = responseGeoLocation.Data;
+                    }
+                };
+            }
+            return results;
+        }
+
+        public static async Task<List<Cafe>> GetCafesAsync(string basic, double latitude, double longitude, int radius)
+        {
+            List<Cafe> results = new List<Cafe>();
+            var client = new RestClient(Settings.ApiUrl);
+            var request = new RestRequest(Settings.CafesPath, Method.GET);
+            request.AddHeader(@"Authorization", string.Format(@"Basic {0}", basic));
+            request.AddUrlSegment(@"latitude", latitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
+            request.AddUrlSegment(@"longitude", longitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
+            request.AddUrlSegment(@"radius", radius.ToString());
+            var response = await client.ExecuteTaskAsync<List<Cafe>>(request);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                results = response.Data;
+                foreach (var cafe in results)
+                {
+                    request = new RestRequest(Settings.GeoLocationPath, Method.GET);
+                    request.AddHeader(@"Authorization", string.Format(@"Basic {0}", basic));
+                    request.AddUrlSegment(@"id", cafe.GeoLocationId.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
+                    var responseGeoLocation = await client.ExecuteTaskAsync<GeoLocation>(request);
+                    if (responseGeoLocation.StatusCode == HttpStatusCode.OK)
+                    {
                         cafe.GeoLocation = responseGeoLocation.Data;
                     }
                 };

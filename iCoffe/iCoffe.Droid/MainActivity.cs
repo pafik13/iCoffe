@@ -15,6 +15,7 @@ using Android.Locations;
 using UniversalImageLoader.Core;
 
 using iCoffe.Shared;
+using System.Threading.Tasks;
 
 namespace iCoffe.Droid
 {
@@ -27,6 +28,7 @@ namespace iCoffe.Droid
         public const string C_DEFAULT_PREFS = @"I_COFFEE";
         public const string C_ACCESS_TOKEN = @"ACCESS_TOKEN";
         public const string C_IS_NEED_TUTORIAL = @"C_IS_NEED_TUTORIAL";
+        public const string C_IS_BACK_PRESSED_IN_SIGN_IN = @"C_IS_BACK_PRESSED_IN_SIGN_IN";
 
         public const string C_BONUS_ID = @"C_BONUS_ID";
 
@@ -53,6 +55,10 @@ namespace iCoffe.Droid
         AlertDialog.Builder builder;
         Dialog dialog;
         ProgressDialog progressDialog;
+
+        // Data Service
+        private CancellationTokenSource cancelSource;
+        private CancellationToken cancelToken;
 
         protected override void OnCreate (Bundle bundle)
 		{
@@ -83,8 +89,24 @@ namespace iCoffe.Droid
         {
             base.OnResume();
             SDiag.Debug.Print("OnResume called");
-
+            if (cancelToken != null && cancelToken.CanBeCanceled && cancelSource != null)
+            {
+                cancelSource.Cancel();
+            }
             var sharedPreferences = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private);
+            bool isBackPressedInSignIn = sharedPreferences.GetBoolean(C_IS_BACK_PRESSED_IN_SIGN_IN, false);
+
+            if (isBackPressedInSignIn)
+            {
+                GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private)
+                    .Edit()
+                    .PutBoolean(MainActivity.C_IS_BACK_PRESSED_IN_SIGN_IN, false)
+                    .Apply();
+
+                Finish();
+                return;
+            }
+
             string accessToken = sharedPreferences.GetString(C_ACCESS_TOKEN, string.Empty);
             bool isNeedTutorial = sharedPreferences.GetBoolean(C_IS_NEED_TUTORIAL, true);
 
@@ -109,68 +131,33 @@ namespace iCoffe.Droid
                 if (IsInternetActive() && IsLocationActive())
                 {
 
-                    if (defaultPlace == string.Empty)
+                    var locationCriteria = new Criteria();
+                    locationCriteria.Accuracy = Accuracy.Coarse;
+                    locationCriteria.PowerRequirement = Power.Medium;
+                    string locationProvider = locMgr.GetBestProvider(locationCriteria, true);
+                    SDiag.Debug.Print("Starting location updates with " + locationProvider.ToString());
+                    locMgr.RequestLocationUpdates(locationProvider, 2000, 1, this);
+
+                    // Progress
+                    string message = @"Получение данных о местоположении...";
+                    progressDialog = ProgressDialog.Show(this, @"", message, true);
+
+                    //progressDialog.Show();
+                    ThreadPool.QueueUserWorkItem(state =>
                     {
-                        // pass in the provider (GPS), 
-                        // the minimum time between updates (in seconds), 
-                        // the minimum distance the user needs to move to generate an update (in meters),
-                        // and an ILocationListener (recall that this class impletents the ILocationListener interface)
-                        ////if (locMgr.AllProviders.Contains(LocationManager.NetworkProvider)
-                        ////    && locMgr.IsProviderEnabled(LocationManager.NetworkProvider))
-                        ////{
-                        ////    locMgr.RequestLocationUpdates(LocationManager.NetworkProvider, 2000, 1, this);
-                        ////}
-                        ////else
-                        ////{
-                        ////    Toast.MakeText(this, "The Network Provider does not exist or is not enabled!", ToastLength.Long).Show();
-                        ////}
+                        Thread.Sleep(30000);
 
-                        // pass in the provider (GPS), 
-                        // the minimum time between updates (in seconds), 
-                        // the minimum distance the user needs to move to generate an update (in meters),
-                        // and an ILocationListener (recall that this class impletents the ILocationListener interface)
-                        ////if (locMgr.AllProviders.Contains(LocationManager.GpsProvider)
-                        ////    && locMgr.IsProviderEnabled(LocationManager.GpsProvider))
-                        ////{
-                        ////    locMgr.RequestLocationUpdates(LocationManager.GpsProvider, 2000, 1, this);
-                        ////}
-                        ////else
-                        ////{
-                        ////    Toast.MakeText(this, "The GPS Provider does not exist or is not enabled!", ToastLength.Long).Show();
-                        ////}
-                        //Location loc = locMgr.GetLastKnownLocation();
-                        //loc.
-                        var locationCriteria = new Criteria();
-                        locationCriteria.Accuracy = Accuracy.Coarse;
-                        locationCriteria.PowerRequirement = Power.Medium;
-                        string locationProvider = locMgr.GetBestProvider(locationCriteria, true);
-                        SDiag.Debug.Print("Starting location updates with " + locationProvider.ToString());
-                        locMgr.RequestLocationUpdates(locationProvider, 2000, 1, this);
-
-                        // Progress
-                        string message = @"Получение данных о местоположении...";
-                        progressDialog = ProgressDialog.Show(this, @"", message, true);
-
-                        //progressDialog.Show();
-                        ThreadPool.QueueUserWorkItem(state =>
+                        RunOnUiThread(() =>
                         {
-                            Thread.Sleep(30000);
-
-                            RunOnUiThread(() =>
+                            if (!isLocationFound)
                             {
-                                if (!isLocationFound)
+                                if (progressDialog != null)
                                 {
                                     progressDialog.Dismiss();
                                 }
-                            });
-
-                            SDiag.Debug.Print("Location find stopped.");
+                            }
                         });
-                    }
-                    else
-                    {
-                        GetCafesAndBonusOffers();
-                    }
+                    });
                 }
             }
         }
@@ -190,15 +177,67 @@ namespace iCoffe.Droid
                 Data.Cafes = Rest.GetCafes(accessToken, 54.974362, 73.418061, 10);
                 Data.UserBonusOffers = Rest.GetUserBonusOffers(accessToken);
 
-                LoadFragments();
+                //LoadFragments();
                 MapTab_Click(MapTab, EventArgs.Empty);
 
-                RunOnUiThread(() => progressDialog.Dismiss());
+                RunOnUiThread(() => {
+                    if (progressDialog != null) {
+                        progressDialog.Dismiss();
+                    }
+                });
 
                 SDiag.Debug.Print("GetCafesAndBonusOffers stopped.");
 
 
             });
+        }
+
+        private async Task GetCafesAndBonusOffersAsync(CancellationToken cancellationToken, double lat, double lon, int rad)
+        {
+            SDiag.Debug.Print("GetCafesAndBonusOffers started. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+
+            string message = string.IsNullOrEmpty(defaultPlace) ? @"Получение данных..." : "Получение данных. В качестве основной точки используется: " + defaultPlace;
+            progressDialog = ProgressDialog.Show(this, @"", message, true);
+
+            SDiag.Debug.Print("Radius " + radius.ToString());
+            string accessToken = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private).GetString(C_ACCESS_TOKEN, string.Empty);
+            SDiag.Debug.Print("accessToken " + accessToken);
+            Data.BonusOffers = new List<BonusOffer>();
+            Data.Cafes = new List<Cafe>();
+            Data.UserBonusOffers = new List<BonusOffer>();
+
+            LoadFragments(lat, lon);
+
+            var offers = await Rest.GetBonusOffersAsync(accessToken, lat, lon, rad);
+            SDiag.Debug.Print("GetCafesAndBonusOffers running. Offers. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+
+            var cafes = await Rest.GetCafesAsync(accessToken, lat, lon, rad);
+            SDiag.Debug.Print("GetCafesAndBonusOffers running. Cafes Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+
+            var userBonuses = await Rest.GetUserBonusOffersAsync(accessToken);
+            SDiag.Debug.Print("GetCafesAndBonusOffers running. UserInfo. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                // do something here as task was cancelled mid flight maybe just
+                return;
+            }
+
+            Data.BonusOffers = offers;
+            Data.Cafes = cafes;
+            Data.UserBonusOffers = userBonuses;
+
+            LoadFragments(lat, lon);
+            MapTab_Click(MapTab, EventArgs.Empty);
+
+            RunOnUiThread(() => {
+                if (progressDialog != null)
+                {
+                    progressDialog.Dismiss();
+                }
+            });
+
+            SDiag.Debug.Print("GetCafesAndBonusOffers stopped. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
         }
 
         private bool IsLocationActive()
@@ -282,7 +321,7 @@ namespace iCoffe.Droid
             }
         }
         
-        private void LoadFragments()
+        private void LoadFragments(double lat, double lon)
         {
             FragmentTransaction trans = FragmentManager.BeginTransaction();
             if (user == null)
@@ -306,7 +345,10 @@ namespace iCoffe.Droid
             }
             else
             {
-                RunOnUiThread(() => (map as Fragments.MapFragment).RecreateMarkers());
+                RunOnUiThread(() => {
+                    (map as Fragments.MapFragment).RecreateMarkers();
+                    (map as Fragments.MapFragment).MoveCamera(new Android.Gms.Maps.Model.LatLng(lat, lon));
+                });
             }
 
             if (bonus == null)
@@ -360,6 +402,16 @@ namespace iCoffe.Droid
         {
             base.OnPause();
 
+            if (cancelToken != null && cancelToken.CanBeCanceled && cancelSource != null)
+            {
+                cancelSource.Cancel();
+            }
+
+            if (progressDialog != null)
+            {
+                progressDialog.Dismiss();
+            }
+
             // stop sending location updates when the application goes into the background
             // to learn about updating location in the background, refer to the Backgrounding guide
             // http://docs.xamarin.com/guides/cross-platform/application_fundamentals/backgrounding/
@@ -403,7 +455,9 @@ namespace iCoffe.Droid
             locMgr.RemoveUpdates(this);
             progressDialog.Hide();
             radius = 5;
-            GetCafesAndBonusOffers();
+            cancelSource = new CancellationTokenSource();
+            cancelToken = cancelSource.Token;
+            var task = GetCafesAndBonusOffersAsync(cancelToken, location.Latitude, location.Longitude, 5);
         }
         public void OnProviderDisabled(string provider)
         {

@@ -28,9 +28,11 @@ namespace iCoffe.Droid
         EditText userPassword;
 
         // Intermedia
-        AlertDialog.Builder builder;
         Dialog dialog;
         ProgressDialog progressDialog;
+
+        // Flags
+        bool IsBackPressed;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -48,10 +50,39 @@ namespace iCoffe.Droid
             userPassword = FindViewById<EditText>(Resource.Id.siPasswordET);
         }
 
+        protected override void OnResume()
+        {
+            base.OnResume();
+            IsBackPressed = false;
+        }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+            IsBackPressed = false;
+        }
+
+        public override void OnBackPressed()
+        {
+            if (IsBackPressed)
+            {
+                GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private)
+                    .Edit()
+                    .PutBoolean(MainActivity.C_IS_BACK_PRESSED_IN_SIGN_IN, IsBackPressed)
+                    .Apply();
+
+                base.OnBackPressed();
+            }
+            else
+            {
+                Toast.MakeText(this, @"Нажмите повторно для закрытия программы!", ToastLength.Short).Show();
+                IsBackPressed = true;
+            }
+        }
+
         private void SingupB_Click(object sender, EventArgs e)
         {
             StartActivityForResult(typeof(SignUpActivity), C_REQUEST_CODE_SING_UP);
-            //throw new NotImplementedException();
         }
 
         private void SigninB_Click(object sender, EventArgs e)

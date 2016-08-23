@@ -32,7 +32,14 @@
 		/// </summary>
 		public string Contact { get; set; }
 
-        public string LogoUrl { get; set; }
-        public string ImageUrl { get; set; }
+		/// <summary>
+		/// URL логотипа
+		/// </summary>
+		public string LogoUrl { get; set; }
+
+		/// <summary>
+		/// URL картинки
+		/// </summary>
+		public string ImageUrl { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="iCoffe.iCoffe" android:installLocation="auto" android:versionCode="1" android:versionName="1.0.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="iCoffe.iCoffe" android:installLocation="auto" android:versionCode="4" android:versionName="1.2.1">
 	<uses-sdk android:minSdkVersion="15" />
 	<uses-library android:name="com.google.android.maps" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -9,6 +9,6 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<application android:label="iCoffe">
 		<!-- Put your Google Maps V2 API Key here. -->
-    <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyD-0WZb4k-tsftwsY3Zaym3Rxc4q_4yVMs" />
+		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyD-0WZb4k-tsftwsY3Zaym3Rxc4q_4yVMs" />
 	</application>
 </manifest>
