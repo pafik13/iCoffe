@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Collections.Generic;
+using System.Linq;
 using SDiag = System.Diagnostics;
 
 using Android.App;
@@ -98,10 +99,7 @@ namespace iCoffe.Droid
 
             if (isBackPressedInSignIn)
             {
-                GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private)
-                    .Edit()
-                    .PutBoolean(MainActivity.C_IS_BACK_PRESSED_IN_SIGN_IN, false)
-                    .Apply();
+                sharedPreferences.Edit().PutBoolean(C_IS_BACK_PRESSED_IN_SIGN_IN, false).Apply();
 
                 Finish();
                 return;
@@ -122,10 +120,6 @@ namespace iCoffe.Droid
                 {
                     StartActivity(new Intent(this, typeof(TutorialActivity)));
                     return;
-                }
-                else
-                {
-                    Rest.GetUserInfo(accessToken);
                 }
 
                 if (IsInternetActive() && IsLocationActive())
@@ -204,6 +198,7 @@ namespace iCoffe.Droid
             SDiag.Debug.Print("accessToken " + accessToken);
             Data.BonusOffers = new List<BonusOffer>();
             Data.Cafes = new List<Cafe>();
+            Data.UserInfo = new UserInfo() { FullUserName = @"<нет данных>", Login = @"<нет данных>", Points = -1 };
             Data.UserBonusOffers = new List<BonusOffer>();
 
             LoadFragments(lat, lon);
@@ -214,8 +209,22 @@ namespace iCoffe.Droid
             var cafes = await Rest.GetCafesAsync(accessToken, lat, lon, rad);
             SDiag.Debug.Print("GetCafesAndBonusOffers running. Cafes Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
-            var userBonuses = await Rest.GetUserBonusOffersAsync(accessToken);
+            var offrersCafeIds = offers.Select(i => i.CafeId).Distinct().ToArray();
+            var offrersCafes = await Rest.GetCafesAsync(accessToken, offrersCafeIds);
+            cafes.AddRange(offrersCafes);
+
+            var userInfo = await Rest.GetUserInfoAsync(accessToken);
             SDiag.Debug.Print("GetCafesAndBonusOffers running. UserInfo. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+
+            var userBonuses = await Rest.GetUserBonusOffersAsync(accessToken);
+            SDiag.Debug.Print("GetCafesAndBonusOffers running. UserBonusOffer. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+
+            var userBonusesCafeIds = userBonuses.Select(i => i.CafeId).Distinct().ToArray();
+            var cafesIds = cafes.Select(i => i.Id).Distinct().ToArray();
+            var userCafes = await Rest.GetCafesAsync(accessToken, userBonusesCafeIds.Except(cafesIds).ToArray());
+            cafes.AddRange(userCafes);
+            SDiag.Debug.Print("GetCafesAndBonusOffers running. Cafes for UserBonusOffer. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+
 
             if (cancellationToken.IsCancellationRequested)
             {
@@ -225,8 +234,9 @@ namespace iCoffe.Droid
 
             Data.BonusOffers = offers;
             Data.Cafes = cafes;
+            Data.UserInfo = userInfo;
             Data.UserBonusOffers = userBonuses;
-
+            
             LoadFragments(lat, lon);
             MapTab_Click(MapTab, EventArgs.Empty);
 

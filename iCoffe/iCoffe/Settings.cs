@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using RestSharp;
-
-namespace iCoffe.Shared
+﻿namespace iCoffe.Shared
 {
     public static class Settings
     {
@@ -16,13 +11,14 @@ namespace iCoffe.Shared
         public static string RegisterPath { get { return @"Account/Register"; } }
 
         public static string OffersPath { get { return @"Bonus/offersSel"; } }
-        //public static string BonusOffersPath { get { return @"BonusOffer/{latitude}/{longitude}/{radius}"; } }
-        public static string BonusOffersPath { get { return @"BonusOffer/{longitude}/{latitude}/{radius}"; } }
+        public static string BonusOffersPath { get { return @"BonusOffer/{latitude}/{longitude}/{radius}"; } }
+        //public static string BonusOffersPath { get { return @"BonusOffer/{longitude}/{latitude}/{radius}"; } }
 
         public static string BonusOfferRequestPath { get { return @"BonusOffer/RequestOffer/{id}"; } }
 
-        //public static string CafesPath { get { return @"Cafe/{latitude}/{longitude}/{radius}"; } }
-        public static string CafesPath { get { return @"Cafe/{longitude}/{latitude}/{radius}"; } }
+        public static string CafesPath { get { return @"Cafe/{latitude}/{longitude}/{radius}"; } }
+        //public static string CafesPath { get { return @"Cafe/{longitude}/{latitude}/{radius}"; } }
+        public static string CafePath { get { return @"Cafe/{id}"; } }
 
         public static string GeoLocationPath { get { return @"GeoLocation/{id}"; } }
 

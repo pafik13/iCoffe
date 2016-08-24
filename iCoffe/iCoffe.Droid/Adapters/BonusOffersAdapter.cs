@@ -52,7 +52,7 @@ namespace iCoffe.Droid.Adapters
 
             // TODO: Load image
             ImageLoader imageLoader = ImageLoader.Instance;
-            if (!string.IsNullOrEmpty(cafe.LogoUrl))
+            if ((cafe != null) && !string.IsNullOrEmpty(cafe.LogoUrl))
                 imageLoader.DisplayImage(cafe.LogoUrl, view.FindViewById<ImageView>(Resource.Id.biLogoIV));
 
             //Finally return the view

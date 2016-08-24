@@ -131,11 +131,14 @@ namespace iCoffe.Droid.Fragments
             if (markers.ContainsKey(marker.Id))
             {
                 SDiag.Debug.Print(string.Format(@"cafeId : {0}", markers[marker.Id]));
-
-                Intent intent = new Intent(Activity, typeof(BonusActivity));
                 BonusOffer offer = Data.GetBonusOffer(markers[marker.Id]);
-                intent.PutExtra(MainActivity.C_BONUS_ID, offer.Id.ToString());
-                StartActivityForResult(intent, 1);
+
+                if (offer != null)
+                {
+                    Intent intent = new Intent(Activity, typeof(BonusActivity));
+                    intent.PutExtra(MainActivity.C_BONUS_ID, offer.Id.ToString());
+                    StartActivityForResult(intent, 1);
+                }
             }
             else
             {
