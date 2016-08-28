@@ -420,6 +420,7 @@
     <Compile Include="BonusViewController.designer.cs">
       <DependentUpon>BonusViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="LocationManager.cs" />
   </ItemGroup>
   <Import Project="..\iCoffe\iCoffe.projitems" Label="Shared" Condition="Exists('..\iCoffe\iCoffe.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

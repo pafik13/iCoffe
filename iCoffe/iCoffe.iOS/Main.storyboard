@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="896">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -301,7 +300,7 @@
                                     </mapView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1131">
                                         <rect key="frame" x="254" y="244" width="73" height="37"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.98039215686274506" green="0.0392156862745098" blue="0.23137254901960785" alpha="1"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -325,7 +324,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iim-Ql-ZD2" userLabel="Count">
                                                 <rect key="frame" x="10" y="-2" width="27" height="29"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
-                                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" colorSpace="calibratedRGB" red="0.98039215686274506" green="0.0392156862745098" blue="0.23137254901960785" alpha="1"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -460,18 +459,6 @@
                                     <constraint firstAttribute="bottom" secondItem="dsa-yL-Rcq" secondAttribute="bottom" id="bop-YY-RQC"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNb-r3-Uhc">
-                                <rect key="frame" x="269" y="543" width="63" height="37"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
-                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                                <state key="normal" title="ХОЧУ!">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="WantTouchDown:" destination="463" eventType="touchDown" id="1180"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Df-hc-qWd" userLabel="TopView">
                                 <rect key="frame" x="10" y="30" width="580" height="284"/>
                                 <subviews>
@@ -492,10 +479,10 @@
                                                     <constraint firstAttribute="height" constant="24" id="s0W-DX-xz5"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x97-6H-Z1K" userLabel="Count">
-                                                <rect key="frame" x="10" y="-2" width="27" height="29"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x97-6H-Z1K" userLabel="Count">
+                                                <rect key="frame" x="8" y="-3" width="27" height="29"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
-                                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" colorSpace="calibratedRGB" red="0.996078431372549" green="0.16862745098039217" blue="0.29411764705882354" alpha="1"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -542,6 +529,18 @@
                                     <constraint firstItem="ePi-RA-fa0" firstAttribute="top" secondItem="stp-pt-U16" secondAttribute="bottom" constant="10" id="wgk-3d-5tR"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNb-r3-Uhc">
+                                <rect key="frame" x="269" y="543" width="63" height="37"/>
+                                <color key="backgroundColor" colorSpace="calibratedRGB" red="0.98039215686274506" green="0.0392156862745098" blue="0.23137254901960785" alpha="1"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                <state key="normal" title="ХОЧУ!">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="WantTouchDown:" destination="463" eventType="touchDown" id="1180"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -658,7 +657,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1109">
                                 <rect key="frame" x="20" y="279" width="560" height="42"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" colorSpace="calibratedRGB" red="0.98039215686274506" green="0.0392156862745098" blue="0.23137254901960785" alpha="1"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -669,7 +668,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1110">
                                 <rect key="frame" x="20" y="341" width="560" height="42"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" colorSpace="calibratedRGB" red="0.98039215686274506" green="0.0392156862745098" blue="0.23137254901960785" alpha="1"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -805,7 +804,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vOV-tQ-8sX" userLabel="Register">
                                 <rect key="frame" x="20" y="334" width="560" height="42"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" colorSpace="calibratedRGB" red="0.98039215686274506" green="0.0392156862745098" blue="0.23137254901960785" alpha="1"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -819,7 +818,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8oE-sG-PlX" userLabel="Back">
                                 <rect key="frame" x="20" y="396" width="560" height="42"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" colorSpace="calibratedRGB" red="0.98039215686274506" green="0.0392156862745098" blue="0.23137254901960785" alpha="1"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -888,14 +887,14 @@
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Купленные подарки" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sja-4o-vLC" userLabel="User">
                                         <rect key="frame" x="10" y="300" width="180" height="99"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.98039215686274506" green="0.0392156862745098" blue="0.23137254901960785" alpha="1"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P5n-5N-Sos" userLabel="ViewUserRed">
                                         <rect key="frame" x="98" y="0.0" width="4" height="300"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.98039215686274506" green="0.0392156862745098" blue="0.23137254901960785" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="4" id="Tso-Ts-Wfa"/>
                                         </constraints>
@@ -920,7 +919,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BT3-dD-d6K" userLabel="ViewBonusRed">
                                         <rect key="frame" x="98" y="0.0" width="4" height="100"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.98039215686274506" green="0.0392156862745098" blue="0.23137254901960785" alpha="1"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="4" id="fMh-4e-Mrz"/>
                                         </constraints>
@@ -933,7 +932,7 @@
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Акции действующие сегодня" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9SR-xr-TtE" userLabel="Bonus">
                                         <rect key="frame" x="10" y="100" width="180" height="99"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.98039215686274506" green="0.0392156862745098" blue="0.23137254901960785" alpha="1"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -963,14 +962,7 @@
                                             <constraint firstAttribute="width" constant="4" id="0NP-b7-6oH"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Адреса кафе" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ild-LS-4Wm" userLabel="Map">
-                                        <rect key="frame" x="10" y="199" width="180" height="100"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sY1-uc-Zi8" userLabel="ViewMapClear">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sY1-uc-Zi8" userLabel="ViewMapClear">
                                         <rect key="frame" x="98" y="299" width="4" height="199"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="4" id="0Jn-xc-MWo"/>
@@ -978,7 +970,7 @@
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9lB-02-t5i" userLabel="Next">
                                         <rect key="frame" x="66" y="441" width="69" height="37"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.98039215686274506" green="0.0392156862745098" blue="0.23137254901960785" alpha="1"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                         <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                         <state key="normal" title="ДАЛЕЕ">
@@ -988,6 +980,13 @@
                                             <action selector="NextTouchDown:" destination="JMb-Yj-mtc" eventType="touchDown" id="1163"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Адреса кафе" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ild-LS-4Wm" userLabel="Map">
+                                        <rect key="frame" x="10" y="199" width="180" height="100"/>
+                                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.98039215686274506" green="0.0392156862745098" blue="0.23137254901960785" alpha="1"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Ild-LS-4Wm" firstAttribute="height" secondItem="Ae0-ZR-OTf" secondAttribute="height" multiplier="0.5" id="3pe-jM-qaG"/>
@@ -1044,7 +1043,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="moO-qW-chC" userLabel="AllClear">
                                 <rect key="frame" x="10" y="131" width="580" height="39"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" colorSpace="calibratedRGB" red="0.98039215686274506" green="0.0392156862745098" blue="0.23137254901960785" alpha="1"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
                                 <state key="normal" title="ВСЕ ПОНЯТНО!">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1082,11 +1081,26 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_account_box_white_24dp" width="24" height="24"/>
-        <image name="ic_bonus_white_48pt" width="48" height="48"/>
-        <image name="ic_lock_outline_white_24dp" width="24" height="24"/>
-        <image name="ic_map_white_48pt" width="48" height="48"/>
-        <image name="ic_star_red_24pt" width="24" height="24"/>
-        <image name="ic_user_white_48pt" width="48" height="48"/>
+        <image name="ic_account_box_white_24dp" width="72" height="72"/>
+        <image name="ic_bonus_white_48pt" width="96" height="96"/>
+        <image name="ic_lock_outline_white_24dp" width="72" height="72"/>
+        <image name="ic_map_white_48pt" width="144" height="144"/>
+        <image name="ic_star_red_24pt" width="76" height="76"/>
+        <image name="ic_user_white_48pt" width="144" height="144"/>
+        <image name="ic_place_white_48pt" width="144" height="144"/>
+        <image name="ic_cake_white_48pt" width="144" height="144"/>
+        <image name="ic_free_breakfast_white_48pt" width="144" height="144"/>
+        <image name="ic_place_white_18pt" width="54" height="54"/>
+        <image name="ic_cake_white_36pt" width="108" height="108"/>
+        <image name="ic_map_red_48pt" width="144" height="144"/>
+        <image name="ic_user_red_48pt" width="144" height="144"/>
+        <image name="ic_bonus_red_48pt" width="144" height="144"/>
+        <image name="ic_bonus_logo_96pt" width="288" height="288"/>
+        <image name="ic_bonus_logo_120pt" width="360" height="360"/>
+        <image name="fon.png" width="1053" height="1746"/>
+        <image name="29_icon.png" width="29" height="29"/>
+        <image name="redhat.png" width="96" height="96"/>
+        <image name="ic_bonus_logo_demo_96pt" width="288" height="288"/>
+        <image name="NewSplash2.png" width="919" height="1299"/>
     </resources>
 </document>

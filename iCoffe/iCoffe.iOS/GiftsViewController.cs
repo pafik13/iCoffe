@@ -12,9 +12,6 @@ namespace iCoffe.iOS
 	{
 		BonusesTableSource source;
 
-		public string AccessToken;
-		public bool IsDataUpdating;
-
 		public GiftsViewController (IntPtr handle) : base (handle)
 		{
 		}

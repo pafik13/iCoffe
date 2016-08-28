@@ -31,6 +31,8 @@ namespace iCoffe.iOS
 
 	class MapDelegate : MKMapViewDelegate
 	{
+		public event EventHandler<UserLocationUpdatedEventArgs> UserLocationUpdated = delegate { };
+
 		protected string annotationIdentifier = "BasicAnnotation";
 		UIButton detailButton;
 		MapViewController parent;
@@ -83,10 +85,40 @@ namespace iCoffe.iOS
 		// as an optimization, you should override this method to add or remove annotations as the 
 		// map zooms in or out.
 		public override void RegionChanged (MKMapView mapView, bool animated) {}
+
+		public override void DidUpdateUserLocation(MKMapView mapView, MKUserLocation userLocation)
+		{
+			if (mapView.UserLocation != null)
+			{
+				CLLocationCoordinate2D coords = mapView.UserLocation.Coordinate;
+				MKCoordinateSpan span = new MKCoordinateSpan(MilesToLatitudeDegrees(4), MilesToLongitudeDegrees(4, coords.Latitude));
+				mapView.Region = new MKCoordinateRegion(coords, span);
+				UserLocationUpdated(this, new UserLocationUpdatedEventArgs(userLocation));
+			}
+		}
+
+		public double MilesToLatitudeDegrees(double miles)
+		{
+			double earthRadius = 3960.0; // in miles
+			double radiansToDegrees = 180.0 / Math.PI;
+			return (miles / earthRadius) * radiansToDegrees;
+		}
+
+		public double MilesToLongitudeDegrees(double miles, double atLatitude)
+		{
+			double earthRadius = 3960.0; // in miles
+			double degreesToRadians = Math.PI / 180.0;
+			double radiansToDegrees = 180.0 / Math.PI;
+			// derive the earth's radius at that point in latitude
+			double radiusAtLatitude = earthRadius * Math.Cos(atLatitude * degreesToRadians);
+			return (miles / radiusAtLatitude) * radiansToDegrees;
+		}
 	}
 
 	partial class MapViewController : UIViewController
 	{
+		public event EventHandler<UserLocationUpdatedEventArgs> UserLocationUpdated = delegate { };
+
 		public MapViewController (IntPtr handle) : base (handle)
 		{
 		}
@@ -101,16 +133,17 @@ namespace iCoffe.iOS
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			//MapLabel.Text = string.Format ("Map. Image: h{0}, w{1}", ivPlace.Frame.Height, ivPlace.Frame.Width);
 
-			var annotation = new BasicMapAnnotation (new CLLocationCoordinate2D(54.9771215,73.3842507), "Omsk", "North City");
-			Map.AddAnnotation(annotation);
+			Map.ShowsUserLocation = true;
 
-			var coords = new CLLocationCoordinate2D(54.9771215,73.3842507);
-			var span = new MKCoordinateSpan(MilesToLatitudeDegrees(4), MilesToLongitudeDegrees(4, coords.Latitude));
-			Map.Region = new MKCoordinateRegion(coords, span);
+			var mapDelegate = new MapDelegate(this);
+			mapDelegate.UserLocationUpdated += (sender, e) =>
+			{
+				UserLocationUpdated(this, e);
+			};
 
-			Map.Delegate = new MapDelegate(this);
+			Map.Delegate = mapDelegate;
+
 
 		}
 
@@ -128,22 +161,15 @@ namespace iCoffe.iOS
 				}
 			}
 		}
+	}
 
-		public double MilesToLatitudeDegrees(double miles)
-		{
-			double earthRadius = 3960.0; // in miles
-			double radiansToDegrees = 180.0/Math.PI;
-			return (miles/earthRadius) * radiansToDegrees;
-		}
+	public class UserLocationUpdatedEventArgs : EventArgs
+	{
+		readonly public MKUserLocation UserLocation;
 
-		public double MilesToLongitudeDegrees(double miles, double atLatitude)
+		public UserLocationUpdatedEventArgs(MKUserLocation userLocation)
 		{
-			double earthRadius = 3960.0; // in miles
-			double degreesToRadians = Math.PI/180.0;
-			double radiansToDegrees = 180.0/Math.PI;
-			// derive the earth's radius at that point in latitude
-			double radiusAtLatitude = earthRadius * Math.Cos(atLatitude * degreesToRadians);
-			return (miles / radiusAtLatitude) * radiansToDegrees;
+			UserLocation = userLocation;
 		}
 	}
 }

@@ -6,6 +6,11 @@ using UIKit;
 using Foundation;
 
 using iCoffe.Shared;
+using CoreLocation;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace iCoffe.iOS
 {
@@ -21,7 +26,7 @@ namespace iCoffe.iOS
 		MessageOverlay loadingOverlay;
 
 		// Consts
-		public const string C_WAS_BONUS_DESCRIPTION = @"C_WAS_STARTED_NEW_ACTIVITY";
+		public const string C_WAS_BONUS_DESCRIPTION = @"C_WAS_BONUS_DESCRIPTION";
 		public const string C_IS_USER_SIGN_IN = @"C_IS_USER_SIGN_IN";
 		public const string C_DEFAULT_PREFS = @"I_COFFEE";
 		public const string C_ACCESS_TOKEN = @"ACCESS_TOKEN";
@@ -32,17 +37,58 @@ namespace iCoffe.iOS
 
 		//int count = 1;
 
-		//UIColor Selected = UIColor.White.ColorWithAlpha ((nfloat)0.3f);
-		UIColor NonSelected = UIColor.White.ColorWithAlpha ((nfloat)0.4f);
+		UIColor Selected = UIColor.FromRGB(250, 10, 59);
+		UIColor NonSelected = UIColor.White.ColorWithAlpha (0.4f);
 
 		AvailbleTabs currentTab;
 		GiftsViewController BonusesVC;
 		MapViewController MapVC;
 		UserViewController UserVC;
 
+		LocationManager Manager;
+
+		// Data Service
+		private CancellationTokenSource CancelSource;
+		private CancellationToken CancelToken;
+
 		public ViewController (IntPtr handle) : base (handle)
 		{
+			Manager = new LocationManager();
+			Manager.StartLocationUpdates();
+
+			//ContainerTutor1.Alpha = 0;
+			//ContainerTutor2.Alpha = 0;
+			//ContainerGifts.Alpha = 0;
+			//ContainerMap.Alpha = 1;
+			//ContainerUser.Alpha = 0;
 		}
+
+		#region Public Methods
+		public void HandleLocationChanged(object sender, LocationUpdatedEventArgs e)
+		{
+			// Handle foreground updates
+			//CLLocation location = e.Location;
+
+			//LblAltitude.Text = location.Altitude + " meters";
+			//LblLongitude.Text = location.Coordinate.Longitude.ToString();
+			//LblLatitude.Text = location.Coordinate.Latitude.ToString();
+			//LblCourse.Text = location.Course.ToString();
+			//LblSpeed.Text = location.Speed.ToString();
+
+			Console.WriteLine("foreground updated");
+		}
+
+		//This will keep going in the background and the foreground
+		public void PrintLocation(object sender, LocationUpdatedEventArgs e)
+		{
+			CLLocation location = e.Location;
+			Console.WriteLine("Altitude: " + location.Altitude + " meters");
+			Console.WriteLine("Longitude: " + location.Coordinate.Longitude);
+			Console.WriteLine("Latitude: " + location.Coordinate.Latitude);
+			Console.WriteLine("Course: " + location.Course);
+			Console.WriteLine("Speed: " + location.Speed);
+		}
+		#endregion
 
 		public override void ViewDidAppear (bool animated)
 		{
@@ -70,27 +116,27 @@ namespace iCoffe.iOS
 					ContainerUser.Alpha = 0;
 
 					// Data Update
-					UpdateGlobalData();
+					//UpdateGlobalData();
 					NSUserDefaults.StandardUserDefaults.SetBool(false, C_IS_NEED_TUTORIAL);
 				}
 				else {
 					CanClick = true;
 
-					bool wasBonusDescription = NSUserDefaults.StandardUserDefaults.BoolForKey(C_WAS_BONUS_DESCRIPTION);
+					//bool wasBonusDescription = NSUserDefaults.StandardUserDefaults.BoolForKey(C_WAS_BONUS_DESCRIPTION);
 
-					if (!wasBonusDescription)
-					{
-						// show the loading overlay on the UI thread using the correct orientation sizing
-						loadingOverlay = new MessageOverlay(UIScreen.MainScreen.Bounds, @"Обновление данных, ждите...");
-						View.Add(loadingOverlay);
+					//if (!wasBonusDescription)
+					//{
+					//	// show the loading overlay on the UI thread using the correct orientation sizing
+					//	loadingOverlay = new MessageOverlay(UIScreen.MainScreen.Bounds, @"Обновление данных, ждите...");
+					//	View.Add(loadingOverlay);
 
-						// Data Update
-						UpdateGlobalData();
+					//	// Data Update
+					//	UpdateGlobalData();
 
-						Map_Click();
-					}
+					//	Map_Click();
+					//}
 
-					NSUserDefaults.StandardUserDefaults.SetBool(false, C_WAS_BONUS_DESCRIPTION);
+					//NSUserDefaults.StandardUserDefaults.SetBool(false, C_WAS_BONUS_DESCRIPTION);
 
 					bool isNeedUpdateUserinfo = NSUserDefaults.StandardUserDefaults.BoolForKey(C_IS_NEED_UPDATE_USERINFO);
 
@@ -113,16 +159,12 @@ namespace iCoffe.iOS
 			base.ViewDidLoad ();
 			NSUserDefaults.StandardUserDefaults.SetBool(false, "isSkiped");
 			NSUserDefaults.StandardUserDefaults.Synchronize();
-			//Title.BackBarButtonItem.BackGr
-			//vMap.Touche
-			//myImage.Image = UIImage.FromBundle ("ic_place_white_48pt");
-			// Perform any additional setup after loading the view, typically from a nib.
-//			Button.AccessibilityIdentifier = "myButton";
-//			Button.TouchUpInside += delegate {
-//				var title = string.Format ("{0} clicks!", count++);
-//				Button.SetTitle (title, UIControlState.Normal);
-//			};
-//			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromBundle("fon"));
+
+			ContainerTutor1.Alpha = 0;
+			ContainerTutor2.Alpha = 0;
+			ContainerGifts.Alpha = 0;
+			ContainerMap.Alpha = 0;
+			ContainerUser.Alpha = 0;
 
 			UIGraphics.BeginImageContext(vMain.Frame.Size);
 			//TODO: if this is an iphone5, then use an iphone5 pic (the default 2x picture would not have the same aspect ratio)
@@ -131,11 +173,6 @@ namespace iCoffe.iOS
 
 			vMain.BackgroundColor = UIColor.FromPatternImage(i);
 
-//			nfloat red   = (nfloat)158.0f;
-//			nfloat green = (nfloat)158.0f;
-//			nfloat blue  = (nfloat)158.0f;
-//			nfloat alpha = (nfloat)0.6f;
-//			UIColor.FromRGBA (red, green, blue, alpha);
 			vGifts.BackgroundColor = NonSelected;
 			vMap.BackgroundColor = NonSelected;
 			vUser.BackgroundColor = NonSelected;
@@ -155,11 +192,45 @@ namespace iCoffe.iOS
 					MapVC = (item as MapViewController);
 				}
 			}
-        }
+
+			// Location
+			Manager.LocationUpdated += PrintLocation;
+			UIApplication.Notifications.ObserveDidEnterBackground((sender, args) =>
+			{
+				Manager.LocationUpdated -= HandleLocationChanged;
+
+				if (CancelToken != null && CancelToken.CanBeCanceled && CancelSource != null)
+				{
+					CancelSource.Cancel();
+				}
+
+				if (loadingOverlay != null)
+				{
+					InvokeOnMainThread(() => loadingOverlay.Hide());
+				}
+			});
+
+			//MapVC.UserLocationUpdated += (object sender, UserLocationUpdatedEventArgs e) =>
+			Manager.LocationUpdated += (sender, e) => 
+			{
+				if (CancelToken != null && CancelToken.CanBeCanceled && CancelSource != null)
+				{
+					if (loadingOverlay != null)
+					{
+						InvokeOnMainThread(() => loadingOverlay.Hide());
+					}
+					CancelSource.Cancel();
+				}
+
+				CancelSource = new CancellationTokenSource();
+				CancelToken = CancelSource.Token;
+				var task = UpdateGlobalDataAsync(CancelToken, e.Location.Coordinate.Latitude, e.Location.Coordinate.Longitude, 5);
+			};
+		}
 
 		public void UpdateGlobalData()
 		{
-			System.Threading.ThreadPool.QueueUserWorkItem(state =>
+			ThreadPool.QueueUserWorkItem(state =>
 			{
 				string accessToken = NSUserDefaults.StandardUserDefaults.StringForKey(C_ACCESS_TOKEN);
 				int radius = 5; // in km
@@ -202,6 +273,89 @@ namespace iCoffe.iOS
 					InvokeOnMainThread(() => loadingOverlay.Hide());
 				}
 			});
+		}
+
+		async Task UpdateGlobalDataAsync(CancellationToken cancellationToken, double lat, double lon, int rad)
+		{
+			SDiag.Debug.Print("UpdateGlobalDataAsync started. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+
+			loadingOverlay = new MessageOverlay(UIScreen.MainScreen.Bounds, @"Обновление данных, ждите...");
+			View.Add(loadingOverlay);
+
+			SDiag.Debug.Print("Radius " + rad.ToString());
+			string accessToken = NSUserDefaults.StandardUserDefaults.StringForKey(C_ACCESS_TOKEN);
+			SDiag.Debug.Print("accessToken " + accessToken);
+			Data.BonusOffers = new List<BonusOffer>();
+			Data.Cafes = new List<Cafe>();
+			Data.UserInfo = new UserInfo() { FullUserName = @"<нет данных>", Login = @"<нет данных>", Points = -1 };
+			Data.UserBonusOffers = new List<BonusOffer>();
+
+			UpdateScreens();
+
+			var offers = await Rest.GetBonusOffersAsync(accessToken, lat, lon, rad);
+			SDiag.Debug.Print("UpdateGlobalDataAsync running. Offers. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+
+			var cafes = await Rest.GetCafesAsync(accessToken, lat, lon, rad);
+			SDiag.Debug.Print("UpdateGlobalDataAsync running. Cafes Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+
+			var offrersCafeIds = offers.Select(i => i.CafeId).Distinct().ToArray();
+			var offrersCafes = await Rest.GetCafesAsync(accessToken, offrersCafeIds);
+			cafes.AddRange(offrersCafes);
+
+			var userInfo = await Rest.GetUserInfoAsync(accessToken);
+			SDiag.Debug.Print("UpdateGlobalDataAsync running. UserInfo. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+
+			var userBonuses = await Rest.GetUserBonusOffersAsync(accessToken);
+			SDiag.Debug.Print("UpdateGlobalDataAsync running. UserBonusOffer. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+
+			var userBonusesCafeIds = userBonuses.Select(i => i.CafeId).Distinct().ToArray();
+			var cafesIds = cafes.Select(i => i.Id).Distinct().ToArray();
+			var userCafes = await Rest.GetCafesAsync(accessToken, userBonusesCafeIds.Except(cafesIds).ToArray());
+			cafes.AddRange(userCafes);
+			SDiag.Debug.Print("UpdateGlobalDataAsync running. Cafes for UserBonusOffer. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+
+
+			if (cancellationToken.IsCancellationRequested)
+			{
+				// do something here as task was cancelled mid flight maybe just
+				return;
+			}
+
+			Data.BonusOffers = offers;
+			Data.Cafes = cafes;
+			Data.UserInfo = userInfo;
+			Data.UserBonusOffers = userBonuses;
+
+			UpdateScreens();
+
+			if (loadingOverlay != null)
+			{
+				InvokeOnMainThread(() => loadingOverlay.Hide());
+			}
+
+			SDiag.Debug.Print("UpdateGlobalDataAsync stopped. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+		}
+
+		void UpdateScreens()
+		{
+			if (BonusesVC != null)
+			{
+				InvokeOnMainThread(() => BonusesVC.UpdateBonuses());
+			}
+
+			if (MapVC != null)
+			{
+				InvokeOnMainThread(() => MapVC.UpdateAnnotations());
+			}
+
+			if (UserVC != null)
+			{
+				InvokeOnMainThread(() =>
+				{
+					UserVC.UpdateUserInfo();
+					UserVC.UpdateUserBonuses();
+				});
+			}
 		}
 
 		public override void DidReceiveMemoryWarning ()
@@ -268,7 +422,7 @@ namespace iCoffe.iOS
 				() => {
 					ContainerGifts.Alpha = 1;
 					ivGifts.Image = UIImage.FromBundle("ic_bonus_red_48pt");
-					BonusLabel.TextColor = UIColor.Red;
+					BonusLabel.TextColor = Selected; //UIColor.Red;
 
 					ContainerMap.Alpha = 0;
 					ivMap.Image = UIImage.FromBundle("ic_map_white_48pt");
@@ -304,7 +458,7 @@ namespace iCoffe.iOS
 
 					ContainerMap.Alpha = 1;
 					ivMap.Image = UIImage.FromBundle("ic_map_red_48pt");
-					MapLabel.TextColor = UIColor.Red;
+					MapLabel.TextColor = Selected; //UIColor.Red;
 
 					ContainerUser.Alpha = 0;
 					ivUser.Image = UIImage.FromBundle("ic_user_white_48pt");
@@ -343,7 +497,7 @@ namespace iCoffe.iOS
 
 					ContainerUser.Alpha = 1;
 					ivUser.Image = UIImage.FromBundle("ic_user_red_48pt");
-					UserLabel.TextColor = UIColor.Red;
+					UserLabel.TextColor = Selected; //UIColor.Red;
 				},
 				() => {
 					Console.WriteLine("User_Click ended");
