@@ -67,33 +67,29 @@ namespace iCoffe.Droid.Fragments
             map = googleMap;
             map.UiSettings.ZoomControlsEnabled = false;
             map.MyLocationEnabled = true;
-            RecreateMarkers();
         }
 
-        public void RecreateMarkers()
+        public void MoveCamera(LatLng position)
         {
             if (map != null)
             {
-                map.Clear();
-
-                //LatLng pos = new LatLng(54.974362, 73.418061);
-                LatLng pos = new LatLng(54.9748227, 73.4099986);
-                map.AddMarker(new MarkerOptions().SetPosition(pos).SetTitle(@"ќмск")); // addMarker(new MarkerOptions().position(/*some location*/));
-
-                map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(pos, 12)); // moveCamera(CameraUpdateFactory.newLatLngZoom(/*some location*/, 10));
+                map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(position, 12)); // moveCamera(CameraUpdateFactory.newLatLngZoom(/*some location*/, 10));
             }
         }
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
-            //throw new NotImplementedException();
-            SDiag.Debug.Print("UserAvatar_Click called");
+            SDiag.Debug.Print("ExitButton_Click called");
 
-            ISharedPreferences prefs = Activity.GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
-            ISharedPreferencesEditor editor = prefs.Edit();
-            editor.PutString(MainActivity.C_ACCESS_TOKEN, string.Empty);
-            editor.Apply();
+            Activity.GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private)
+                .Edit()
+                .PutString(MainActivity.C_ACCESS_TOKEN, string.Empty)
+                .Apply();
+
             StartActivity(new Intent(Activity, typeof(SignInActivity)));
+
+            Data.UserInfo = new UserInfo() { FullUserName = @"<нет данных>", Login = @"<нет данных>", Points = -1 };
+            RefreshUserInfo();
         }
 
         public override void OnPause()

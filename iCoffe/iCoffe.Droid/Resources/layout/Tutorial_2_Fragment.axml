@@ -23,4 +23,19 @@
         p1:textSize="24sp"
         p1:textStyle="bold"
         p1:typeface="monospace" />
+    <RelativeLayout
+        p1:minWidth="25px"
+        p1:minHeight="25px"
+        p1:layout_width="match_parent"
+        p1:layout_height="match_parent"
+        p1:id="@+id/relativeLayout1">
+        <ImageView
+            p1:src="@drawable/ic_scroll_markers_2_from_2_24dp"
+            p1:layout_width="wrap_content"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/imageView1"
+            p1:layout_alignParentBottom="true"
+            p1:layout_centerHorizontal="true"
+            p1:layout_marginBottom="20dp" />
+    </RelativeLayout>
 </LinearLayout>

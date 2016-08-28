@@ -1,17 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
 using iCoffe.Shared;
+using Android.Views.InputMethods;
 
 namespace iCoffe.Droid
 {
@@ -75,7 +72,7 @@ namespace iCoffe.Droid
             }
             else
             {
-                Toast.MakeText(this, @"Нажмите повторно для закрытия программы!", ToastLength.Short).Show();
+                Toast.MakeText(this, Resource.String.repush_for_exit, ToastLength.Short).Show();
                 IsBackPressed = true;
             }
         }
@@ -100,6 +97,13 @@ namespace iCoffe.Droid
                 }
                 else
                 {
+                    // Check if no view has focus:
+                    if (CurrentFocus != null)
+                    {
+                        InputMethodManager imm = (InputMethodManager)GetSystemService(InputMethodService);
+                        imm.HideSoftInputFromWindow(CurrentFocus.WindowToken, 0);
+                    }
+
                     string message = @"Выполняется вход...";
                     progressDialog = ProgressDialog.Show(this, @"", message, true);
                     ThreadPool.QueueUserWorkItem(state =>
@@ -120,26 +124,16 @@ namespace iCoffe.Droid
 
                 if (!string.IsNullOrEmpty(accessToken))
                 {
-                    AlertDialog.Builder builder;
-                    builder = new AlertDialog.Builder(this);
-                    builder.SetTitle(@"Новый Access Token");
-                    builder.SetMessage(accessToken);
-                    builder.SetCancelable(false);
-                    builder.SetPositiveButton(@"OK", delegate {
-                        dialog.Dismiss();
-                        Finish();
-                    });
+                    ISharedPreferences sharedPreferences = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
+                    bool isSignedLater = sharedPreferences.GetBoolean(userEmail.Text, false);
 
-                    ISharedPreferences prefs = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
-                    bool isSignedLater = prefs.GetBoolean(userEmail.Text, false);
+                    sharedPreferences.Edit()
+                        .PutString(MainActivity.C_ACCESS_TOKEN, accessToken)
+                        .PutBoolean(MainActivity.C_IS_NEED_TUTORIAL, !isSignedLater)
+                        .PutBoolean(userEmail.Text, true)
+                        .Apply();
 
-                    ISharedPreferencesEditor editor = prefs.Edit();
-                    editor.PutString(MainActivity.C_ACCESS_TOKEN, accessToken);
-                    editor.PutBoolean(MainActivity.C_IS_NEED_TUTORIAL, !isSignedLater);
-                    editor.PutBoolean(userEmail.Text, true);
-                    editor.Apply();
-
-                    dialog = builder.Show();
+                    Finish();
                 }
                 else
                 {

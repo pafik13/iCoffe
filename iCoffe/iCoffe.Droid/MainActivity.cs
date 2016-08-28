@@ -116,6 +116,14 @@ namespace iCoffe.Droid
 
             if (!Intent.GetBooleanExtra(C_WAS_STARTED_NEW_ACTIVITY, false))
             {
+                if (user != null)
+                {
+                    RunOnUiThread(() =>
+                    {
+                        (user as Fragments.UserFragment).RefreshUserInfo();
+                    });
+                }
+
                 if (isNeedTutorial)
                 {
                     StartActivity(new Intent(this, typeof(TutorialActivity)));
@@ -133,7 +141,7 @@ namespace iCoffe.Droid
                     locMgr.RequestLocationUpdates(locationProvider, 2000, 1, this);
 
                     // Progress
-                    string message = @"Получение данных о местоположении...";
+                    string message = @"Определение местоположения...";
                     progressDialog = ProgressDialog.Show(this, @"", message, true);
 
                     //progressDialog.Show();
@@ -345,6 +353,7 @@ namespace iCoffe.Droid
                 {
                     (user as Fragments.UserFragment).RefreshUserInfo();
                     (user as Fragments.UserFragment).RecreateAdapter();
+                    (user as Fragments.UserFragment).MoveCamera(new Android.Gms.Maps.Model.LatLng(lat, lon));
                 });
             }
 

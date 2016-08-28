@@ -476,55 +476,67 @@ namespace iCoffe.Droid
 			public const int ic_place_white_48dp = 2130837572;
 			
 			// aapt resource value: 0x7f020045
-			public const int ic_star_red_24dp = 2130837573;
+			public const int ic_scroll_markers_1_from_2_24dp = 2130837573;
 			
 			// aapt resource value: 0x7f020046
-			public const int ic_user_red_48dp = 2130837574;
+			public const int ic_scroll_markers_1_from_2_36dp = 2130837574;
 			
 			// aapt resource value: 0x7f020047
-			public const int ic_user_white_48dp = 2130837575;
+			public const int ic_scroll_markers_2_from_2_24dp = 2130837575;
 			
 			// aapt resource value: 0x7f020048
-			public const int Icon = 2130837576;
+			public const int ic_scroll_markers_2_from_2_36dp = 2130837576;
 			
 			// aapt resource value: 0x7f020049
-			public const int map_tab = 2130837577;
+			public const int ic_star_red_24dp = 2130837577;
 			
 			// aapt resource value: 0x7f02004a
-			public const int new_splash_screen = 2130837578;
+			public const int ic_user_red_48dp = 2130837578;
 			
 			// aapt resource value: 0x7f02004b
-			public const int NewIcon = 2130837579;
+			public const int ic_user_white_48dp = 2130837579;
 			
 			// aapt resource value: 0x7f02004c
-			public const int redhat = 2130837580;
+			public const int Icon = 2130837580;
 			
 			// aapt resource value: 0x7f02004d
-			public const int Splash = 2130837581;
+			public const int map_tab = 2130837581;
 			
 			// aapt resource value: 0x7f02004e
-			public const int Splash2 = 2130837582;
+			public const int new_splash_screen = 2130837582;
 			
 			// aapt resource value: 0x7f02004f
-			public const int splash_screen = 2130837583;
+			public const int NewIcon = 2130837583;
 			
 			// aapt resource value: 0x7f020050
-			public const int Splinter_Cell = 2130837584;
+			public const int redhat = 2130837584;
 			
 			// aapt resource value: 0x7f020051
-			public const int Splinter_Cell_2 = 2130837585;
+			public const int Splash = 2130837585;
 			
 			// aapt resource value: 0x7f020052
-			public const int top_nav_states = 2130837586;
+			public const int Splash2 = 2130837586;
 			
 			// aapt resource value: 0x7f020053
-			public const int tutorial_1 = 2130837587;
+			public const int splash_screen = 2130837587;
 			
 			// aapt resource value: 0x7f020054
-			public const int tutorial_2 = 2130837588;
+			public const int Splinter_Cell = 2130837588;
 			
 			// aapt resource value: 0x7f020055
-			public const int user_tab = 2130837589;
+			public const int Splinter_Cell_2 = 2130837589;
+			
+			// aapt resource value: 0x7f020056
+			public const int top_nav_states = 2130837590;
+			
+			// aapt resource value: 0x7f020057
+			public const int tutorial_1 = 2130837591;
+			
+			// aapt resource value: 0x7f020058
+			public const int tutorial_2 = 2130837592;
+			
+			// aapt resource value: 0x7f020059
+			public const int user_tab = 2130837593;
 			
 			static Drawable()
 			{
@@ -674,11 +686,14 @@ namespace iCoffe.Droid
 			// aapt resource value: 0x7f090007
 			public const int icon_only = 2131296263;
 			
+			// aapt resource value: 0x7f090056
+			public const int imageView1 = 2131296342;
+			
 			// aapt resource value: 0x7f09000c
 			public const int light = 2131296268;
 			
-			// aapt resource value: 0x7f090056
-			public const int linearLayout1 = 2131296342;
+			// aapt resource value: 0x7f090057
+			public const int linearLayout1 = 2131296343;
 			
 			// aapt resource value: 0x7f09001c
 			public const int lock_message = 2131296284;
@@ -724,6 +739,9 @@ namespace iCoffe.Droid
 			
 			// aapt resource value: 0x7f090002
 			public const int normal = 2131296258;
+			
+			// aapt resource value: 0x7f09005a
+			public const int relativeLayout1 = 2131296346;
 			
 			// aapt resource value: 0x7f090003
 			public const int satellite = 2131296259;
@@ -791,11 +809,11 @@ namespace iCoffe.Droid
 			// aapt resource value: 0x7f090055
 			public const int suSignupB = 2131296341;
 			
-			// aapt resource value: 0x7f090058
-			public const int t2fAllclearB = 2131296344;
+			// aapt resource value: 0x7f090059
+			public const int t2fAllclearB = 2131296345;
 			
-			// aapt resource value: 0x7f090057
-			public const int t2fRules = 2131296343;
+			// aapt resource value: 0x7f090058
+			public const int t2fRules = 2131296344;
 			
 			// aapt resource value: 0x7f090004
 			public const int terrain = 2131296260;
@@ -803,50 +821,50 @@ namespace iCoffe.Droid
 			// aapt resource value: 0x7f090041
 			public const int text_view = 2131296321;
 			
-			// aapt resource value: 0x7f09005e
-			public const int ubiImageHasGifts = 2131296350;
-			
-			// aapt resource value: 0x7f09005d
-			public const int ubiImageHasGiftsRL = 2131296349;
-			
-			// aapt resource value: 0x7f09005a
-			public const int ubiLogoIV = 2131296346;
-			
-			// aapt resource value: 0x7f090059
-			public const int ubiLogoRL = 2131296345;
-			
-			// aapt resource value: 0x7f09005c
-			public const int ubiText = 2131296348;
-			
-			// aapt resource value: 0x7f09005b
-			public const int ubiTextRL = 2131296347;
-			
-			// aapt resource value: 0x7f090065
-			public const int ufExitB = 2131296357;
-			
-			// aapt resource value: 0x7f090067
-			public const int ufListView = 2131296359;
+			// aapt resource value: 0x7f090060
+			public const int ubiImageHasGifts = 2131296352;
 			
 			// aapt resource value: 0x7f09005f
-			public const int ufMainLL = 2131296351;
+			public const int ubiImageHasGiftsRL = 2131296351;
 			
-			// aapt resource value: 0x7f090066
-			public const int ufTextView = 2131296358;
+			// aapt resource value: 0x7f09005c
+			public const int ubiLogoIV = 2131296348;
+			
+			// aapt resource value: 0x7f09005b
+			public const int ubiLogoRL = 2131296347;
+			
+			// aapt resource value: 0x7f09005e
+			public const int ubiText = 2131296350;
+			
+			// aapt resource value: 0x7f09005d
+			public const int ubiTextRL = 2131296349;
+			
+			// aapt resource value: 0x7f090067
+			public const int ufExitB = 2131296359;
+			
+			// aapt resource value: 0x7f090069
+			public const int ufListView = 2131296361;
 			
 			// aapt resource value: 0x7f090061
-			public const int ufUserIDTV = 2131296353;
+			public const int ufMainLL = 2131296353;
 			
-			// aapt resource value: 0x7f090060
-			public const int ufUserInfoLL = 2131296352;
-			
-			// aapt resource value: 0x7f090064
-			public const int ufUserMap = 2131296356;
+			// aapt resource value: 0x7f090068
+			public const int ufTextView = 2131296360;
 			
 			// aapt resource value: 0x7f090063
-			public const int ufUserNameTV = 2131296355;
+			public const int ufUserIDTV = 2131296355;
 			
 			// aapt resource value: 0x7f090062
-			public const int ufUserPointsTV = 2131296354;
+			public const int ufUserInfoLL = 2131296354;
+			
+			// aapt resource value: 0x7f090066
+			public const int ufUserMap = 2131296358;
+			
+			// aapt resource value: 0x7f090065
+			public const int ufUserNameTV = 2131296357;
+			
+			// aapt resource value: 0x7f090064
+			public const int ufUserPointsTV = 2131296356;
 			
 			// aapt resource value: 0x7f090009
 			public const int wide = 2131296265;
@@ -1057,6 +1075,9 @@ namespace iCoffe.Droid
 			
 			// aapt resource value: 0x7f040027
 			public const int on_button = 2130968615;
+			
+			// aapt resource value: 0x7f04002a
+			public const int repush_for_exit = 2130968618;
 			
 			// aapt resource value: 0x7f040029
 			public const int tutorial_rules = 2130968617;
