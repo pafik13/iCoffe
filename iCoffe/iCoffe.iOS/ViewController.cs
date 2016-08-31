@@ -199,7 +199,7 @@ namespace iCoffe.iOS
 			{
 				Manager.LocationUpdated -= HandleLocationChanged;
 
-				if (CancelToken != null && CancelToken.CanBeCanceled && CancelSource != null)
+				if (CancelToken.CanBeCanceled && CancelSource != null)
 				{
 					CancelSource.Cancel();
 				}
@@ -213,7 +213,7 @@ namespace iCoffe.iOS
 			//MapVC.UserLocationUpdated += (object sender, UserLocationUpdatedEventArgs e) =>
 			Manager.LocationUpdated += (sender, e) => 
 			{
-				if (CancelToken != null && CancelToken.CanBeCanceled && CancelSource != null)
+				if (CancelToken.CanBeCanceled && CancelSource != null)
 				{
 					if (loadingOverlay != null)
 					{
@@ -317,6 +317,10 @@ namespace iCoffe.iOS
 
 			if (cancellationToken.IsCancellationRequested)
 			{
+				if (loadingOverlay != null)
+				{
+					InvokeOnMainThread(() => loadingOverlay.Hide());
+				}
 				// do something here as task was cancelled mid flight maybe just
 				return;
 			}

@@ -48,6 +48,11 @@ namespace iCoffe.iOS
 		public override MKAnnotationView GetViewForAnnotation (MKMapView mapView, IMKAnnotation annotation)
 		{
 
+			if (ThisIsTheCurrentLocation(mapView, annotation))
+			{
+				return null;
+			}
+
 			// try and dequeue the annotation view
 			MKAnnotationView annotationView = mapView.DequeueReusableAnnotation(annotationIdentifier);
 
@@ -69,10 +74,15 @@ namespace iCoffe.iOS
 			detailButton.TouchUpInside += (s, e) => { 
 				Console.WriteLine ("Clicked");
 				if (parent.ParentViewController.NavigationController != null) {
-					var vc = parent.Storyboard.InstantiateViewController ("BonusVC") as BonusViewController;
-                    vc.Bonus = Data.GetBonusOffer((annotation as BasicMapAnnotation).ObjId);
-                    parent.ParentViewController.NavigationController.PushViewController (vc, true);
-					parent.ParentViewController.NavigationController.SetNavigationBarHidden(false, true);
+					if (annotation is BasicMapAnnotation) {
+						var bonus = Data.GetBonusOffer((annotation as BasicMapAnnotation).ObjId);
+						if (bonus == null) return;
+
+						var vc = parent.Storyboard.InstantiateViewController("BonusVC") as BonusViewController;
+						vc.Bonus = bonus;
+						parent.ParentViewController.NavigationController.PushViewController(vc, true);
+						parent.ParentViewController.NavigationController.SetNavigationBarHidden(false, true);
+					}
 				}
 			};
 			annotationView.RightCalloutAccessoryView = detailButton;
@@ -112,6 +122,17 @@ namespace iCoffe.iOS
 			// derive the earth's radius at that point in latitude
 			double radiusAtLatitude = earthRadius * Math.Cos(atLatitude * degreesToRadians);
 			return (miles / radiusAtLatitude) * radiansToDegrees;
+		}
+
+		bool ThisIsTheCurrentLocation(MKMapView mapView, IMKAnnotation annotation)
+		{
+			var userLocationAnnotation = ObjCRuntime.Runtime.GetNSObject(annotation.Handle) as MKUserLocation;
+			if (userLocationAnnotation != null)
+			{
+				return userLocationAnnotation == mapView.UserLocation;
+			}
+
+			return false;
 		}
 	}
 
