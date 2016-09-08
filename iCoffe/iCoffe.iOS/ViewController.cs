@@ -16,6 +16,7 @@ namespace iCoffe.iOS
 {
 	public enum AvailbleTabs
 	{
+		atNone,
 		atGifts,
 		atMap,
 		atUser
@@ -122,19 +123,9 @@ namespace iCoffe.iOS
 				else {
 					CanClick = true;
 
-					//bool wasBonusDescription = NSUserDefaults.StandardUserDefaults.BoolForKey(C_WAS_BONUS_DESCRIPTION);
-
-					//if (!wasBonusDescription)
-					//{
-					//	// show the loading overlay on the UI thread using the correct orientation sizing
-					//	loadingOverlay = new MessageOverlay(UIScreen.MainScreen.Bounds, @"Обновление данных, ждите...");
-					//	View.Add(loadingOverlay);
-
-					//	// Data Update
-					//	UpdateGlobalData();
-
-					//	Map_Click();
-					//}
+					if (currentTab == AvailbleTabs.atNone) {
+						Map_Click();
+					}
 
 					//NSUserDefaults.StandardUserDefaults.SetBool(false, C_WAS_BONUS_DESCRIPTION);
 
@@ -224,7 +215,7 @@ namespace iCoffe.iOS
 
 				CancelSource = new CancellationTokenSource();
 				CancelToken = CancelSource.Token;
-				var task = UpdateGlobalDataAsync(CancelToken, e.Location.Coordinate.Latitude, e.Location.Coordinate.Longitude, 5);
+				var task = UpdateGlobalDataAsync(CancelToken, e.Location.Coordinate.Latitude, e.Location.Coordinate.Longitude, 40);
 			};
 		}
 
