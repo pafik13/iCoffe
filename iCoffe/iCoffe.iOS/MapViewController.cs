@@ -98,30 +98,13 @@ namespace iCoffe.iOS
 
 		public override void DidUpdateUserLocation(MKMapView mapView, MKUserLocation userLocation)
 		{
-			if (mapView.UserLocation != null)
-			{
-				CLLocationCoordinate2D coords = mapView.UserLocation.Coordinate;
-				MKCoordinateSpan span = new MKCoordinateSpan(MilesToLatitudeDegrees(4), MilesToLongitudeDegrees(4, coords.Latitude));
-				mapView.Region = new MKCoordinateRegion(coords, span);
-				UserLocationUpdated(this, new UserLocationUpdatedEventArgs(userLocation));
-			}
-		}
-
-		public double MilesToLatitudeDegrees(double miles)
-		{
-			double earthRadius = 3960.0; // in miles
-			double radiansToDegrees = 180.0 / Math.PI;
-			return (miles / earthRadius) * radiansToDegrees;
-		}
-
-		public double MilesToLongitudeDegrees(double miles, double atLatitude)
-		{
-			double earthRadius = 3960.0; // in miles
-			double degreesToRadians = Math.PI / 180.0;
-			double radiansToDegrees = 180.0 / Math.PI;
-			// derive the earth's radius at that point in latitude
-			double radiusAtLatitude = earthRadius * Math.Cos(atLatitude * degreesToRadians);
-			return (miles / radiusAtLatitude) * radiansToDegrees;
+			//if (mapView.UserLocation != null)
+			//{
+			//	CLLocationCoordinate2D coords = mapView.UserLocation.Coordinate;
+			//	MKCoordinateSpan span = new MKCoordinateSpan(MilesToLatitudeDegrees(4), MilesToLongitudeDegrees(4, coords.Latitude));
+			//	mapView.Region = new MKCoordinateRegion(coords, span);
+			//	UserLocationUpdated(this, new UserLocationUpdatedEventArgs(userLocation));
+			//}
 		}
 
 		bool ThisIsTheCurrentLocation(MKMapView mapView, IMKAnnotation annotation)
@@ -157,6 +140,10 @@ namespace iCoffe.iOS
 
 			Map.ShowsUserLocation = true;
 
+			var coords = new CLLocationCoordinate2D(54.9771215, 73.3842507);
+			var span = new MKCoordinateSpan(MilesToLatitudeDegrees(6), MilesToLongitudeDegrees(6, coords.Latitude));
+			Map.Region = new MKCoordinateRegion(coords, span);
+
 			var mapDelegate = new MapDelegate(this);
 			mapDelegate.UserLocationUpdated += (sender, e) =>
 			{
@@ -177,10 +164,27 @@ namespace iCoffe.iOS
 				{
 					var coordinate = new CLLocationCoordinate2D(cafe.GeoLocation.GeoPoint.Latitude, cafe.GeoLocation.GeoPoint.Longitude);
 
-					var ann = new BasicMapAnnotation(coordinate, string.Format("Id: {0}", cafe.Id), cafe.FullAddress, cafe.Id);
+					var ann = new BasicMapAnnotation(coordinate, cafe.Name, cafe.FullAddress, cafe.Id);
 					Map.AddAnnotation(ann);
 				}
 			}
+		}
+
+		public double MilesToLatitudeDegrees(double miles)
+		{
+			double earthRadius = 3960.0; // in miles
+			double radiansToDegrees = 180.0 / Math.PI;
+			return (miles / earthRadius) * radiansToDegrees;
+		}
+
+		public double MilesToLongitudeDegrees(double miles, double atLatitude)
+		{
+			double earthRadius = 3960.0; // in miles
+			double degreesToRadians = Math.PI / 180.0;
+			double radiansToDegrees = 180.0 / Math.PI;
+			// derive the earth's radius at that point in latitude
+			double radiusAtLatitude = earthRadius * Math.Cos(atLatitude * degreesToRadians);
+			return (miles / radiusAtLatitude) * radiansToDegrees;
 		}
 	}
 
