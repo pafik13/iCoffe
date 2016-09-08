@@ -65,6 +65,8 @@ namespace iCoffe.Droid.Fragments
             map.UiSettings.ZoomControlsEnabled = true;  // GetUiSettings().setZoomControlsEnabled(true);
             map.MyLocationEnabled = true;
 
+            MoveCamera(new LatLng(54.974362, 73.418061));
+
             RecreateMarkers();
 
             map.SetOnMarkerClickListener(this);
@@ -90,7 +92,7 @@ namespace iCoffe.Droid.Fragments
         {
             if (map != null)
             {
-                map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(position, 12)); // moveCamera(CameraUpdateFactory.newLatLngZoom(/*some location*/, 10));
+                map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(position, 10)); // moveCamera(CameraUpdateFactory.newLatLngZoom(/*some location*/, 10));
             }
         }
 

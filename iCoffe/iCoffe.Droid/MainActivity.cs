@@ -366,7 +366,7 @@ namespace iCoffe.Droid
             {
                 RunOnUiThread(() => {
                     (map as Fragments.MapFragment).RecreateMarkers();
-                    (map as Fragments.MapFragment).MoveCamera(new Android.Gms.Maps.Model.LatLng(lat, lon));
+                    //(map as Fragments.MapFragment).MoveCamera(new Android.Gms.Maps.Model.LatLng(lat, lon));
                 });
             }
 
@@ -476,7 +476,7 @@ namespace iCoffe.Droid
             radius = 5;
             cancelSource = new CancellationTokenSource();
             cancelToken = cancelSource.Token;
-            var task = GetCafesAndBonusOffersAsync(cancelToken, location.Latitude, location.Longitude, 5);
+            var task = GetCafesAndBonusOffersAsync(cancelToken, location.Latitude, location.Longitude, 40);
         }
         public void OnProviderDisabled(string provider)
         {
