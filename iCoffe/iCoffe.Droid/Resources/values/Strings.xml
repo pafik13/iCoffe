@@ -10,6 +10,7 @@
   <string name="no_location_provider">Не получается получить данные о местоположении, так как отключены провайдеры.</string>
   <string name="on_button">Включить</string>
   <string name="lorem_ipsum_short">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel velit suscipit, molestie odio a, ultrices sapien. Sed porttitor lacus.</string>
+  <string name="lorem_ipsum_long">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vestibulum dictum lobortis. Curabitur quis dictum magna. Donec sodales est sit amet sapien gravida, a vehicula metus commodo. Mauris nulla est, dapibus nec purus at, pharetra dapibus magna. Nullam rhoncus finibus velit. Etiam scelerisque ornare sem quis aliquet. Donec aliquam venenatis.</string>
   <string name="tutorial_rules">После регистрации пользователю начисляется условное количество баллов. Вы можете потратить их на доступные в данный момент акции в приложении кафе и ресторанах.</string>
   <string name="repush_for_exit">Нажмите ещё раз для закрытия</string>
 </resources>
