@@ -98,7 +98,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp">
                 <TextView
-                    android:text="Адрес"
+                    android:text="Время работы"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:typeface="monospace"
                     android:textStyle="bold"
@@ -106,13 +106,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp" />
-                <TextView
-                    android:text="- Герцена, 12"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/baAddressTV"
-                    android:background="@drawable/bg_white_corned" />
+                    android:background="@drawable/bg_white_corned">
+                    <TextView
+                        android:text="@string/lorem_ipsum_long"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/baAddressTV"/>
+                </ScrollView>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout

@@ -1061,6 +1061,9 @@ namespace iCoffe.Droid
 			// aapt resource value: 0x7f04001f
 			public const int hello = 2130968607;
 			
+			// aapt resource value: 0x7f040029
+			public const int lorem_ipsum_long = 2130968617;
+			
 			// aapt resource value: 0x7f040028
 			public const int lorem_ipsum_short = 2130968616;
 			
@@ -1076,11 +1079,11 @@ namespace iCoffe.Droid
 			// aapt resource value: 0x7f040027
 			public const int on_button = 2130968615;
 			
-			// aapt resource value: 0x7f04002a
-			public const int repush_for_exit = 2130968618;
+			// aapt resource value: 0x7f04002b
+			public const int repush_for_exit = 2130968619;
 			
-			// aapt resource value: 0x7f040029
-			public const int tutorial_rules = 2130968617;
+			// aapt resource value: 0x7f04002a
+			public const int tutorial_rules = 2130968618;
 			
 			// aapt resource value: 0x7f040022
 			public const int warning_caption = 2130968610;

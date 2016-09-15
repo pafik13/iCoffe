@@ -44,9 +44,9 @@ namespace iCoffe.Droid.Fragments
             //View view = inflater.Inflate(Resource.Layout.fragment, container, false);
             //TextView tv = view.FindViewById<TextView>(Resource.Id.frTextView);
             //string text = string.Empty;
-            //foreach (var item in Data.Objs)
+            //foreach (var cafe in Data.Objs)
             //{
-            //    text += string.Format(@"Id:{0}, X:{1}, Y:{2}", item.Id, item.geoloc.x, item.geoloc.y) + System.Environment.NewLine;
+            //    text += string.Format(@"Id:{0}, X:{1}, Y:{2}", cafe.Id, cafe.geoloc.x, cafe.geoloc.y) + System.Environment.NewLine;
             //}
             //tv.Text = text;
             ////tv.Text = @"Map";
@@ -65,6 +65,8 @@ namespace iCoffe.Droid.Fragments
             map.UiSettings.ZoomControlsEnabled = true;  // GetUiSettings().setZoomControlsEnabled(true);
             map.MyLocationEnabled = true;
 
+            MoveCamera(new LatLng(54.974362, 73.418061));
+
             RecreateMarkers();
 
             map.SetOnMarkerClickListener(this);
@@ -76,12 +78,12 @@ namespace iCoffe.Droid.Fragments
             {
                 map.Clear();
 
-                foreach (var item in Data.Cafes)
+                foreach (var cafe in Data.Cafes)
                 {
-                    //text += string.Format(@"Id:{0}, X:{1}, Y:{2}", item.Id, item.geoloc.x, item.geoloc.y) + System.Environment.NewLine;
-                    var position = new LatLng(item.GeoLocation.GeoPoint.Latitude, item.GeoLocation.GeoPoint.Longitude);
-                    Marker m = map.AddMarker(new MarkerOptions().SetPosition(position).SetTitle(string.Format(@"Id:{0}", item.Id)).SetSnippet(@"snippet"));
-                    markers.Add(m.Id, item.Id);
+                    //text += string.Format(@"Id:{0}, X:{1}, Y:{2}", cafe.Id, cafe.geoloc.x, cafe.geoloc.y) + System.Environment.NewLine;
+                    var position = new LatLng(cafe.GeoLocation.GeoPoint.Latitude, cafe.GeoLocation.GeoPoint.Longitude);
+                    Marker m = map.AddMarker(new MarkerOptions().SetPosition(position).SetTitle(cafe.Name).SetSnippet(@"snippet"));
+                    markers.Add(m.Id, cafe.Id);
                 }
             }
         }
@@ -90,7 +92,7 @@ namespace iCoffe.Droid.Fragments
         {
             if (map != null)
             {
-                map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(position, 12)); // moveCamera(CameraUpdateFactory.newLatLngZoom(/*some location*/, 10));
+                map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(position, 10)); // moveCamera(CameraUpdateFactory.newLatLngZoom(/*some location*/, 10));
             }
         }
 
