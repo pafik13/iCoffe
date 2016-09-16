@@ -49,7 +49,7 @@ namespace iCoffe.iOS
 				);
 			}
 
-			CafeName.Text = string.IsNullOrEmpty(Cafe.Name) ? Cafe.Name : @"<No Name>";
+			CafeName.Text = Cafe.Name;
 
 			if (!string.IsNullOrEmpty (Cafe.ImageUrl)) {
 				CafeImage.SetImage (
@@ -63,7 +63,7 @@ namespace iCoffe.iOS
 
 			BonusDescription.Text = Bonus.Description;
 
-			CafeAddress.Text = string.IsNullOrEmpty(Cafe.FullAddress) ? Cafe.FullAddress : @"<No FullAddress>";
+			CafeAddress.Text = Cafe.FullAddress;
 
 			Want.Layer.CornerRadius = 8.0f;
 			Want.Layer.MasksToBounds = true;
