@@ -78,6 +78,12 @@ namespace iCoffe.iOS
 
 		#endregion
 
+		void HandleSDWebImageCompletionHandler(UIImage image, NSError error, SDImageCacheType cacheType, NSUrl imageUrl)
+		{
+			Console.WriteLine(@"image:{0}; error:{1}; cacheType:{2}; imageUrl:{3}", image, error, cacheType, imageUrl);
+		}
+
+
 		partial void WantTouchDown(UIButton sender)
 		{
 			string accessToken = NSUserDefaults.StandardUserDefaults.StringForKey(ViewController.C_ACCESS_TOKEN);
