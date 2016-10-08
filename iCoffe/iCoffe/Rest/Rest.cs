@@ -155,7 +155,7 @@ namespace iCoffe.Shared
         {
             List<BonusOffer> results = new List<BonusOffer>();
             var client = new RestClient(Settings.ApiUrl);
-            var request = new RestRequest(Settings.BonusOffersPath, Method.GET);
+            var request = new RestRequest(Settings.BonusOffersAggregatePath, Method.GET);
             request.AddHeader(@"Authorization", string.Format(@"Basic {0}", basic));
             request.AddUrlSegment(@"latitude", latitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
             request.AddUrlSegment(@"longitude", longitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));

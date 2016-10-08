@@ -12,9 +12,10 @@
 
         public static string OffersPath { get { return @"Bonus/offersSel"; } }
         public static string BonusOffersPath { get { return @"BonusOffer/{latitude}/{longitude}/{radius}"; } }
-        //public static string BonusOffersPath { get { return @"BonusOffer/{longitude}/{latitude}/{radius}"; } }
+		//public static string BonusOffersPath { get { return @"BonusOffer/{longitude}/{latitude}/{radius}"; } }
+		public static string BonusOffersAggregatePath { get { return @"BonusOffer/Aggregate/{latitude}/{longitude}/{radius}"; } }
 
-        public static string BonusOfferRequestPath { get { return @"BonusOffer/RequestOffer/{id}"; } }
+		public static string BonusOfferRequestPath { get { return @"BonusOffer/RequestOffer/{id}"; } }
 
         public static string CafesPath { get { return @"Cafe/{latitude}/{longitude}/{radius}"; } }
         //public static string CafesPath { get { return @"Cafe/{longitude}/{latitude}/{radius}"; } }
