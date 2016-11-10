@@ -1,15 +1,11 @@
-using Foundation;
 using System;
-using System.CodeDom.Compiler;
+using SDiag = System.Diagnostics;
+
 using UIKit;
 using MapKit;
 using CoreLocation;
 
-using RestSharp;
-using System.Globalization;
-
 using iCoffe.Shared;
-using System.Collections.Generic;
 
 namespace iCoffe.iOS
 {
@@ -36,6 +32,8 @@ namespace iCoffe.iOS
 		protected string annotationIdentifier = "BasicAnnotation";
 		UIButton detailButton;
 		MapViewController parent;
+
+		CLLocationCoordinate2D Coords = new CLLocationCoordinate2D(-1, -1);
 
 		public MapDelegate(MapViewController parent)
 		{
@@ -98,13 +96,16 @@ namespace iCoffe.iOS
 
 		public override void DidUpdateUserLocation(MKMapView mapView, MKUserLocation userLocation)
 		{
-			//if (mapView.UserLocation != null)
-			//{
-			//	CLLocationCoordinate2D coords = mapView.UserLocation.Coordinate;
-			//	MKCoordinateSpan span = new MKCoordinateSpan(MilesToLatitudeDegrees(4), MilesToLongitudeDegrees(4, coords.Latitude));
-			//	mapView.Region = new MKCoordinateRegion(coords, span);
-			//	UserLocationUpdated(this, new UserLocationUpdatedEventArgs(userLocation));
-			//}
+			if (mapView.UserLocation != null)
+			{
+				if (Coords.Latitude.CompareTo(-1d) == 0 && Coords.Longitude.CompareTo(-1d) == 0)
+				{
+					Coords = mapView.UserLocation.Coordinate;
+					MKCoordinateSpan span = new MKCoordinateSpan(MilesToLatitudeDegrees(6), MilesToLongitudeDegrees(6, Coords.Latitude));
+					mapView.Region = new MKCoordinateRegion(Coords, span);
+					UserLocationUpdated(this, new UserLocationUpdatedEventArgs(userLocation));
+				}
+			}
 		}
 
 		bool ThisIsTheCurrentLocation(MKMapView mapView, IMKAnnotation annotation)
@@ -116,6 +117,23 @@ namespace iCoffe.iOS
 			}
 
 			return false;
+		}
+
+		public double MilesToLatitudeDegrees(double miles)
+		{
+			double earthRadius = 3960.0; // in miles
+			double radiansToDegrees = 180.0 / Math.PI;
+			return (miles / earthRadius) * radiansToDegrees;
+		}
+
+		public double MilesToLongitudeDegrees(double miles, double atLatitude)
+		{
+			double earthRadius = 3960.0; // in miles
+			double degreesToRadians = Math.PI / 180.0;
+			double radiansToDegrees = 180.0 / Math.PI;
+			// derive the earth's radius at that point in latitude
+			double radiusAtLatitude = earthRadius * Math.Cos(atLatitude * degreesToRadians);
+			return (miles / radiusAtLatitude) * radiansToDegrees;
 		}
 	}
 
@@ -162,10 +180,14 @@ namespace iCoffe.iOS
 				Map.RemoveAnnotations();
 				foreach (var cafe in Data.Cafes)
 				{
-					var coordinate = new CLLocationCoordinate2D(cafe.GeoLocation.GeoPoint.Latitude, cafe.GeoLocation.GeoPoint.Longitude);
+					if (cafe.GeoLocation != null) {
+						var coordinate = new CLLocationCoordinate2D(cafe.GeoLocation.GeoPoint.Latitude, cafe.GeoLocation.GeoPoint.Longitude);
 
-					var ann = new BasicMapAnnotation(coordinate, cafe.Name, cafe.FullAddress, cafe.Id);
-					Map.AddAnnotation(ann);
+						var ann = new BasicMapAnnotation(coordinate, cafe.Name, cafe.FullAddress, cafe.Id);
+						Map.AddAnnotation(ann);
+					} else {
+						SDiag.Debug.Print("MapVC.UpdateAnnotations: cafe.GeoLocation IS NULL. Thread: {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
+					}
 				}
 			}
 		}

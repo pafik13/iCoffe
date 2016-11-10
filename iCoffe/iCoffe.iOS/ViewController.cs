@@ -1,16 +1,16 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using SDiag = System.Diagnostics;
 
 using UIKit;
 
 using Foundation;
+using CoreLocation;
 
 using iCoffe.Shared;
-using CoreLocation;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace iCoffe.iOS
 {
