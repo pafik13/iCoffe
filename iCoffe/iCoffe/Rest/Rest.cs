@@ -325,5 +325,26 @@ namespace iCoffe.Shared
 
             return true;
         }
-    }
+
+		// http://stackoverflow.com/questions/14296644/how-to-execute-a-method-periodically-from-wpf-client-application-using-threading/14297203#14297203
+		// The `onTick` method will be called periodically unless cancelled.
+		public static async Task RunPeriodicAsync(Action onTick, TimeSpan dueTime, TimeSpan interval,
+		                                   System.Threading.CancellationToken token)
+		{
+			// Initial wait time before we begin the periodic loop.
+			if (dueTime > TimeSpan.Zero)
+				await Task.Delay(dueTime, token);
+
+			// Repeat this loop until cancelled.
+			while (!token.IsCancellationRequested)
+			{
+				// Call our onTick function.
+				onTick?.Invoke();
+
+				// Wait to repeat again.
+				if (interval > TimeSpan.Zero)
+					await Task.Delay(interval, token);
+			}
+		}
+	}
 }

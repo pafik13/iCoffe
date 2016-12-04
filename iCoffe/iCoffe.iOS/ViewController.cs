@@ -52,6 +52,10 @@ namespace iCoffe.iOS
 		private CancellationTokenSource CancelSource;
 		private CancellationToken CancelToken;
 
+		// User Desc
+		CancellationTokenSource CSUserDesc;
+		CancellationToken CTUserDesc;
+
 		public ViewController (IntPtr handle) : base (handle)
 		{
 			Manager = new LocationManager();
@@ -94,8 +98,24 @@ namespace iCoffe.iOS
 		public override void ViewDidAppear (bool animated)
 		{
 			base.ViewDidAppear (animated);
-//			NSUserDefaults.StandardUserDefaults.SetBool(false, "isSigned");
-//			NSUserDefaults.StandardUserDefaults.Synchronize();
+
+			if (CTUserDesc.CanBeCanceled && CSUserDesc != null)
+			{
+				CSUserDesc.Cancel();
+			}
+
+			CSUserDesc = new CancellationTokenSource();
+			CTUserDesc = CSUserDesc.Token;
+
+			var dueTime = TimeSpan.FromSeconds(30);
+			var interval = TimeSpan.FromSeconds(5);
+
+			// TODO: Add a CancellationTokenSource and supply the token here instead of None.
+			Rest.RunPeriodicAsync(OnTick, dueTime, interval, CTUserDesc);
+
+			///
+			/// Main code
+			///
 			NavigationController.SetNavigationBarHidden (true, false);
 			bool isSigned = NSUserDefaults.StandardUserDefaults.BoolForKey ("isSigned");
 			bool isSkiped = NSUserDefaults.StandardUserDefaults.BoolForKey ("isSkiped");
@@ -144,6 +164,34 @@ namespace iCoffe.iOS
 				NSUserDefaults.StandardUserDefaults.Synchronize();
 			}
 		}
+
+		void OnTick()
+		{
+			// TODO: Your code here
+			SDiag.Debug.Print("OnTick. Date: {0}, Thread: {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId);
+			string accessToken = NSUserDefaults.StandardUserDefaults.StringForKey(C_ACCESS_TOKEN);
+			SDiag.Debug.Print("accessToken " + accessToken);
+			Rest.GetUserInfo(accessToken);
+			InvokeOnMainThread(() =>
+			{
+				UserVC.UpdateUserInfo();
+			});		
+		}
+
+		public override void ViewDidDisappear(bool animated)
+		{
+			base.ViewDidDisappear(animated);
+			if (CTUserDesc.CanBeCanceled && CSUserDesc != null)
+			{
+				CSUserDesc.Cancel();
+			}
+
+			if (CancelToken.CanBeCanceled && CancelSource != null)
+			{
+				CancelSource.Cancel();
+			}
+		}
+
 
 		public override void ViewDidLoad ()
 		{
