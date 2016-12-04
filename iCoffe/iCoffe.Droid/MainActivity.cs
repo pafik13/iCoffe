@@ -61,6 +61,10 @@ namespace iCoffe.Droid
         private CancellationTokenSource cancelSource;
         private CancellationToken cancelToken;
 
+        // User Desc
+        CancellationTokenSource CSUserDesc;
+        CancellationToken CTUserDesc;
+
         protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
@@ -90,6 +94,25 @@ namespace iCoffe.Droid
         {
             base.OnResume();
             SDiag.Debug.Print("OnResume called");
+
+
+            if (CTUserDesc.CanBeCanceled && CSUserDesc != null)
+            {
+                CSUserDesc.Cancel();
+            }
+
+            CSUserDesc = new CancellationTokenSource();
+            CTUserDesc = CSUserDesc.Token;
+
+            var dueTime = TimeSpan.FromSeconds(5);
+            var interval = TimeSpan.FromSeconds(5);
+
+            // TODO: Add a CancellationTokenSource and supply the token here instead of None.
+            Rest.RunPeriodicAsync(OnTick, dueTime, interval, CTUserDesc);
+
+            ///
+            /// Main code
+            ///
             if (cancelToken != null && cancelToken.CanBeCanceled && cancelSource != null)
             {
                 cancelSource.Cancel();
@@ -164,6 +187,23 @@ namespace iCoffe.Droid
             }
         }
 
+        void OnTick()
+        {
+            // TODO: Your code here
+            SDiag.Debug.Print("OnTick. Date: {0}, Thread: {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId);
+            if (user != null)
+            {
+                string accessToken = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private).GetString(C_ACCESS_TOKEN, string.Empty);
+                SDiag.Debug.Print("accessToken " + accessToken);
+                Rest.GetUserInfo(accessToken);
+                RunOnUiThread(() =>
+                {
+                    (user as Fragments.UserFragment).RefreshUserInfo();
+                });
+            }
+
+        }
+
         private void GetCafesAndBonusOffers()
         {
             /* throw new NotImplementedException();*/
@@ -189,8 +229,6 @@ namespace iCoffe.Droid
                 });
 
                 SDiag.Debug.Print("GetCafesAndBonusOffers stopped.");
-
-
             });
         }
 
@@ -420,6 +458,10 @@ namespace iCoffe.Droid
         protected override void OnPause()
         {
             base.OnPause();
+            if (CTUserDesc.CanBeCanceled && CSUserDesc != null)
+            {
+                CSUserDesc.Cancel();
+            }
 
             if (cancelToken != null && cancelToken.CanBeCanceled && cancelSource != null)
             {
