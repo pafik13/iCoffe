@@ -12,13 +12,12 @@ using UniversalImageLoader.Core;
 
 namespace iCoffe.Droid
 {
-    [Activity(Label = "BonusActivity")]
-    public class BonusActivity : Activity
+    [Activity(Label = "OfferActivity")]
+    public class OfferActivity : Activity
     {
         bool IgnoreBackPress;
-        string BonusId;
-        BonusOffer Bonus;
-        Cafe Cafe;
+        Offer Offer;
+        Place Place;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -29,22 +28,22 @@ namespace iCoffe.Droid
             // Create your application here
             SetContentView(Resource.Layout.Bonus);
 
-            BonusId = Intent.GetStringExtra(MainActivity.C_BONUS_ID);
-            Bonus = Data.GetBonusOffer(new Guid(BonusId));
-            Cafe = Data.GetCafe(Bonus.CafeId);
+            var offerId = Intent.GetIntExtra(MainActivity.C_OFFER_ID, -1);
+            Offer = Data.GetOffer(offerId);
+            Place = Data.GetPlace(Offer.PlaceId);
 
-            FindViewById<TextView>(Resource.Id.baBonusDescrTV).Text = Bonus.Description;
-            FindViewById<TextView>(Resource.Id.baAddressTV).Text = Cafe.FullAddress;
-            FindViewById<TextView>(Resource.Id.baCafeNameTV).Text = Cafe.Name;
-            FindViewById<TextView>(Resource.Id.baPriceTV).Text = Bonus.Price.ToString();
+            FindViewById<TextView>(Resource.Id.baBonusDescrTV).Text = Offer.Description;
+            FindViewById<TextView>(Resource.Id.baAddressTV).Text = "<нет адреса>";
+            FindViewById<TextView>(Resource.Id.baCafeNameTV).Text = Place.Name;
+            FindViewById<TextView>(Resource.Id.baPriceTV).Text = Offer.Price.ToString();
 
             // TODO: Load image
             ImageLoader imageLoader = ImageLoader.Instance;
-            if (!string.IsNullOrEmpty(Cafe.LogoUrl))
-                imageLoader.DisplayImage(Cafe.LogoUrl, FindViewById<ImageView>(Resource.Id.baCafeNameIV));
+            if (!string.IsNullOrEmpty(Place.LogoUrl))
+                imageLoader.DisplayImage(Place.LogoUrl, FindViewById<ImageView>(Resource.Id.baCafeNameIV));
 
-            if (!string.IsNullOrEmpty(Cafe.ImageUrl))
-                imageLoader.DisplayImage(Cafe.ImageUrl, FindViewById<ImageView>(Resource.Id.baCafeImageIV));
+            if (!string.IsNullOrEmpty(Offer.LogoUrl))
+                imageLoader.DisplayImage(Offer.LogoUrl, FindViewById<ImageView>(Resource.Id.baCafeImageIV));
 
             var want = FindViewById<Button>(Resource.Id.baWantB);
             want.Click += Want_Click;
@@ -65,9 +64,9 @@ namespace iCoffe.Droid
             var sharedPreferences = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
             string accessToken = sharedPreferences.GetString(MainActivity.C_ACCESS_TOKEN, string.Empty);
 
-            if (Rest.RequestOffer(accessToken, Bonus.Id)) {
-                Data.UserInfo.Points -= (int)Bonus.Price;
-                Data.UserBonusOffers.Add(Bonus);
+            if (Rest.BuyOffer(accessToken, Offer.Id)) {
+                Data.UserInfo.PointsAmount -= (double)Offer.Price;
+                Data.UserPurchasedOffers.Add(Offer);
                 ShowMessage(@"Приобретено"); 
             } else {
                 ShowMessage(@"Неудача!");

@@ -21,16 +21,15 @@ using iCoffe.Droid.Adapters;
 
 namespace iCoffe.Droid.Fragments
 {
-    public class UserFragment : Fragment, IOnMapReadyCallback
+    public class AccountFragment : Fragment, IOnMapReadyCallback
     {
         View MainLayout;
 
         MapView mapView;
         GoogleMap map;
 
-        ListView bonusListView;
-        UserBonusAdapter bonusAdapter;
-        IList<BonusOffer> bonuses;
+        ListView PurchasedOffersTable;
+        OffersAdapter PurchasedOffersAdapter;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -42,7 +41,7 @@ namespace iCoffe.Droid.Fragments
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             MainLayout = inflater.Inflate(Resource.Layout.UserFragment, container, false);
-            bonusListView = MainLayout.FindViewById<ListView>(Resource.Id.ufListView);
+            PurchasedOffersTable = MainLayout.FindViewById<ListView>(Resource.Id.ufListView);
 
             RefreshUserInfo();
 
@@ -58,8 +57,8 @@ namespace iCoffe.Droid.Fragments
         public void RefreshUserInfo()
         {
             MainLayout.FindViewById<TextView>(Resource.Id.ufUserIDTV).Text = Data.UserInfo.Login;
-            MainLayout.FindViewById<TextView>(Resource.Id.ufUserNameTV).Text = Data.UserInfo.FullUserName;
-            MainLayout.FindViewById<TextView>(Resource.Id.ufUserPointsTV).Text = Data.UserInfo.Points.ToString();
+            MainLayout.FindViewById<TextView>(Resource.Id.ufUserNameTV).Text = Data.UserInfo.Login;
+            MainLayout.FindViewById<TextView>(Resource.Id.ufUserPointsTV).Text = Data.UserInfo.PointsAmount.ToString();
         }
 
         public void OnMapReady(GoogleMap googleMap)
@@ -88,7 +87,7 @@ namespace iCoffe.Droid.Fragments
 
             StartActivity(new Intent(Activity, typeof(SignInActivity)));
 
-            Data.UserInfo = new UserInfo() { FullUserName = @"<нет данных>", Login = @"<нет данных>", Points = -1 };
+            Data.UserInfo = new UserInfo() { Id = "<нет данных>", Login = "<нет данных>", PointsAmount = -1 };
             RefreshUserInfo();
         }
 
@@ -126,15 +125,11 @@ namespace iCoffe.Droid.Fragments
 
         public void RecreateAdapter()
         {
-            // get data
-            // bonuses = Data.Offers.Take(5).ToList();
-            bonuses = Data.UserBonusOffers;
-
             // create our adapter
-            bonusAdapter = new UserBonusAdapter(Activity, bonuses);
+            PurchasedOffersAdapter = new OffersAdapter(Activity, Data.UserPurchasedOffers);
 
             //Hook up our adapter to our ListView
-            Activity.RunOnUiThread(() => bonusListView.Adapter = bonusAdapter);
+            Activity.RunOnUiThread(() => PurchasedOffersTable.Adapter = PurchasedOffersAdapter);
         }
 
     }

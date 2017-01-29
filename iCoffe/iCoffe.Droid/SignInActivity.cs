@@ -117,7 +117,7 @@ namespace iCoffe.Droid
         private void GetAccessToken()
         {
             //string accessToken = Rest.GetAccessToken(userEmail.Text, userPassword.Text);
-            string accessToken = Rest.GetBasicToken(userEmail.Text, userPassword.Text);
+            string accessToken = Rest.GetAccessToken(userEmail.Text, userPassword.Text);
             RunOnUiThread(() =>
             {
                 if (progressDialog != null) progressDialog.Dismiss();

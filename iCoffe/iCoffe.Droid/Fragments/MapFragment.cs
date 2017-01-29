@@ -78,12 +78,12 @@ namespace iCoffe.Droid.Fragments
             {
                 map.Clear();
 
-                foreach (var cafe in Data.Cafes)
+                foreach (var place in Data.PlaceInfos)
                 {
                     //text += string.Format(@"Id:{0}, X:{1}, Y:{2}", cafe.Id, cafe.geoloc.x, cafe.geoloc.y) + System.Environment.NewLine;
-                    var position = new LatLng(cafe.GeoLocation.GeoPoint.Latitude, cafe.GeoLocation.GeoPoint.Longitude);
-                    Marker m = map.AddMarker(new MarkerOptions().SetPosition(position).SetTitle(cafe.Name).SetSnippet(@"snippet"));
-                    markers.Add(m.Id, cafe.Id);
+                    var position = new LatLng(place.GeoLocation.Latitude, place.GeoLocation.Longitude);
+                    Marker m = map.AddMarker(new MarkerOptions().SetPosition(position).SetTitle(place.Name).SetSnippet("snippet"));
+                    markers.Add(m.Id, place.Id);
                 }
             }
         }
@@ -128,17 +128,17 @@ namespace iCoffe.Droid.Fragments
 
         public bool OnMarkerClick(Marker marker)
         {
-            //throw new NotImplementedException();
+            //TODO: fix errors
             SDiag.Debug.Print(string.Format(@"markerTitle : {0}", marker.Title));
             if (markers.ContainsKey(marker.Id))
             {
                 SDiag.Debug.Print(string.Format(@"cafeId : {0}", markers[marker.Id]));
-                BonusOffer offer = Data.GetBonusOffer(markers[marker.Id]);
+                Offer offer = Data.GetOffer(markers[marker.Id]);
 
                 if (offer != null)
                 {
-                    Intent intent = new Intent(Activity, typeof(BonusActivity));
-                    intent.PutExtra(MainActivity.C_BONUS_ID, offer.Id.ToString());
+                    Intent intent = new Intent(Activity, typeof(OfferActivity));
+                    intent.PutExtra(MainActivity.C_OFFER_ID, offer.Id);
                     StartActivityForResult(intent, 1);
                 }
             }

@@ -1,40 +1,27 @@
 ﻿namespace iCoffe.Shared
 {
-    /// <summary>
-    /// Объекты размещения / геолокации
-    /// Отражается на запись в таблице GeoLocation
-    /// </summary>
-    public class GeoLocation
-	{
-		/// <summary>
-		/// Идентификатор объекта
-		/// </summary>
-		public long Id { get; set; }
+    public class Geolocation
+    {
 
-		/// <summary>
-		/// Обозначение, метка
-		/// </summary>
-		public string Label { get; set; }
+        /// <summary>
+        /// Широта
+        /// </summary>
+        public double Latitude { get; set; }
 
-		/// <summary>
-		/// Название, заголовок
-		/// </summary>
-		public string Title { get; set; }
+        /// <summary>
+        /// Долгота
+        /// </summary>
+        public double Longitude { get; set; }
 
-		/// <summary>
-		/// Текстовое описание, дополнительные заметки
-		/// </summary>
-		public string Description { get; set; }
+        public Geolocation(double latitude, double longitude)
+        {
+            Latitude = latitude;
+            Longitude = longitude;
+        }
 
-		/// <summary>
-		/// Идентификатор групп
-		/// <see cref="Group"/>
-		/// </summary>
-		public long GroupId { get; set; }
+        public Geolocation()
+        {
 
-		/// <summary>
-		/// Координаты геолокации
-		/// </summary>
-		public GeoPoint GeoPoint { get; set; }
-	}
+        }
+    }
 }

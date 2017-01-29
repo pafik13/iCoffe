@@ -31,18 +31,18 @@ namespace iCoffe.Droid
         public const string C_IS_NEED_TUTORIAL = @"C_IS_NEED_TUTORIAL";
         public const string C_IS_BACK_PRESSED_IN_SIGN_IN = @"C_IS_BACK_PRESSED_IN_SIGN_IN";
 
-        public const string C_BONUS_ID = @"C_BONUS_ID";
+        public const string C_OFFER_ID = @"C_OFFER_ID";
 
 
         // Layouts
-        LinearLayout BonusTab;
+        LinearLayout OffersTab;
         LinearLayout MapTab;
-        LinearLayout UserTab;
+        LinearLayout AccountTab;
 
         // Views
-        Fragment bonus = null;
+        Fragment offers = null;
         Fragment map = null;
-        Fragment user = null;
+        Fragment account = null;
 
         // Location
         LocationManager locMgr;
@@ -58,8 +58,8 @@ namespace iCoffe.Droid
         ProgressDialog progressDialog;
 
         // Data Service
-        private CancellationTokenSource cancelSource;
-        private CancellationToken cancelToken;
+        private CancellationTokenSource CSData;
+        private CancellationToken CTData;
 
         // User Desc
         CancellationTokenSource CSUserDesc;
@@ -80,14 +80,31 @@ namespace iCoffe.Droid
 
             // Get our button from the layout resource,
             // and attach an event to it
-            BonusTab = FindViewById<LinearLayout>(Resource.Id.maBonusTabLL);
-            BonusTab.Click += BonusTab_Click;
+            OffersTab = FindViewById<LinearLayout>(Resource.Id.maBonusTabLL);
+            OffersTab.Click += BonusTab_Click;
 
             MapTab = FindViewById<LinearLayout>(Resource.Id.maMapTabLL);
             MapTab.Click += MapTab_Click; ;
 
-            UserTab = FindViewById<LinearLayout>(Resource.Id.maUserTabLL);
-            UserTab.Click += UserTab_Click; ;
+            AccountTab = FindViewById<LinearLayout>(Resource.Id.maUserTabLL);
+            AccountTab.Click += UserTab_Click; ;
+        }
+
+        void OnTick()
+        {
+            // TODO: Your code here
+            SDiag.Debug.Print("OnTick. Date: {0}, Thread: {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId);
+            if (account != null)
+            {
+                string accessToken = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private).GetString(C_ACCESS_TOKEN, string.Empty);
+                SDiag.Debug.Print("accessToken " + accessToken);
+                //Rest.GetUserInfo(accessToken);
+                RunOnUiThread(() =>
+                {
+                    (account as Fragments.AccountFragment).RefreshUserInfo();
+                });
+            }
+
         }
 
         protected override void OnResume()
@@ -108,14 +125,14 @@ namespace iCoffe.Droid
             var interval = TimeSpan.FromSeconds(5);
 
             // TODO: Add a CancellationTokenSource and supply the token here instead of None.
-            Rest.RunPeriodicAsync(OnTick, dueTime, interval, CTUserDesc);
+            var startPooling = Rest.RunPeriodicAsync(OnTick, dueTime, interval, CTUserDesc);
 
             ///
             /// Main code
             ///
-            if (cancelToken != null && cancelToken.CanBeCanceled && cancelSource != null)
+            if (CTData != null && CTData.CanBeCanceled && CSData != null)
             {
-                cancelSource.Cancel();
+                CSData.Cancel();
             }
             var sharedPreferences = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private);
             bool isBackPressedInSignIn = sharedPreferences.GetBoolean(C_IS_BACK_PRESSED_IN_SIGN_IN, false);
@@ -139,11 +156,11 @@ namespace iCoffe.Droid
 
             if (!Intent.GetBooleanExtra(C_WAS_STARTED_NEW_ACTIVITY, false))
             {
-                if (user != null)
+                if (account != null)
                 {
                     RunOnUiThread(() =>
                     {
-                        (user as Fragments.UserFragment).RefreshUserInfo();
+                        (account as Fragments.AccountFragment).RefreshUserInfo();
                     });
                 }
 
@@ -167,7 +184,6 @@ namespace iCoffe.Droid
                     string message = @"Определение местоположения...";
                     progressDialog = ProgressDialog.Show(this, @"", message, true);
 
-                    //progressDialog.Show();
                     ThreadPool.QueueUserWorkItem(state =>
                     {
                         Thread.Sleep(30000);
@@ -187,54 +203,9 @@ namespace iCoffe.Droid
             }
         }
 
-        void OnTick()
+        private async Task GetPlacesAndOffersAsync(CancellationToken cancellationToken, double lat, double lon, int rad)
         {
-            // TODO: Your code here
-            SDiag.Debug.Print("OnTick. Date: {0}, Thread: {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId);
-            if (user != null)
-            {
-                string accessToken = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private).GetString(C_ACCESS_TOKEN, string.Empty);
-                SDiag.Debug.Print("accessToken " + accessToken);
-                Rest.GetUserInfo(accessToken);
-                RunOnUiThread(() =>
-                {
-                    (user as Fragments.UserFragment).RefreshUserInfo();
-                });
-            }
-
-        }
-
-        private void GetCafesAndBonusOffers()
-        {
-            /* throw new NotImplementedException();*/
-            string message = string.IsNullOrEmpty(defaultPlace) ? @"Получение данных..." : "Получение данных. В качестве основной точки используется: " + defaultPlace;
-            progressDialog = ProgressDialog.Show(this, @"", message, true);
-
-            ThreadPool.QueueUserWorkItem(state =>
-            {
-                SDiag.Debug.Print("Radius " + radius.ToString());
-                string accessToken = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private).GetString(C_ACCESS_TOKEN, string.Empty);
-                SDiag.Debug.Print("accessToken " + accessToken);
-                Data.BonusOffers = Rest.GetBonusOffers(accessToken, 54.974362, 73.418061, 10);
-                Data.Cafes = Rest.GetCafes(accessToken, 54.974362, 73.418061, 10);
-                Data.UserBonusOffers = Rest.GetUserBonusOffers(accessToken);
-
-                //LoadFragments();
-                MapTab_Click(MapTab, EventArgs.Empty);
-
-                RunOnUiThread(() => {
-                    if (progressDialog != null) {
-                        progressDialog.Dismiss();
-                    }
-                });
-
-                SDiag.Debug.Print("GetCafesAndBonusOffers stopped.");
-            });
-        }
-
-        private async Task GetCafesAndBonusOffersAsync(CancellationToken cancellationToken, double lat, double lon, int rad)
-        {
-            SDiag.Debug.Print("GetCafesAndBonusOffers started. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+            SDiag.Debug.Print("GetPlacesAndOffersAsync started. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
             string message = string.IsNullOrEmpty(defaultPlace) ? @"Получение данных..." : "Получение данных. В качестве основной точки используется: " + defaultPlace;
             progressDialog = ProgressDialog.Show(this, @"", message, true);
@@ -242,34 +213,35 @@ namespace iCoffe.Droid
             SDiag.Debug.Print("Radius " + radius.ToString());
             string accessToken = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private).GetString(C_ACCESS_TOKEN, string.Empty);
             SDiag.Debug.Print("accessToken " + accessToken);
-            Data.BonusOffers = new List<BonusOffer>();
-            Data.Cafes = new List<Cafe>();
-            Data.UserInfo = new UserInfo() { FullUserName = @"<нет данных>", Login = @"<нет данных>", Points = -1 };
-            Data.UserBonusOffers = new List<BonusOffer>();
+            Data.Offers = new List<Offer>();
+            Data.Places = new List<Place>();
+            Data.PlaceInfos = new List<PlaceInfo>();
+            Data.UserInfo = new UserInfo() { Id = @"<нет данных>", Login = @"<нет данных>", PointsAmount = -1 };
+            Data.UserPurchasedOffers = new List<Offer>();
 
             LoadFragments(lat, lon);
 
-            var offers = await Rest.GetBonusOffersAsync(accessToken, lat, lon, rad);
-            SDiag.Debug.Print("GetCafesAndBonusOffers running. Offers. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+            var offers = await Rest.GetOffersAsync(accessToken, lat, lon);
+            SDiag.Debug.Print("GetOffersAsync running. Offers. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
-            var cafes = await Rest.GetCafesAsync(accessToken, lat, lon, rad);
-            SDiag.Debug.Print("GetCafesAndBonusOffers running. Cafes Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+            var placeInfos = await Rest.GetPlaceInfosAsync(accessToken, lat, lon, rad);
+            SDiag.Debug.Print("GetPlaceInfosAsync running. Cafes Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
-            var offrersCafeIds = offers.Select(i => i.CafeId).Distinct().ToArray();
-            var offrersCafes = await Rest.GetCafesAsync(accessToken, offrersCafeIds);
-            cafes.AddRange(offrersCafes);
+            //var offrersCafeIds = offers.Select(i => i.CafeId).Distinct().ToArray();
+            //var offrersCafes = await Rest.GetCafesAsync(accessToken, offrersCafeIds);
+            //places.AddRange(offrersCafes);
 
-            var userInfo = await Rest.GetUserInfoAsync(accessToken);
-            SDiag.Debug.Print("GetCafesAndBonusOffers running. UserInfo. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+            var accountInfo = await Rest.GetAccountInfoAsync(accessToken);
+            SDiag.Debug.Print("GetAccountInfoAsync running. UserInfo. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
-            var userBonuses = await Rest.GetUserBonusOffersAsync(accessToken);
-            SDiag.Debug.Print("GetCafesAndBonusOffers running. UserBonusOffer. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+            //var userBonuses = await Rest.GetUserBonusOffersAsync(accessToken);
+            //SDiag.Debug.Print("GetCafesAndBonusOffers running. UserBonusOffer. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
-            var userBonusesCafeIds = userBonuses.Select(i => i.CafeId).Distinct().ToArray();
-            var cafesIds = cafes.Select(i => i.Id).Distinct().ToArray();
-            var userCafes = await Rest.GetCafesAsync(accessToken, userBonusesCafeIds.Except(cafesIds).ToArray());
-            cafes.AddRange(userCafes);
-            SDiag.Debug.Print("GetCafesAndBonusOffers running. Cafes for UserBonusOffer. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+            //var userBonusesCafeIds = userBonuses.Select(i => i.CafeId).Distinct().ToArray();
+            //var cafesIds = places.Select(i => i.Id).Distinct().ToArray();
+            //var userCafes = await Rest.GetCafesAsync(accessToken, userBonusesCafeIds.Except(cafesIds).ToArray());
+            //places.AddRange(userCafes);
+            //SDiag.Debug.Print("GetCafesAndBonusOffers running. Cafes for UserBonusOffer. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
 
             if (cancellationToken.IsCancellationRequested)
@@ -278,10 +250,10 @@ namespace iCoffe.Droid
                 return;
             }
 
-            Data.BonusOffers = offers;
-            Data.Cafes = cafes;
-            Data.UserInfo = userInfo;
-            Data.UserBonusOffers = userBonuses;
+            Data.Offers = offers;
+            Data.PlaceInfos = placeInfos;
+            Data.UserInfo = accountInfo.User;
+            Data.UserPurchasedOffers = accountInfo.Purchases;
             
             LoadFragments(lat, lon);
             MapTab_Click(MapTab, EventArgs.Empty);
@@ -293,7 +265,7 @@ namespace iCoffe.Droid
                 }
             });
 
-            SDiag.Debug.Print("GetCafesAndBonusOffers stopped. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
+            SDiag.Debug.Print("GetPlacesAndOffersAsync stopped. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
         }
 
         private bool IsLocationActive()
@@ -324,7 +296,7 @@ namespace iCoffe.Droid
                     latitude = 54.974362;
                     longitude = 73.418061;
                     radius = 4;
-                    GetCafesAndBonusOffers();
+                    //GetCafesAndBonusOffers();
                 });
 
                 dialog = builder.Show();
@@ -380,18 +352,18 @@ namespace iCoffe.Droid
         private void LoadFragments(double lat, double lon)
         {
             FragmentTransaction trans = FragmentManager.BeginTransaction();
-            if (user == null)
+            if (account == null)
             {
-                user = new Fragments.UserFragment();
-                trans.Add(Resource.Id.mContentFL, user);
+                account = new Fragments.AccountFragment();
+                trans.Add(Resource.Id.mContentFL, account);
             }
             else
             {
                 RunOnUiThread(() =>
                 {
-                    (user as Fragments.UserFragment).RefreshUserInfo();
-                    (user as Fragments.UserFragment).RecreateAdapter();
-                    (user as Fragments.UserFragment).MoveCamera(new Android.Gms.Maps.Model.LatLng(lat, lon));
+                    (account as Fragments.AccountFragment).RefreshUserInfo();
+                    (account as Fragments.AccountFragment).RecreateAdapter();
+                    (account as Fragments.AccountFragment).MoveCamera(new Android.Gms.Maps.Model.LatLng(lat, lon));
                 });
             }
 
@@ -408,17 +380,17 @@ namespace iCoffe.Droid
                 });
             }
 
-            if (bonus == null)
+            if (offers == null)
             {
-                bonus = new Fragments.BonusFragment();
-                trans.Add(Resource.Id.mContentFL, bonus);
+                offers = new Fragments.OffersFragment();
+                trans.Add(Resource.Id.mContentFL, offers);
             }
             else
             {
-                RunOnUiThread(() => (bonus as Fragments.BonusFragment).RecreateAdapter());
+                RunOnUiThread(() => (offers as Fragments.OffersFragment).RecreateAdapter());
             }
             trans.Commit();
-            if (!MapTab.Selected && !BonusTab.Selected && !UserTab.Selected)
+            if (!MapTab.Selected && !OffersTab.Selected && !AccountTab.Selected)
             {
                 MapTab_Click(MapTab, null);
             }
@@ -426,32 +398,32 @@ namespace iCoffe.Droid
 
         private void UserTab_Click(object sender, EventArgs e)
         {
-            FragmentManager.BeginTransaction().Hide(bonus).Hide(map).Show(user).Commit();
+            FragmentManager.BeginTransaction().Hide(offers).Hide(map).Show(account).Commit();
             RunOnUiThread(() => {
                 MapTab.Selected = false;
-                BonusTab.Selected = false;
-                UserTab.Selected = true;
-                (user as Fragments.UserFragment).RefreshUserInfo();
+                OffersTab.Selected = false;
+                AccountTab.Selected = true;
+                (account as Fragments.AccountFragment).RefreshUserInfo();
             });
         }
 
         private void MapTab_Click(object sender, EventArgs e)
         {
-            FragmentManager.BeginTransaction().Hide(bonus).Hide(user).Show(map).Commit();
+            FragmentManager.BeginTransaction().Hide(offers).Hide(account).Show(map).Commit();
             RunOnUiThread(() => { 
                 MapTab.Selected = true;
-                BonusTab.Selected = false;
-                UserTab.Selected = false;
+                OffersTab.Selected = false;
+                AccountTab.Selected = false;
             });
         }
 
         private void BonusTab_Click(object sender, EventArgs e)
         {
-            FragmentManager.BeginTransaction().Hide(map).Hide(user).Show(bonus).Commit();
+            FragmentManager.BeginTransaction().Hide(map).Hide(account).Show(offers).Commit();
             RunOnUiThread(() => {
                 MapTab.Selected = false;
-                BonusTab.Selected = true;
-                UserTab.Selected = false;
+                OffersTab.Selected = true;
+                AccountTab.Selected = false;
             });
         }
 
@@ -463,9 +435,9 @@ namespace iCoffe.Droid
                 CSUserDesc.Cancel();
             }
 
-            if (cancelToken != null && cancelToken.CanBeCanceled && cancelSource != null)
+            if (CTData != null && CTData.CanBeCanceled && CSData != null)
             {
-                cancelSource.Cancel();
+                CSData.Cancel();
             }
 
             if (progressDialog != null)
@@ -516,17 +488,17 @@ namespace iCoffe.Droid
             locMgr.RemoveUpdates(this);
             progressDialog.Hide();
             radius = 5;
-            cancelSource = new CancellationTokenSource();
-            cancelToken = cancelSource.Token;
-            var task = GetCafesAndBonusOffersAsync(cancelToken, location.Latitude, location.Longitude, 40);
+            CSData = new CancellationTokenSource();
+            CTData = CSData.Token;
+            var task = GetPlacesAndOffersAsync(CTData, location.Latitude, location.Longitude, 40);
         }
         public void OnProviderDisabled(string provider)
         {
-            SDiag.Debug.Print(provider + " disabled by user");
+            SDiag.Debug.Print(provider + " disabled by account");
         }
         public void OnProviderEnabled(string provider)
         {
-            SDiag.Debug.Print(provider + " enabled by user");
+            SDiag.Debug.Print(provider + " enabled by account");
         }
         public void OnStatusChanged(string provider, Availability status, Bundle extras)
         {

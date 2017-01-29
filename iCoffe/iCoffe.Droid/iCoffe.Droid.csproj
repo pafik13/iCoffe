@@ -67,19 +67,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapters\BonusOffersAdapter.cs" />
-    <Compile Include="Adapters\ComplexObjsAdapter.cs" />
-    <Compile Include="Adapters\GiftsAdapter.cs" />
-    <Compile Include="Adapters\NetsAdapter.cs" />
+    <Compile Include="Adapters\OffersAdapter.cs" />
     <Compile Include="Adapters\TutorialAdapter.cs" />
-    <Compile Include="Adapters\UserBonusAdapter.cs" />
-    <Compile Include="BonusActivity.cs" />
-    <Compile Include="Fragments\BonusFragment.cs" />
-    <Compile Include="Fragments\GiftsFragment.cs" />
-    <Compile Include="Fragments\NetsFragment.cs" />
+    <Compile Include="OfferActivity..cs" />
+    <Compile Include="Fragments\OffersFragment.cs" />
     <Compile Include="Fragments\MapFragment.cs" />
-    <Compile Include="Fragments\UserFragment.cs" />
-    <Compile Include="EventDescActivity.cs" />
+    <Compile Include="Fragments\AccountFragment.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,12 +12,11 @@ using iCoffe.Droid.Adapters;
 
 namespace iCoffe.Droid.Fragments
 {
-    public class BonusFragment : Fragment
+    public class OffersFragment : Fragment
     {
-        ListView bonusListView;
+        ListView OffersTable;
 
-        BonusOffersAdapter offersAdapter;
-        IList<BonusOffer> offers;
+        OffersAdapter OffersAdapter;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -33,17 +32,17 @@ namespace iCoffe.Droid.Fragments
             View view = inflater.Inflate(Resource.Layout.fragment, container, false);
 
             view.FindViewById<TextView>(Resource.Id.frTextView).Visibility = ViewStates.Gone;
-            bonusListView = view.FindViewById<ListView>(Resource.Id.frListView);
-            bonusListView.ItemClick += NetsListView_ItemClick;
+            OffersTable = view.FindViewById<ListView>(Resource.Id.frListView);
+            OffersTable.ItemClick += OffersTable_ItemClick;
             return view;
         }
 
-        private void NetsListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        private void OffersTable_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             //throw new NotImplementedException();
-            //Toast.MakeText(Activity, string.Format(@"id : {0}; Descr: {1}", offersAdapter[e.Position].Id, offersAdapter[e.Position].Description), ToastLength.Short).Show();
-            Intent intent = new Intent(Activity, typeof(BonusActivity));
-            intent.PutExtra(MainActivity.C_BONUS_ID, offersAdapter[e.Position].Id.ToString());
+            //Toast.MakeText(Activity, string.Format(@"id : {0}; Descr: {1}", OffersAdapter[e.Position].Id, OffersAdapter[e.Position].Description), ToastLength.Short).Show();
+            Intent intent = new Intent(Activity, typeof(OfferActivity));
+            intent.PutExtra(MainActivity.C_OFFER_ID, OffersAdapter[e.Position].Id.ToString());
             StartActivityForResult(intent, 1);
         }
 
@@ -56,15 +55,11 @@ namespace iCoffe.Droid.Fragments
 
         public void RecreateAdapter()
         {
-            // get data
-            // offers = Data.Offers;
-            offers = Data.BonusOffers;
-
             // create our adapter
-            offersAdapter = new BonusOffersAdapter(Activity, offers);
+            OffersAdapter = new OffersAdapter(Activity, Data.Offers);
 
             //Hook up our adapter to our ListView
-            Activity.RunOnUiThread(() => bonusListView.Adapter = offersAdapter);
+            Activity.RunOnUiThread(() => OffersTable.Adapter = OffersAdapter);
         }
 
         public override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
