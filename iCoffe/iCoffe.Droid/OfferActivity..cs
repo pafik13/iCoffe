@@ -26,26 +26,26 @@ namespace iCoffe.Droid
             RequestWindowFeature(WindowFeatures.NoTitle);
 
             // Create your application here
-            SetContentView(Resource.Layout.Bonus);
+            SetContentView(Resource.Layout.Offer);
 
             var offerId = Intent.GetIntExtra(MainActivity.C_OFFER_ID, -1);
             Offer = Data.GetOffer(offerId);
             Place = Data.GetPlace(Offer.PlaceId);
 
-            FindViewById<TextView>(Resource.Id.baBonusDescrTV).Text = Offer.Description;
-            FindViewById<TextView>(Resource.Id.baAddressTV).Text = "<нет адреса>";
-            FindViewById<TextView>(Resource.Id.baCafeNameTV).Text = Place.Name;
-            FindViewById<TextView>(Resource.Id.baPriceTV).Text = Offer.Price.ToString();
+            FindViewById<TextView>(Resource.Id.oaBonusDescrTV).Text = Offer.Description;
+            FindViewById<TextView>(Resource.Id.oaAddressTV).Text = "<нет адреса>";
+            FindViewById<TextView>(Resource.Id.oaCafeNameTV).Text = Place.Name;
+            FindViewById<TextView>(Resource.Id.oaPriceTV).Text = Offer.Price.ToString();
 
             // TODO: Load image
             ImageLoader imageLoader = ImageLoader.Instance;
             if (!string.IsNullOrEmpty(Place.LogoUrl))
-                imageLoader.DisplayImage(Place.LogoUrl, FindViewById<ImageView>(Resource.Id.baCafeNameIV));
+                imageLoader.DisplayImage(Place.LogoUrl, FindViewById<ImageView>(Resource.Id.oaCafeNameIV));
 
             if (!string.IsNullOrEmpty(Offer.LogoUrl))
-                imageLoader.DisplayImage(Offer.LogoUrl, FindViewById<ImageView>(Resource.Id.baCafeImageIV));
+                imageLoader.DisplayImage(Offer.LogoUrl, FindViewById<ImageView>(Resource.Id.oaCafeImageIV));
 
-            var want = FindViewById<Button>(Resource.Id.baWantB);
+            var want = FindViewById<Button>(Resource.Id.oaWantB);
             want.Click += Want_Click;
 
             SetResult(Result.Ok);
@@ -81,7 +81,7 @@ namespace iCoffe.Droid
             var lock_message = FindViewById<TextView>(Resource.Id.lock_message);
             lock_message.Text = message;
 
-            var want = FindViewById<Button>(Resource.Id.baWantB);
+            var want = FindViewById<Button>(Resource.Id.oaWantB);
             want.Enabled = false;
 
             ThreadPool.QueueUserWorkItem(state =>

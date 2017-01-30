@@ -95,7 +95,7 @@ namespace iCoffe.Shared
             request.AddUrlSegment(@"longitude", longitude.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
             request.AddUrlSegment(@"radius", radius.ToString());
             request.AddUrlSegment(@"limit", limit.ToString());
-            var response = await client.ExecuteGetTaskAsync<PlaceResponse>(request);
+            var response = await client.ExecuteGetTaskAsync<PlaceInfoResponse>(request);
             if (response.StatusCode == HttpStatusCode.OK && response.Data.Items != null)
             {
                 results = response.Data.Items;
@@ -107,7 +107,7 @@ namespace iCoffe.Shared
         {
             var client = new RestClient(Consts.ApiUrl);
             var request = new RestRequest(Consts.OfferBuyPath, Method.POST);
-            request.AddHeader(@"Authorization", string.Format(@"Basic {0}", bearer));
+            request.AddHeader(@"Authorization", string.Format(@"Bearer {0}", bearer));
             request.AddParameter(@"OfferId", offerId);
             request.AddParameter(@"Amount", amount);
             var response = client.Execute(request);
@@ -135,5 +135,24 @@ namespace iCoffe.Shared
 					await Task.Delay(interval, token);
 			}
 		}
-	}
+
+        public static async Task<List<Place>> GetPlacesAsync(string bearer, int[] ids)
+        {
+            List<Place> results = new List<Place>();
+            var client = new RestClient(Consts.ApiUrl);
+            foreach (var id in ids)
+            {
+                var request = new RestRequest(Consts.PlaceInfoPath, Method.GET);
+                request.AddHeader(@"Authorization", string.Format(@"Bearer {0}", bearer));
+                request.AddUrlSegment(@"id", id.ToString(CultureInfo.CreateSpecificCulture("en-GB")));
+
+                var response = await client.ExecuteTaskAsync<PlaceResponse>(request);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    results.Add(response.Data.Place);
+                }
+            }
+            return results;
+        }
+    }
 }

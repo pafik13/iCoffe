@@ -25,12 +25,12 @@ namespace iCoffe.Shared
         //    }
         //}
 
-        internal static Place GetPlace(int placeId)
+        public static Place GetPlace(int placeId)
         {
             return Places.FirstOrDefault(place => place.Id == placeId);
         }
 
-        internal static Offer GetOffer(int offerId)
+        public static Offer GetOffer(int offerId)
         {
             return Offers.FirstOrDefault(offer => offer.Id == offerId);
         }

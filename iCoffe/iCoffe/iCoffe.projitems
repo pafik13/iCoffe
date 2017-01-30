@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\OfferResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\Place.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\PlaceInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataModel\PlaceInfoResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\PlaceResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataModel\UserInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Data.cs" />

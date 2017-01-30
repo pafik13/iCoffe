@@ -45,12 +45,12 @@ namespace iCoffe.Droid.Adapters
                                 Context.LayoutInflater.Inflate(
                                 Resource.Layout.PurchasedOfferItem,
                                 parent,
-                                false)) as LinearLayout;
-            view.FindViewById<TextView>(Resource.Id.biText).Text = string.IsNullOrEmpty(offer.Title) ? "<unknow offer>" : offer.Title;
+                                false)) as RelativeLayout;
+            view.FindViewById<TextView>(Resource.Id.poiOfferTitleTV).Text = string.IsNullOrEmpty(offer.Title) ? "<unknow offer>" : offer.Title;
 
             if (!string.IsNullOrEmpty(offer.LogoUrl))
             {
-                ImageLoader.Instance.DisplayImage(offer.LogoUrl, view.FindViewById<ImageView>(Resource.Id.biLogoIV));
+                ImageLoader.Instance.DisplayImage(offer.LogoUrl, view.FindViewById<ImageView>(Resource.Id.poiOfferLogoIV));
             }
 
             //Finally return the view

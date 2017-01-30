@@ -242,11 +242,10 @@ namespace iCoffe.Droid
             var placeInfos = await Rest.GetPlaceInfosAsync(accessToken, lat, lon, rad);
             SDiag.Debug.Print("GetPlaceInfosAsync running. Cafes Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
-            //var offrersCafeIds = offers.Select(i => i.CafeId).Distinct().ToArray();
-            //var offrersCafes = await Rest.GetCafesAsync(accessToken, offrersCafeIds);
-            //places.AddRange(offrersCafes);
+            var offrersPlacesIds = offers.Select(o => o.PlaceId).Distinct().ToArray();
+            var places = await Rest.GetPlacesAsync(accessToken, offrersPlacesIds);
 
-			if (cancellationToken.IsCancellationRequested)
+            if (cancellationToken.IsCancellationRequested)
             {
                 // do something here as task was cancelled mid flight maybe just
                 return;
@@ -273,6 +272,7 @@ namespace iCoffe.Droid
 
             Data.Offers = offers;
             Data.PlaceInfos = placeInfos;
+            Data.Places = places;
             Data.UserInfo = accountInfo.User;
             Data.UserPurchasedOffers = accountInfo.Purchases;
             
@@ -301,21 +301,21 @@ namespace iCoffe.Droid
             }
             else
             {
-                new AlertDialog.Builder(this);
-                .SetTitle(Resource.String.warning_caption);
-                .SetMessage(Resource.String.no_location_provider);
-                .SetCancelable(false);
-                .SetPositiveButton(Resource.String.on_button, (sender, args) => {
-                    var intent = new Intent(Android.Provider.Settings.ActionLocationSourceSettings);
-                    StartActivity(intent);
-                }).SetNegativeButton(Resource.String.cancel_button, (sender, args) => {
-                    (sender as Dialog).Dismiss();
-                    defaultPlace = @"центр Омска";
-                    latitude = 54.974362;
-                    longitude = 73.418061;
-                    radius = 4;
-                    //GetCafesAndBonusOffers();
-                }).Show();
+                new AlertDialog.Builder(this)
+                            .SetTitle(Resource.String.warning_caption)
+                            .SetMessage(Resource.String.no_location_provider)
+                            .SetCancelable(false)
+                            .SetPositiveButton(Resource.String.on_button, (sender, args) => {
+                                var intent = new Intent(Android.Provider.Settings.ActionLocationSourceSettings);
+                                StartActivity(intent);
+                            }).SetNegativeButton(Resource.String.cancel_button, (sender, args) => {
+                                (sender as Dialog).Dismiss();
+                                defaultPlace = @"центр Омска";
+                                latitude = 54.974362;
+                                longitude = 73.418061;
+                                radius = 4;
+                                //GetCafesAndBonusOffers();
+                            }).Show();
 
                 return false;
             }
@@ -332,30 +332,30 @@ namespace iCoffe.Droid
                 }
                 else
                 {
-                    new AlertDialog.Builder(this);
-                    .SetTitle(Resource.String.error_caption);
-                    .SetMessage(Resource.String.no_internet_connection);
-                    .SetCancelable(false);
-                    .SetNegativeButton(Resource.String.cancel_button, (sender, args) => {
-                        (sender as Dialog).Dismiss();
-                    }).Show();
+                    new AlertDialog.Builder(this)
+                                .SetTitle(Resource.String.error_caption)
+                                .SetMessage(Resource.String.no_internet_connection)
+                                .SetCancelable(false)
+                                .SetNegativeButton(Resource.String.cancel_button, (sender, args) => {
+                                    (sender as Dialog).Dismiss();
+                                }).Show();
 
                     return false;
                 }
             }
             else
             {
-                new AlertDialog.Builder(this);
-                .SetTitle(Resource.String.warning_caption);
-                .SetMessage(Resource.String.no_internet_provider);
-                .SetCancelable(false);
-                .SetPositiveButton(Resource.String.on_button, (sender, args) => {
-                    var intent = new Intent(Android.Provider.Settings.ActionWirelessSettings);
-                    StartActivity(intent);
-                })
-                .SetNegativeButton(Resource.String.cancel_button, (sender, args) => {
-					(sender as Dialog).Dismiss();
-                }).Show();
+                new AlertDialog.Builder(this)
+                            .SetTitle(Resource.String.warning_caption)
+                            .SetMessage(Resource.String.no_internet_provider)
+                            .SetCancelable(false)
+                            .SetPositiveButton(Resource.String.on_button, (sender, args) => {
+                                var intent = new Intent(Android.Provider.Settings.ActionWirelessSettings);
+                                StartActivity(intent);
+                            })
+                            .SetNegativeButton(Resource.String.cancel_button, (sender, args) => {
+					            (sender as Dialog).Dismiss();
+                            }).Show();
 				
                 return false;
             }

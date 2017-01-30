@@ -1,20 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using SDiag = System.Diagnostics;
 
-using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Util;
+using Android.App;
 using Android.Views;
 using Android.Widget;
+using Android.Content;
+using Android.Views.Animations;
 
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
-using Android.Gms.Actions;
 
 using iCoffe.Shared;
 using iCoffe.Droid.Adapters;
@@ -39,13 +34,11 @@ namespace iCoffe.Droid.Fragments
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            // Create your fragment here
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            MainLayout = inflater.Inflate(Resource.Layout.UserFragment, container, false);
+            MainLayout = inflater.Inflate(Resource.Layout.AccountFragment, container, false);
             PurchasedOffersTable = MainLayout.FindViewById<ListView>(Resource.Id.afListView);
 
             RefreshUserInfo();
@@ -57,12 +50,23 @@ namespace iCoffe.Droid.Fragments
             mapView.OnCreate(savedInstanceState);
             mapView.GetMapAsync(this); //this is important
 			
-			ScaleUp = AnimationUtils.LoadAnimation(this, Resource.Animation.scale_up);
-			ScaleDown = AnimationUtils.LoadAnimation(this, Resource.Animation.scale_down);
+			ScaleUp = AnimationUtils.LoadAnimation(Activity, Resource.Animation.scale_up);
+			ScaleDown = AnimationUtils.LoadAnimation(Activity, Resource.Animation.scale_down);
 			
-			RotateFromUpToDown = AnimationUtils.LoadAnimation(this, Resource.Animation.rotate_from_up_to_down);
-			RotateFromDownToUp = AnimationUtils.LoadAnimation(this, Resource.Animation.rotate_from_down_to_up);
-			
+			RotateFromUpToDown = AnimationUtils.LoadAnimation(Activity, Resource.Animation.rotate_from_up_to_down);
+            RotateFromUpToDown.AnimationEnd += (s, e) =>
+            {
+                MainLayout.FindViewById<FrameLayout>(Resource.Id.afUserMapFL).Visibility = ViewStates.Gone;
+                MainLayout.FindViewById<ImageButton>(Resource.Id.afShowAndHideMapB).SetImageResource(Android.Resource.Drawable.ArrowDownFloat);
+            };
+
+            RotateFromDownToUp = AnimationUtils.LoadAnimation(Activity, Resource.Animation.rotate_from_down_to_up);
+            RotateFromDownToUp.AnimationEnd += (s, e) =>
+            {
+                MainLayout.FindViewById<FrameLayout>(Resource.Id.afUserMapFL).Visibility = ViewStates.Visible;
+                MainLayout.FindViewById<ImageButton>(Resource.Id.afShowAndHideMapB).SetImageResource(Android.Resource.Drawable.ArrowUpFloat);
+            };
+
             return MainLayout;
         }
 
@@ -106,16 +110,17 @@ namespace iCoffe.Droid.Fragments
         private void ShowAndHideMapButton_Click(object sender, EventArgs e)
         {
             SDiag.Debug.Print("ShowAndHideMapButton_Click called");
-			var mapFrame = View.FindViewById<FrameLaout>(Resource.Id.afUserMapFL);
-			if (mapFrame.Height == 0){
+            var infoLayout = View.FindViewById<LinearLayout>(Resource.Id.afUserInfoLL);
+            var mapFrame = View.FindViewById<FrameLayout>(Resource.Id.afUserMapFL);
+			if (mapFrame.Visibility == ViewStates.Gone){
 				mapFrame.StartAnimation(ScaleUp);
-				(sender as Button).StartAnimation(RotateFromDownToUp);
+				(sender as ImageButton).StartAnimation(RotateFromDownToUp);
 			} else {
-				mapFrame.StartAnimation(ScaleDown);
-				(sender as Button).StartAnimation(RotateFromUpToDown);				
+                mapFrame.StartAnimation(ScaleDown);
+                (sender as ImageButton).StartAnimation(RotateFromUpToDown);				
 			}
         }
-		
+
         public override void OnPause()
         {
             base.OnPause();

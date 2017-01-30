@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -29,10 +27,9 @@ namespace iCoffe.Droid.Fragments
         {
             base.OnCreateView(inflater, container, savedInstanceState);
 
-            View view = inflater.Inflate(Resource.Layout.fragment, container, false);
+            View view = inflater.Inflate(Resource.Layout.OffersFragment, container, false);
 
-            view.FindViewById<TextView>(Resource.Id.frTextView).Visibility = ViewStates.Gone;
-            OffersTable = view.FindViewById<ListView>(Resource.Id.frListView);
+            OffersTable = view.FindViewById<ListView>(Resource.Id.ofListView);
             OffersTable.ItemClick += OffersTable_ItemClick;
             return view;
         }
@@ -42,7 +39,7 @@ namespace iCoffe.Droid.Fragments
             //throw new NotImplementedException();
             //Toast.MakeText(Activity, string.Format(@"id : {0}; Descr: {1}", OffersAdapter[e.Position].Id, OffersAdapter[e.Position].Description), ToastLength.Short).Show();
             Intent intent = new Intent(Activity, typeof(OfferActivity));
-            intent.PutExtra(MainActivity.C_OFFER_ID, OffersAdapter[e.Position].Id.ToString());
+            intent.PutExtra(MainActivity.C_OFFER_ID, OffersAdapter[e.Position].Id);
             StartActivityForResult(intent, 1);
         }
 
