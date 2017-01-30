@@ -45,25 +45,23 @@ namespace iCoffe.Droid
         Fragment account = null;
 
         // Location
-        LocationManager locMgr;
-        bool isLocationFound = false;
+        LocationManager LocMgr;
+        bool IsLocationFound = false;
         string defaultPlace = string.Empty;
         double latitude;
         double longitude;
-        int radius = 2;
+        int radius = 100;
 
         // Intermedia
-        AlertDialog.Builder builder;
-        Dialog dialog;
-        ProgressDialog progressDialog;
+        ProgressDialog ProgressDialog;
 
         // Data Service
-        private CancellationTokenSource CSData;
+        private CancellationTokenSource CTSData;
         private CancellationToken CTData;
 
         // User Desc
-        CancellationTokenSource CSUserDesc;
-        CancellationToken CTUserDesc;
+        private CancellationTokenSource CTSUserInfo;
+        private CancellationToken CTUserInfo;
 
         protected override void OnCreate (Bundle bundle)
 		{
@@ -112,27 +110,31 @@ namespace iCoffe.Droid
             base.OnResume();
             SDiag.Debug.Print("OnResume called");
 
-
-            if (CTUserDesc.CanBeCanceled && CSUserDesc != null)
+			if (ProgressDialog != null)
+			{
+				ProgressDialog.Dismiss();
+			}
+			
+            if (CTUserInfo != null && CTUserInfo.CanBeCanceled && CTSUserInfo != null)
             {
-                CSUserDesc.Cancel();
+                CTSUserInfo.Cancel();
             }
 
-            CSUserDesc = new CancellationTokenSource();
-            CTUserDesc = CSUserDesc.Token;
+            CTSUserInfo = new CancellationTokenSource();
+            CTUserInfo = CTSUserInfo.Token;
 
             var dueTime = TimeSpan.FromSeconds(5);
             var interval = TimeSpan.FromSeconds(5);
 
             // TODO: Add a CancellationTokenSource and supply the token here instead of None.
-            var startPooling = Rest.RunPeriodicAsync(OnTick, dueTime, interval, CTUserDesc);
+            var startPooling = Rest.RunPeriodicAsync(OnTick, dueTime, interval, CTUserInfo);
 
             ///
             /// Main code
             ///
-            if (CTData != null && CTData.CanBeCanceled && CSData != null)
+            if (CTData != null && CTData.CanBeCanceled && CTSData != null)
             {
-                CSData.Cancel();
+                CTSData.Cancel();
             }
             var sharedPreferences = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private);
             bool isBackPressedInSignIn = sharedPreferences.GetBoolean(C_IS_BACK_PRESSED_IN_SIGN_IN, false);
@@ -176,13 +178,13 @@ namespace iCoffe.Droid
                     var locationCriteria = new Criteria();
                     locationCriteria.Accuracy = Accuracy.Coarse;
                     locationCriteria.PowerRequirement = Power.Medium;
-                    string locationProvider = locMgr.GetBestProvider(locationCriteria, true);
+                    string locationProvider = LocMgr.GetBestProvider(locationCriteria, true);
                     SDiag.Debug.Print("Starting location updates with " + locationProvider.ToString());
-                    locMgr.RequestLocationUpdates(locationProvider, 2000, 1, this);
+                    LocMgr.RequestLocationUpdates(locationProvider, 2000, 1, this);
 
                     // Progress
                     string message = @"Определение местоположения...";
-                    progressDialog = ProgressDialog.Show(this, @"", message, true);
+                    ProgressDialog = ProgressDialog.Show(this, @"", message, true);
 
                     ThreadPool.QueueUserWorkItem(state =>
                     {
@@ -190,11 +192,11 @@ namespace iCoffe.Droid
 
                         RunOnUiThread(() =>
                         {
-                            if (!isLocationFound)
+                            if (!IsLocationFound)
                             {
-                                if (progressDialog != null)
+                                if (ProgressDialog != null)
                                 {
-                                    progressDialog.Dismiss();
+                                    ProgressDialog.Dismiss();
                                 }
                             }
                         });
@@ -208,7 +210,7 @@ namespace iCoffe.Droid
             SDiag.Debug.Print("GetPlacesAndOffersAsync started. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
             string message = string.IsNullOrEmpty(defaultPlace) ? @"Получение данных..." : "Получение данных. В качестве основной точки используется: " + defaultPlace;
-            progressDialog = ProgressDialog.Show(this, @"", message, true);
+            ProgressDialog = ProgressDialog.Show(this, @"", message, true);
 
             SDiag.Debug.Print("Radius " + radius.ToString());
             string accessToken = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private).GetString(C_ACCESS_TOKEN, string.Empty);
@@ -221,9 +223,22 @@ namespace iCoffe.Droid
 
             LoadFragments(lat, lon);
 
+			
+			if (cancellationToken.IsCancellationRequested)
+            {
+                // do something here as task was cancelled mid flight maybe just
+                return;
+            }
+			
             var offers = await Rest.GetOffersAsync(accessToken, lat, lon);
             SDiag.Debug.Print("GetOffersAsync running. Offers. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
+			if (cancellationToken.IsCancellationRequested)
+            {
+                // do something here as task was cancelled mid flight maybe just
+                return;
+            }
+			
             var placeInfos = await Rest.GetPlaceInfosAsync(accessToken, lat, lon, rad);
             SDiag.Debug.Print("GetPlaceInfosAsync running. Cafes Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
@@ -231,6 +246,12 @@ namespace iCoffe.Droid
             //var offrersCafes = await Rest.GetCafesAsync(accessToken, offrersCafeIds);
             //places.AddRange(offrersCafes);
 
+			if (cancellationToken.IsCancellationRequested)
+            {
+                // do something here as task was cancelled mid flight maybe just
+                return;
+            }
+			
             var accountInfo = await Rest.GetAccountInfoAsync(accessToken);
             SDiag.Debug.Print("GetAccountInfoAsync running. UserInfo. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
@@ -259,9 +280,9 @@ namespace iCoffe.Droid
             MapTab_Click(MapTab, EventArgs.Empty);
 
             RunOnUiThread(() => {
-                if (progressDialog != null)
+                if (ProgressDialog != null)
                 {
-                    progressDialog.Dismiss();
+                    ProgressDialog.Dismiss();
                 }
             });
 
@@ -270,36 +291,31 @@ namespace iCoffe.Droid
 
         private bool IsLocationActive()
         {
-            /*throw new NotImplementedException();*/
-            locMgr = GetSystemService(LocationService) as LocationManager;
+            LocMgr = GetSystemService(LocationService) as LocationManager;
 
-            if ( locMgr.IsProviderEnabled(LocationManager.NetworkProvider)
-              || locMgr.IsProviderEnabled(LocationManager.GpsProvider)
+            if ( LocMgr.IsProviderEnabled(LocationManager.NetworkProvider)
+              || LocMgr.IsProviderEnabled(LocationManager.GpsProvider)
                )
             {
                 return true;
             }
             else
             {
-                builder = new AlertDialog.Builder(this);
-                builder.SetTitle(Resource.String.warning_caption);
-                builder.SetMessage(Resource.String.no_location_provider);
-                builder.SetCancelable(false);
-                builder.SetPositiveButton(Resource.String.on_button, delegate {
+                new AlertDialog.Builder(this);
+                .SetTitle(Resource.String.warning_caption);
+                .SetMessage(Resource.String.no_location_provider);
+                .SetCancelable(false);
+                .SetPositiveButton(Resource.String.on_button, (sender, args) => {
                     var intent = new Intent(Android.Provider.Settings.ActionLocationSourceSettings);
                     StartActivity(intent);
-                });
-
-                builder.SetNegativeButton(Resource.String.cancel_button, delegate {
-                    dialog.Dismiss();
+                }).SetNegativeButton(Resource.String.cancel_button, (sender, args) => {
+                    (sender as Dialog).Dismiss();
                     defaultPlace = @"центр Омска";
                     latitude = 54.974362;
                     longitude = 73.418061;
                     radius = 4;
                     //GetCafesAndBonusOffers();
-                });
-
-                dialog = builder.Show();
+                }).Show();
 
                 return false;
             }
@@ -307,7 +323,6 @@ namespace iCoffe.Droid
 
         private bool IsInternetActive()
         {
-            /*throw new NotImplementedException();*/
             ConnectivityManager cm = GetSystemService(Context.ConnectivityService) as ConnectivityManager;
             if (cm.ActiveNetworkInfo != null)
             {
@@ -317,34 +332,31 @@ namespace iCoffe.Droid
                 }
                 else
                 {
-                    builder = new AlertDialog.Builder(this);
-                    builder.SetTitle(Resource.String.error_caption);
-                    builder.SetMessage(Resource.String.no_internet_connection);
-                    builder.SetCancelable(false);
-                    builder.SetNegativeButton(Resource.String.cancel_button, delegate {
-                        dialog.Dismiss();
-                    });
+                    new AlertDialog.Builder(this);
+                    .SetTitle(Resource.String.error_caption);
+                    .SetMessage(Resource.String.no_internet_connection);
+                    .SetCancelable(false);
+                    .SetNegativeButton(Resource.String.cancel_button, (sender, args) => {
+                        (sender as Dialog).Dismiss();
+                    }).Show();
 
-                    dialog = builder.Show();
                     return false;
                 }
             }
             else
             {
-                builder = new AlertDialog.Builder(this);
-                builder.SetTitle(Resource.String.warning_caption);
-                builder.SetMessage(Resource.String.no_internet_provider);
-                builder.SetCancelable(false);
-                builder.SetPositiveButton(Resource.String.on_button, delegate {
+                new AlertDialog.Builder(this);
+                .SetTitle(Resource.String.warning_caption);
+                .SetMessage(Resource.String.no_internet_provider);
+                .SetCancelable(false);
+                .SetPositiveButton(Resource.String.on_button, (sender, args) => {
                     var intent = new Intent(Android.Provider.Settings.ActionWirelessSettings);
                     StartActivity(intent);
-                });
-
-                builder.SetNegativeButton(Resource.String.cancel_button, delegate {
-                    dialog.Dismiss();
-                });
-
-                dialog = builder.Show();
+                })
+                .SetNegativeButton(Resource.String.cancel_button, (sender, args) => {
+					(sender as Dialog).Dismiss();
+                }).Show();
+				
                 return false;
             }
         }
@@ -430,19 +442,19 @@ namespace iCoffe.Droid
         protected override void OnPause()
         {
             base.OnPause();
-            if (CTUserDesc.CanBeCanceled && CSUserDesc != null)
+            if (CTUserInfo.CanBeCanceled && CTSUserInfo != null)
             {
-                CSUserDesc.Cancel();
+                CTSUserInfo.Cancel();
             }
 
-            if (CTData != null && CTData.CanBeCanceled && CSData != null)
+            if (CTData != null && CTData.CanBeCanceled && CTSData != null)
             {
-                CSData.Cancel();
+                CTSData.Cancel();
             }
 
-            if (progressDialog != null)
+            if (ProgressDialog != null)
             {
-                progressDialog.Dismiss();
+                ProgressDialog.Dismiss();
             }
 
             // stop sending location updates when the application goes into the background
@@ -451,9 +463,9 @@ namespace iCoffe.Droid
 
 
             // RemoveUpdates takes a pending intent - here, we pass the current Activity
-            if (locMgr != null)
+            if (LocMgr != null)
             {
-                locMgr.RemoveUpdates(this);
+                LocMgr.RemoveUpdates(this);
             }
 
             SDiag.Debug.Print("Location updates paused because application is entering the background");
@@ -474,7 +486,7 @@ namespace iCoffe.Droid
             base.OnBackPressed();
         }
 
-        //### LOCATION
+        #region LOCATION
         public void OnLocationChanged(Location location)
         {
             SDiag.Debug.Print("Location changed");
@@ -482,14 +494,14 @@ namespace iCoffe.Droid
             SDiag.Debug.Print("Longitude: " + location.Longitude.ToString());
             SDiag.Debug.Print("Provider: " + location.Provider.ToString());
 
-            isLocationFound = true;
+            IsLocationFound = true;
             latitude = location.Latitude;
             longitude = location.Longitude;
-            locMgr.RemoveUpdates(this);
-            progressDialog.Hide();
+            LocMgr.RemoveUpdates(this);
+            ProgressDialog.Hide();
             radius = 5;
-            CSData = new CancellationTokenSource();
-            CTData = CSData.Token;
+            CTSData = new CancellationTokenSource();
+            CTData = CTSData.Token;
             var task = GetPlacesAndOffersAsync(CTData, location.Latitude, location.Longitude, 40);
         }
         public void OnProviderDisabled(string provider)
@@ -504,6 +516,7 @@ namespace iCoffe.Droid
         {
             SDiag.Debug.Print(provider + " availability has changed to " + status.ToString());
         }
+		#endregion
     }
 }
 

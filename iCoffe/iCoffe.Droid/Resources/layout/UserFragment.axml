@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     android:minWidth="25px"
     android:minHeight="25px"
-    android:id="@+id/ufMainLL">
+    android:id="@+id/afMainLL">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ufUserInfoLL"
+        android:id="@+id/afUserInfoLL"
         android:background="@drawable/bg_white_corned"
         android:layout_margin="10dp"
         android:orientation="vertical">
@@ -21,11 +21,11 @@
             android:layout_marginBottom="6dp"
             android:layout_marginTop="4dp">
             <TextView
-                android:text="UserID"
+                android:text="UserLogin"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ufUserIDTV"
+                android:id="@+id/afUserLoginTV"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:typeface="monospace"
@@ -35,7 +35,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ufUserPointsTV"
+                android:id="@+id/afUserPointsAmountTV"
                 android:textColor="@color/red_main"
                 android:layout_gravity="right"
                 android:textSize="24sp"
@@ -51,21 +51,22 @@
             android:minHeight="25px"
             android:layout_marginBottom="8dp">
             <TextView
-                android:text="UserName"
+                android:text="<UserName>"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ufUserNameTV"
+                android:id="@+id/afUserNameTV"
                 android:layout_centerInParent="true" />
         </RelativeLayout>
         <FrameLayout
+			android:id="@+id/afUserMapFL"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
           
           <com.google.android.gms.maps.MapView
-              android:id="@+id/ufUserMap"
+              android:id="@+id/afUserMap"
               android:layout_width="match_parent"
               android:layout_height="match_parent" 
               android:layout_margin="3dp"/>
@@ -86,13 +87,21 @@
                 android:text="Выйти"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ufExitB"
+                android:id="@+id/afExitB"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:background="@drawable/button"
                 android:textStyle="bold"
                 android:typeface="monospace"
                 android:layout_centerInParent="true" />
+            <ImageButton
+				android:src="@android:drawable/up_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/afShowAndHideMapB"
+                android:background="@drawable/round"
+                android:layout_alignParentRight="true"
+				android:layout_alignVertical="true />
         </RelativeLayout>
     </LinearLayout>
     <TextView
@@ -100,12 +109,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ufTextView"
         android:gravity="left" />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/ufListView"
+        android:id="@+id/afListView"
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp"
         android:paddingTop="10dp"

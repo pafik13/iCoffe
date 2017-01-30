@@ -10,12 +10,12 @@ using UniversalImageLoader.Core;
 
 namespace iCoffe.Droid.Adapters
 {
-    public class OffersAdapter : BaseAdapter<Offer>
+    public class PurchasedOffersAdapter : BaseAdapter<Offer>
     {
         Activity Context;
         IList<Offer> Offers;
 
-        public OffersAdapter(Activity context, IList<Offer> offers) : base()
+        public PurchasedOffersAdapter(Activity context, IList<Offer> offers) : base()
         {
             Context = context;
             Offers = offers;
@@ -43,7 +43,7 @@ namespace iCoffe.Droid.Adapters
 
             var view = (convertView ??
                                 Context.LayoutInflater.Inflate(
-                                Resource.Layout.OfferItem,
+                                Resource.Layout.PurchasedOfferItem,
                                 parent,
                                 false)) as LinearLayout;
             view.FindViewById<TextView>(Resource.Id.biText).Text = string.IsNullOrEmpty(offer.Title) ? "<unknow offer>" : offer.Title;

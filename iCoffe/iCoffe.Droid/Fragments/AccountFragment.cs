@@ -29,8 +29,13 @@ namespace iCoffe.Droid.Fragments
         GoogleMap map;
 
         ListView PurchasedOffersTable;
-        OffersAdapter PurchasedOffersAdapter;
-
+        PurchasedOffersAdapter PurchasedOffersAdapter;
+		
+		Animation ScaleUp;
+		Animation ScaleDown;
+		Animation RotateFromUpToDown;
+		Animation RotateFromDownToUp;
+		
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -41,24 +46,31 @@ namespace iCoffe.Droid.Fragments
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             MainLayout = inflater.Inflate(Resource.Layout.UserFragment, container, false);
-            PurchasedOffersTable = MainLayout.FindViewById<ListView>(Resource.Id.ufListView);
+            PurchasedOffersTable = MainLayout.FindViewById<ListView>(Resource.Id.afListView);
 
             RefreshUserInfo();
 
-            MainLayout.FindViewById<Button>(Resource.Id.ufExitB).Click += ExitButton_Click;
+            MainLayout.FindViewById<Button>(Resource.Id.afExitB).Click += ExitButton_Click;
+            MainLayout.FindViewById<ImageButton>(Resource.Id.afShowAndHideMapB).Click += ShowAndHideMapButton_Click;
 
-            mapView = MainLayout.FindViewById<MapView>(Resource.Id.ufUserMap);
+            mapView = MainLayout.FindViewById<MapView>(Resource.Id.afUserMap);
             mapView.OnCreate(savedInstanceState);
             mapView.GetMapAsync(this); //this is important
-
+			
+			ScaleUp = AnimationUtils.LoadAnimation(this, Resource.Animation.scale_up);
+			ScaleDown = AnimationUtils.LoadAnimation(this, Resource.Animation.scale_down);
+			
+			RotateFromUpToDown = AnimationUtils.LoadAnimation(this, Resource.Animation.rotate_from_up_to_down);
+			RotateFromDownToUp = AnimationUtils.LoadAnimation(this, Resource.Animation.rotate_from_down_to_up);
+			
             return MainLayout;
         }
 
         public void RefreshUserInfo()
         {
-            MainLayout.FindViewById<TextView>(Resource.Id.ufUserIDTV).Text = Data.UserInfo.Login;
-            MainLayout.FindViewById<TextView>(Resource.Id.ufUserNameTV).Text = Data.UserInfo.Login;
-            MainLayout.FindViewById<TextView>(Resource.Id.ufUserPointsTV).Text = Data.UserInfo.PointsAmount.ToString();
+            MainLayout.FindViewById<TextView>(Resource.Id.afUserLoginTV).Text = Data.UserInfo.Login;
+            MainLayout.FindViewById<TextView>(Resource.Id.afUserNameTV).Text = Data.UserInfo.Login;
+            MainLayout.FindViewById<TextView>(Resource.Id.afUserPointsAmountTV).Text = Data.UserInfo.PointsAmount.ToString();
         }
 
         public void OnMapReady(GoogleMap googleMap)
@@ -91,6 +103,19 @@ namespace iCoffe.Droid.Fragments
             RefreshUserInfo();
         }
 
+        private void ShowAndHideMapButton_Click(object sender, EventArgs e)
+        {
+            SDiag.Debug.Print("ShowAndHideMapButton_Click called");
+			var mapFrame = View.FindViewById<FrameLaout>(Resource.Id.afUserMapFL);
+			if (mapFrame.Height == 0){
+				mapFrame.StartAnimation(ScaleUp);
+				(sender as Button).StartAnimation(RotateFromDownToUp);
+			} else {
+				mapFrame.StartAnimation(ScaleDown);
+				(sender as Button).StartAnimation(RotateFromUpToDown);				
+			}
+        }
+		
         public override void OnPause()
         {
             base.OnPause();
@@ -126,7 +151,7 @@ namespace iCoffe.Droid.Fragments
         public void RecreateAdapter()
         {
             // create our adapter
-            PurchasedOffersAdapter = new OffersAdapter(Activity, Data.UserPurchasedOffers);
+            PurchasedOffersAdapter = new PurchasedOffersAdapter(Activity, Data.UserPurchasedOffers);
 
             //Hook up our adapter to our ListView
             Activity.RunOnUiThread(() => PurchasedOffersTable.Adapter = PurchasedOffersAdapter);

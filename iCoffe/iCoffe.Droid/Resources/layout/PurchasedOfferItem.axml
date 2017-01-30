@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+	android:minWidth="25px"
+	android:minHeight="25px"
+    android:background="@drawable/bg_white_corned">
+	<ImageView
+		android:src="@drawable/ocean"
+		android:layout_height="60dp"
+		android:layout_width="90dp"
+		android:id="@+id/oiOfferLogoIV"
+		android:layout_alignStart="true" />
+	<ImageView
+		android:src="@drawable/android"
+		android:layout_width="32dp"
+		android:layout_height="32dp"
+		android:id="@+id/oiGiftIV"
+		android:layout_marginTop="14dp"
+		android:layout_marginRight="14dp"
+		android:layout_marginBottom="14dp"
+		android:layout_alignEnd="true" />
+	<TextView
+		android:text="Text"
+		android:layout_width="match_parent"
+		android:layout_height="60dp"
+		android:id="@+id/oiOfferTitleTV"
+		android:layout_toRightOf="@id/oiOfferLogoIV"
+		android:layout_toLeftOf="@id/oiGiftIV"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+		android:textSize="16sp"
+		android:textColor="@android:color/white"
+		android:gravity="center" />
+</RelativeLayout>
