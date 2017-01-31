@@ -21,8 +21,11 @@ namespace iCoffe.Droid.Fragments
 {
     public class MapFragment : Fragment, IOnMapReadyCallback, GoogleMap.IOnMarkerClickListener
     {
-        MapView mapView;
-        GoogleMap map;
+		View Fade;
+		ListView OffersLV;
+		
+        MapView MapView;
+        GoogleMap GoogleMap;
 
         Dictionary<string, int> markers = new Dictionary<string, int>();
 
@@ -36,53 +39,59 @@ namespace iCoffe.Droid.Fragments
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            // Use this to return your custom view for this Fragment
-            // return inflater.Inflate(Resource.Layout.YourFragment, container, false);
-
-
-            //return base.OnCreateView(inflater, container, savedInstanceState);
-            //View view = inflater.Inflate(Resource.Layout.fragment, container, false);
-            //TextView tv = view.FindViewById<TextView>(Resource.Id.frTextView);
-            //string text = string.Empty;
-            //foreach (var cafe in Data.Objs)
-            //{
-            //    text += string.Format(@"Id:{0}, X:{1}, Y:{2}", cafe.Id, cafe.geoloc.x, cafe.geoloc.y) + System.Environment.NewLine;
-            //}
-            //tv.Text = text;
-            ////tv.Text = @"Map";
-
-            View view = inflater.Inflate(Resource.Layout.MapFragment, container, false);
-            mapView = view.FindViewById<MapView>(Resource.Id.mvMap);
-            mapView.OnCreate(savedInstanceState);
-            mapView.GetMapAsync(this); //this is important
-
+            var view = inflater.Inflate(Resource.Layout.MapFragment, container, false);
+            MapView = view.FindViewById<MapView>(Resource.Id.mfMap);
+            MapView.OnCreate(savedInstanceState);
+            MapView.GetMapAsync(this); //this is important
+			
+			Fade = view.FindViewById<View>(Resource.Id.mfFadeV);
+			Fade.Click += (sender, args) => {
+				OffersLV.Visibility = ViewStates.Gone;
+				Fade.Visibility = ViewStates.Gone;
+				OffersLV.Adapter = null;
+			};
+			
+			OffersLV = view.FindViewById<ListView>(Resource.Id.mfOffersLV);
+			
+			OffersLV.ItemClick += OffersTable_ItemClick;
+			
             return view;
+        }
+
+        private void OffersTable_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            //Toast.MakeText(Activity, string.Format(@"id : {0}; Descr: {1}", OffersAdapter[e.Position].Id, OffersAdapter[e.Position].Description), ToastLength.Short).Show();
+			var lv = (sender as ListView);
+			var adapter = (lv.Adapter as PurchasedOffersAdapter); 
+            Intent intent = new Intent(Activity, typeof(OfferActivity));
+            intent.PutExtra(MainActivity.C_OFFER_ID, adapter[e.Position].Id);
+            StartActivityForResult(intent, 1);
         }
 
         public void OnMapReady(GoogleMap googleMap)
         {
-            map = googleMap;
-            map.UiSettings.ZoomControlsEnabled = true;  // GetUiSettings().setZoomControlsEnabled(true);
-            map.MyLocationEnabled = true;
+            GoogleMap = googleMap;
+            GoogleMap.UiSettings.ZoomControlsEnabled = true;  // GetUiSettings().setZoomControlsEnabled(true);
+            GoogleMap.MyLocationEnabled = true;
 
             MoveCamera(new LatLng(54.974362, 73.418061));
 
             RecreateMarkers();
 
-            map.SetOnMarkerClickListener(this);
+            GoogleMap.SetOnMarkerClickListener(this);
         }
 
         public void RecreateMarkers()
         {
-            if (map != null)
+            if (GoogleMap != null)
             {
-                map.Clear();
+                GoogleMap.Clear();
 
                 foreach (var place in Data.PlaceInfos)
                 {
                     //text += string.Format(@"Id:{0}, X:{1}, Y:{2}", cafe.Id, cafe.geoloc.x, cafe.geoloc.y) + System.Environment.NewLine;
                     var position = new LatLng(place.GeoLocation.Latitude, place.GeoLocation.Longitude);
-                    Marker m = map.AddMarker(new MarkerOptions().SetPosition(position).SetTitle(place.Name).SetSnippet("snippet"));
+                    Marker m = GoogleMap.AddMarker(new MarkerOptions().SetPosition(position).SetTitle(place.Name).SetSnippet("snippet"));
                     markers.Add(m.Id, place.Id);
                 }
             }
@@ -90,65 +99,76 @@ namespace iCoffe.Droid.Fragments
 
         public void MoveCamera(LatLng position)
         {
-            if (map != null)
+            if (GoogleMap != null)
             {
-                map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(position, 10)); // moveCamera(CameraUpdateFactory.newLatLngZoom(/*some location*/, 10));
+                GoogleMap.MoveCamera(CameraUpdateFactory.NewLatLngZoom(position, 10)); // moveCamera(CameraUpdateFactory.newLatLngZoom(/*some location*/, 10));
             }
         }
 
         public override void OnResume()
         {
             base.OnResume();
-            mapView.OnResume();
+            MapView.OnResume();
+			GoogleMap.InfoWindowClick += MapOnInfoWindowClick;
         }
 
         public override void OnPause()
         {
             base.OnPause();
-            mapView.OnPause();
+            MapView.OnPause();
+			GoogleMap.InfoWindowClick -= MapOnInfoWindowClick;
         }
 
         public override void OnDestroy()
         {
             base.OnDestroy();
-            mapView.OnDestroy();
+            MapView.OnDestroy();
         }
 
         public override void OnSaveInstanceState(Bundle outState)
         {
             base.OnSaveInstanceState(outState);
-            mapView.OnSaveInstanceState(outState);
+            MapView.OnSaveInstanceState(outState);
         }
 
         public override void OnLowMemory()
         {
             base.OnLowMemory();
-            mapView.OnLowMemory();
+            MapView.OnLowMemory();
         }
 
         public bool OnMarkerClick(Marker marker)
         {
             //TODO: fix errors
             SDiag.Debug.Print(string.Format(@"markerTitle : {0}", marker.Title));
+            marker.ShowInfoWindow();
+            
+            return true;
+        }
+		
+		private void MapOnInfoWindowClick(object sender, GoogleMap.InfoWindowClickEventArgs infoWindowClickEventArgs)
+		{
+			var marker = infoWindowClickEventArgs.P0;  //May be a different name here, I'm using old bindings
+
             if (markers.ContainsKey(marker.Id))
             {
                 SDiag.Debug.Print(string.Format(@"cafeId : {0}", markers[marker.Id]));
-                Offer offer = Data.GetOffer(markers[marker.Id]);
+                var offers = Data.Offers.Where(o => o.placeId == (markers[marker.Id])).ToList();
 
-                if (offer != null)
+                if (offers.Count == 1)
                 {
                     Intent intent = new Intent(Activity, typeof(OfferActivity));
-                    intent.PutExtra(MainActivity.C_OFFER_ID, offer.Id);
+                    intent.PutExtra(MainActivity.C_OFFER_ID, offers[0].Id);
                     StartActivityForResult(intent, 1);
                 }
+				else
+				{
+					OffersLV.Adapter = new PurchasedOffersAdapter(Activity, offers);
+					Fade.Visibility = ViewStates.Visible;
+					OffersLV.Visibility = ViewStates.Visible;
+				}
             }
-            else
-            {
-                marker.ShowInfoWindow();
-            }
-
-            return true;
-        }
+		}
 
         public override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
