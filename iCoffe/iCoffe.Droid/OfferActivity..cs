@@ -9,10 +9,11 @@ using Android.Widget;
 
 using iCoffe.Shared;
 using UniversalImageLoader.Core;
+using Android.Content.PM;
 
 namespace iCoffe.Droid
 {
-    [Activity(Label = "OfferActivity")]
+    [Activity(Label = "OfferActivity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class OfferActivity : Activity
     {
         bool IgnoreBackPress;

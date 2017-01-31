@@ -9,10 +9,11 @@ using Android.Widget;
 
 using iCoffe.Shared;
 using Android.Views.InputMethods;
+using Android.Content.PM;
 
 namespace iCoffe.Droid
 {
-    [Activity(Label = "SignInActivity")]
+    [Activity(Label = "SignInActivity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class SignInActivity : Activity
     {
         // Consts

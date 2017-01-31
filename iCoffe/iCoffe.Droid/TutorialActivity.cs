@@ -1,21 +1,18 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Support.V4.View;
 
 using iCoffe.Droid.Adapters;
+using Android.Content.PM;
 
 namespace iCoffe.Droid
 {
-    [Activity(Label = "TutorialActivity")]
+    [Activity(Label = "TutorialActivity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class TutorialActivity : Activity
     {
         Button allclear;

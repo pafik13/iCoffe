@@ -1,21 +1,18 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Collections.Generic;
 using SDiag = System.Diagnostics;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
-using Android.Gms.Actions;
 
 using iCoffe.Shared;
+using iCoffe.Droid.Adapters;
 
 namespace iCoffe.Droid.Fragments
 {
@@ -46,15 +43,14 @@ namespace iCoffe.Droid.Fragments
 			
 			Fade = view.FindViewById<View>(Resource.Id.mfFadeV);
 			Fade.Click += (sender, args) => {
-				OffersLV.Visibility = ViewStates.Gone;
-				Fade.Visibility = ViewStates.Gone;
-				OffersLV.Adapter = null;
-			};
+                HideOffersList();
+            };
 			
 			OffersLV = view.FindViewById<ListView>(Resource.Id.mfOffersLV);
 			
 			OffersLV.ItemClick += OffersTable_ItemClick;
-			
+            //OffersLV.Clickable = true;
+            //OffersLV.Click += (s, e) => { HideOffersList(); };
             return view;
         }
 
@@ -79,6 +75,7 @@ namespace iCoffe.Droid.Fragments
             RecreateMarkers();
 
             GoogleMap.SetOnMarkerClickListener(this);
+            GoogleMap.InfoWindowClick += MapOnInfoWindowClick;
         }
 
         public void RecreateMarkers()
@@ -109,14 +106,29 @@ namespace iCoffe.Droid.Fragments
         {
             base.OnResume();
             MapView.OnResume();
-			GoogleMap.InfoWindowClick += MapOnInfoWindowClick;
+            if (GoogleMap != null)
+            {
+                GoogleMap.SetOnMarkerClickListener(this);
+                GoogleMap.InfoWindowClick += MapOnInfoWindowClick;
+            }
+        }
+
+        void HideOffersList()
+        {
+            OffersLV.Visibility = ViewStates.Gone;
+            Fade.Visibility = ViewStates.Gone;
+            OffersLV.Adapter = null;
         }
 
         public override void OnPause()
         {
             base.OnPause();
             MapView.OnPause();
-			GoogleMap.InfoWindowClick -= MapOnInfoWindowClick;
+            if (GoogleMap != null)
+            {
+                GoogleMap.InfoWindowClick -= MapOnInfoWindowClick;
+                GoogleMap.SetOnMarkerClickListener(null);
+            }
         }
 
         public override void OnDestroy()
@@ -148,12 +160,18 @@ namespace iCoffe.Droid.Fragments
 		
 		private void MapOnInfoWindowClick(object sender, GoogleMap.InfoWindowClickEventArgs infoWindowClickEventArgs)
 		{
-			var marker = infoWindowClickEventArgs.P0;  //May be a different name here, I'm using old bindings
+			var marker = infoWindowClickEventArgs.Marker;
 
             if (markers.ContainsKey(marker.Id))
             {
                 SDiag.Debug.Print(string.Format(@"cafeId : {0}", markers[marker.Id]));
-                var offers = Data.Offers.Where(o => o.placeId == (markers[marker.Id])).ToList();
+                var offers = Data.Offers.Where(o => o.PlaceId == (markers[marker.Id])).ToList<OfferInfo>();
+
+                if (offers.Count == 0)
+                {
+                    Toast.MakeText(Activity, "¬ данном месте нет доступных предложений", ToastLength.Short).Show();
+                    return;
+                }
 
                 if (offers.Count == 1)
                 {
@@ -161,12 +179,12 @@ namespace iCoffe.Droid.Fragments
                     intent.PutExtra(MainActivity.C_OFFER_ID, offers[0].Id);
                     StartActivityForResult(intent, 1);
                 }
-				else
-				{
-					OffersLV.Adapter = new PurchasedOffersAdapter(Activity, offers);
+                else
+                {
+                    OffersLV.Adapter = new PurchasedOffersAdapter(Activity, offers);
 					Fade.Visibility = ViewStates.Visible;
 					OffersLV.Visibility = ViewStates.Visible;
-				}
+                }
             }
 		}
 

@@ -6,7 +6,7 @@ using SDiag = System.Diagnostics;
 
 using Android.App;
 using Android.Content;
-//using Android.Runtime;
+using Android.Content.PM;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace iCoffe.Droid
 {
-    [Activity(Label = "MainActivity")]
+    [Activity(Label = "MainActivity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : Activity, ILocationListener
 	{
         // Consts
@@ -47,6 +47,7 @@ namespace iCoffe.Droid
         // Location
         LocationManager LocMgr;
         bool IsLocationFound = false;
+        bool IsFirstLocation = true;
         string defaultPlace = string.Empty;
         double latitude;
         double longitude;
@@ -96,7 +97,9 @@ namespace iCoffe.Droid
             {
                 string accessToken = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private).GetString(C_ACCESS_TOKEN, string.Empty);
                 SDiag.Debug.Print("accessToken " + accessToken);
-                //Rest.GetUserInfo(accessToken);
+                var accountInfo = Rest.GetAccountInfo(accessToken);
+                Data.UserInfo = accountInfo.User;
+                Data.UserPurchasedOffers = accountInfo.Purchases.Select(p => p.Offer).ToList();
                 RunOnUiThread(() =>
                 {
                     (account as Fragments.AccountFragment).RefreshUserInfo();
@@ -219,7 +222,7 @@ namespace iCoffe.Droid
             Data.Places = new List<Place>();
             Data.PlaceInfos = new List<PlaceInfo>();
             Data.UserInfo = new UserInfo() { Id = @"<нет данных>", Login = @"<нет данных>", PointsAmount = -1 };
-            Data.UserPurchasedOffers = new List<Offer>();
+            Data.UserPurchasedOffers = new List<OfferInfo>();
 
             LoadFragments(lat, lon);
 
@@ -274,8 +277,8 @@ namespace iCoffe.Droid
             Data.PlaceInfos = placeInfos;
             Data.Places = places;
             Data.UserInfo = accountInfo.User;
-            Data.UserPurchasedOffers = accountInfo.Purchases;
-            
+            Data.UserPurchasedOffers = accountInfo.Purchases.Select(p => p.Offer).ToList();
+
             LoadFragments(lat, lon);
             MapTab_Click(MapTab, EventArgs.Empty);
 
@@ -388,7 +391,11 @@ namespace iCoffe.Droid
             {
                 RunOnUiThread(() => {
                     (map as Fragments.MapFragment).RecreateMarkers();
-                    //(map as Fragments.MapFragment).MoveCamera(new Android.Gms.Maps.Model.LatLng(lat, lon));
+                    if (IsFirstLocation)
+                    {
+                        (map as Fragments.MapFragment).MoveCamera(new Android.Gms.Maps.Model.LatLng(lat, lon));
+                        IsFirstLocation = false;
+                    }
                 });
             }
 

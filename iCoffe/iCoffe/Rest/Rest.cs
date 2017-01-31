@@ -54,12 +54,30 @@ namespace iCoffe.Shared
             var result = new AccountInfoResponse
             {
                 User = new UserInfo() { Id = @"<нет данных>", Login = @"<нет данных>", PointsAmount = -1 },
-                Purchases = new List<Offer>()
+                Purchases = new List<Purchase>()
             };
             var client = new RestClient(Consts.ApiUrl);
             var request = new RestRequest(Consts.AccountInfoPath, Method.GET);
             request.AddHeader(@"Authorization", string.Format(@"Bearer {0}", bearer));
             var response = await client.ExecuteTaskAsync<AccountInfoResponse>(request);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                result = response.Data;
+            }
+            return result;
+        }
+
+        public static AccountInfoResponse GetAccountInfo(string bearer)
+        {
+            var result = new AccountInfoResponse
+            {
+                User = new UserInfo() { Id = @"<нет данных>", Login = @"<нет данных>", PointsAmount = -1 },
+                Purchases = new List<Purchase>()
+            };
+            var client = new RestClient(Consts.ApiUrl);
+            var request = new RestRequest(Consts.AccountInfoPath, Method.GET);
+            request.AddHeader(@"Authorization", string.Format(@"Bearer {0}", bearer));
+            var response = client.Execute<AccountInfoResponse>(request);
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 result = response.Data;

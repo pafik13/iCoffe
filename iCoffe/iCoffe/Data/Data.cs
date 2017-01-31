@@ -12,7 +12,7 @@ namespace iCoffe.Shared
         public static List<Place> Places { get; set; }
         public static List<PlaceInfo> PlaceInfos { get; set; }
         public static UserInfo UserInfo { get; set; }
-        public static List<Offer> UserPurchasedOffers { get; set; }
+        public static List<OfferInfo> UserPurchasedOffers { get; set; }
 
         //public static string SerializeUser(User user)
         //{

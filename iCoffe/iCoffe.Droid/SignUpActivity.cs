@@ -8,10 +8,11 @@ using Android.Widget;
 
 using iCoffe.Shared;
 using System.Net;
+using Android.Content.PM;
 
 namespace iCoffe.Droid
 {
-    [Activity(Label = "SignUpActivity")]
+    [Activity(Label = "SignUpActivity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class SignUpActivity : Activity
     {
         //Consts

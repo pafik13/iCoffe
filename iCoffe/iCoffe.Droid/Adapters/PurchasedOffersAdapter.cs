@@ -10,18 +10,18 @@ using UniversalImageLoader.Core;
 
 namespace iCoffe.Droid.Adapters
 {
-    public class PurchasedOffersAdapter : BaseAdapter<Offer>
+    public class PurchasedOffersAdapter : BaseAdapter<OfferInfo>
     {
         Activity Context;
-        IList<Offer> Offers;
+        IList<OfferInfo> Offers;
 
-        public PurchasedOffersAdapter(Activity context, IList<Offer> offers) : base()
+        public PurchasedOffersAdapter(Activity context, IList<OfferInfo> offers) : base()
         {
             Context = context;
             Offers = offers;
         }
 
-        public override Offer this[int position]
+        public override OfferInfo this[int position]
         {
             get { return Offers[position]; }
         }

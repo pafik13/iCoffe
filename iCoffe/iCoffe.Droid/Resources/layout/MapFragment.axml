@@ -7,20 +7,20 @@
         android:id="@+id/mfMap"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <View xmlns:tools="http://schemas.android.com/tools"
+    <View
         android:id="@+id/mfFadeV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        tools:visibility="gone" />
+        android:background="@color/translucent_black"
+        android:visibility="gone" />
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/mfOffersLV"
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp"
         android:layout_marginTop="60dp"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
-        tools:visibility="gone" />
+        android:visibility="gone" />
 </FrameLayout>
