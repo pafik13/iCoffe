@@ -46,12 +46,6 @@ namespace iCoffe.Droid
 
         // Location
         LocationManager LocMgr;
-        bool IsLocationFound = false;
-        bool IsFirstLocation = true;
-        string defaultPlace = string.Empty;
-        double latitude;
-        double longitude;
-        int radius = 100;
 
         // Intermedia
         ProgressDialog ProgressDialog;
@@ -126,10 +120,10 @@ namespace iCoffe.Droid
             CTSUserInfo = new CancellationTokenSource();
             CTUserInfo = CTSUserInfo.Token;
 
+            // TODO: dueTime -> 30 sec, interval -> 30 sec
             var dueTime = TimeSpan.FromSeconds(5);
             var interval = TimeSpan.FromSeconds(5);
 
-            // TODO: Add a CancellationTokenSource and supply the token here instead of None.
             var startPooling = Rest.RunPeriodicAsync(OnTick, dueTime, interval, CTUserInfo);
 
             ///
@@ -185,25 +179,9 @@ namespace iCoffe.Droid
                     SDiag.Debug.Print("Starting location updates with " + locationProvider.ToString());
                     LocMgr.RequestLocationUpdates(locationProvider, 2000, 1, this);
 
-                    // Progress
-                    string message = @"Определение местоположения...";
-                    ProgressDialog = ProgressDialog.Show(this, @"", message, true);
-
-                    ThreadPool.QueueUserWorkItem(state =>
-                    {
-                        Thread.Sleep(30000);
-
-                        RunOnUiThread(() =>
-                        {
-                            if (!IsLocationFound)
-                            {
-                                if (ProgressDialog != null)
-                                {
-                                    ProgressDialog.Dismiss();
-                                }
-                            }
-                        });
-                    });
+                    ProgressDialog = ProgressDialog.Show(this, @"", "Обновление данных. Ждите...", true);
+					
+					UpdateAllData(54.974362f, 73.418061f, 40);
                 }
             }
         }
@@ -212,8 +190,7 @@ namespace iCoffe.Droid
         {
             SDiag.Debug.Print("GetPlacesAndOffersAsync started. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
-            string message = string.IsNullOrEmpty(defaultPlace) ? @"Получение данных..." : "Получение данных. В качестве основной точки используется: " + defaultPlace;
-            ProgressDialog = ProgressDialog.Show(this, @"", message, true);
+            ProgressDialog = ProgressDialog.Show(this, @"", "Получение данных...", true);
 
             SDiag.Debug.Print("Radius " + radius.ToString());
             string accessToken = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private).GetString(C_ACCESS_TOKEN, string.Empty);
@@ -226,60 +203,40 @@ namespace iCoffe.Droid
 
             LoadFragments(lat, lon);
 
-			
-			if (cancellationToken.IsCancellationRequested)
-            {
-                // do something here as task was cancelled mid flight maybe just
-                return;
-            }
+			if (cancellationToken.IsCancellationRequested){ SDiag.Debug.Print("Canceled after <LoadFragments - Start>"); return; }
 			
             var offers = await Rest.GetOffersAsync(accessToken, lat, lon);
             SDiag.Debug.Print("GetOffersAsync running. Offers. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
-			if (cancellationToken.IsCancellationRequested)
-            {
-                // do something here as task was cancelled mid flight maybe just
-                return;
-            }
+			if (cancellationToken.IsCancellationRequested){ SDiag.Debug.Print("Canceled after <GetOffersAsync>"); return; }
 			
             var placeInfos = await Rest.GetPlaceInfosAsync(accessToken, lat, lon, rad);
             SDiag.Debug.Print("GetPlaceInfosAsync running. Cafes Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
+			if (cancellationToken.IsCancellationRequested){ SDiag.Debug.Print("Canceled after <GetPlaceInfosAsync>"); return; }
+
             var offrersPlacesIds = offers.Select(o => o.PlaceId).Distinct().ToArray();
             var places = await Rest.GetPlacesAsync(accessToken, offrersPlacesIds);
 
-            if (cancellationToken.IsCancellationRequested)
-            {
-                // do something here as task was cancelled mid flight maybe just
-                return;
-            }
-			
+			if (cancellationToken.IsCancellationRequested){ SDiag.Debug.Print("Canceled after <GetPlacesAsync>"); return; }
+
             var accountInfo = await Rest.GetAccountInfoAsync(accessToken);
             SDiag.Debug.Print("GetAccountInfoAsync running. UserInfo. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
 
-            //var userBonuses = await Rest.GetUserBonusOffersAsync(accessToken);
-            //SDiag.Debug.Print("GetCafesAndBonusOffers running. UserBonusOffer. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
-
-            //var userBonusesCafeIds = userBonuses.Select(i => i.CafeId).Distinct().ToArray();
-            //var cafesIds = places.Select(i => i.Id).Distinct().ToArray();
-            //var userCafes = await Rest.GetCafesAsync(accessToken, userBonusesCafeIds.Except(cafesIds).ToArray());
-            //places.AddRange(userCafes);
-            //SDiag.Debug.Print("GetCafesAndBonusOffers running. Cafes for UserBonusOffer. Thread: {0}", Thread.CurrentThread.ManagedThreadId);
-
-
-            if (cancellationToken.IsCancellationRequested)
-            {
-                // do something here as task was cancelled mid flight maybe just
-                return;
-            }
+			if (cancellationToken.IsCancellationRequested){ SDiag.Debug.Print("Canceled after <GetAccountInfoAsync>"); return; }
 
             Data.Offers = offers;
             Data.PlaceInfos = placeInfos;
             Data.Places = places;
             Data.UserInfo = accountInfo.User;
             Data.UserPurchasedOffers = accountInfo.Purchases.Select(p => p.Offer).ToList();
-
+			
+			if (cancellationToken.IsCancellationRequested){ SDiag.Debug.Print("Canceled after <Data.UserPurchasedOffers>"); return; }
+			
             LoadFragments(lat, lon);
+			
+			if (cancellationToken.IsCancellationRequested){ SDiag.Debug.Print("Canceled after <LoadFragments - End>"); return; }
+			
             MapTab_Click(MapTab, EventArgs.Empty);
 
             RunOnUiThread(() => {
@@ -313,11 +270,7 @@ namespace iCoffe.Droid
                                 StartActivity(intent);
                             }).SetNegativeButton(Resource.String.cancel_button, (sender, args) => {
                                 (sender as Dialog).Dismiss();
-                                defaultPlace = @"центр Омска";
-                                latitude = 54.974362;
-                                longitude = 73.418061;
-                                radius = 4;
-                                //GetCafesAndBonusOffers();
+								UpdateAllData(54.974362f, 73.418061f, 40);
                             }).Show();
 
                 return false;
@@ -464,11 +417,6 @@ namespace iCoffe.Droid
                 ProgressDialog.Dismiss();
             }
 
-            // stop sending location updates when the application goes into the background
-            // to learn about updating location in the background, refer to the Backgrounding guide
-            // http://docs.xamarin.com/guides/cross-platform/application_fundamentals/backgrounding/
-
-
             // RemoveUpdates takes a pending intent - here, we pass the current Activity
             if (LocMgr != null)
             {
@@ -492,7 +440,19 @@ namespace iCoffe.Droid
             }
             base.OnBackPressed();
         }
-
+		
+		void UpdateAllData(double lat, double lon, int rad)
+		{
+			if (ProgressDialog != null && ProgressDialog.IsShown) { ProgressDialog.Hide(); }
+			if (CTData != null && CTData.CanBeCanceled && CTSData != null)
+            {
+                CTSData.Cancel();
+            }
+            CTSData = new CancellationTokenSource();
+            CTData = CTSData.Token;
+            var getDataAsync = GetPlacesAndOffersAsync(CTData, lat, lon, rad);
+		}
+		
         #region LOCATION
         public void OnLocationChanged(Location location)
         {
@@ -501,15 +461,9 @@ namespace iCoffe.Droid
             SDiag.Debug.Print("Longitude: " + location.Longitude.ToString());
             SDiag.Debug.Print("Provider: " + location.Provider.ToString());
 
-            IsLocationFound = true;
-            latitude = location.Latitude;
-            longitude = location.Longitude;
             LocMgr.RemoveUpdates(this);
-            ProgressDialog.Hide();
-            radius = 5;
-            CTSData = new CancellationTokenSource();
-            CTData = CTSData.Token;
-            var task = GetPlacesAndOffersAsync(CTData, location.Latitude, location.Longitude, 40);
+			
+			UpdateAllData(location.Latitude, location.Longitude, 40);
         }
         public void OnProviderDisabled(string provider)
         {
