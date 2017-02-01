@@ -70,7 +70,7 @@
     <Compile Include="Adapters\OffersAdapter.cs" />
     <Compile Include="Adapters\PurchasedOffersAdapter.cs" />
     <Compile Include="Adapters\TutorialAdapter.cs" />
-    <Compile Include="OfferActivity..cs" />
+    <Compile Include="PlaceActivity.cs" />
     <Compile Include="Fragments\OffersFragment.cs" />
     <Compile Include="Fragments\MapFragment.cs" />
     <Compile Include="Fragments\AccountFragment.cs" />
@@ -108,7 +108,7 @@
     <AndroidResource Include="Resources\layout\Tutorial_2_Fragment.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\Offer.axml">
+    <AndroidResource Include="Resources\layout\Place.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\OfferItem.axml" />

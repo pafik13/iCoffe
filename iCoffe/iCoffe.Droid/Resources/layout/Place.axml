@@ -8,13 +8,13 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/oaMainLL"
+        android:id="@+id/paMainLL"
         android:background="@drawable/background">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/oaTopLL"
+            android:id="@+id/paTopLL"
             android:layout_margin="10dp"
             android:background="@drawable/bg_white_corned">
             <RelativeLayout
@@ -22,19 +22,19 @@
                 android:minHeight="25px"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/oaCafeNameRL"
+                android:id="@+id/paNameRL"
                 android:layout_margin="8dp">
                 <ImageView
                     android:src="@android:drawable/ic_menu_gallery"
                     android:layout_width="72dp"
                     android:layout_height="72dp"
-                    android:id="@+id/oaCafeNameIV" />
+                    android:id="@+id/paLogoIV" />
                 <TextView
                     android:text="Large Text"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/oaCafeNameTV"
+                    android:id="@+id/paNameTV"
                     android:gravity="center"
                     android:layout_centerInParent="true" />
             </RelativeLayout>
@@ -42,33 +42,20 @@
                 android:src="@android:drawable/ic_menu_gallery"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:id="@+id/oaCafeImageIV"
+                android:id="@+id/paViewIV"
                 android:scaleType="fitXY" />
-            <TextView
-                android:text="10 "
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/oaPriceTV"
-                android:textColor="@color/red_main"
-                android:layout_gravity="right"
-                android:layout_margin="8dp"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:drawableRight="@drawable/ic_star_red_24dp" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/oaMiddleLL">
+            android:id="@+id/paMiddleLL">
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:id="@+id/oaMiddleLeftLL"
+                android:layout_height="144dp"
+                android:id="@+id/paMiddleLeftLL"
                 android:layout_weight="1"
-                android:minHeight="144dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp">
                 <TextView
@@ -85,15 +72,14 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/oaBonusDescrTV"
+                    android:id="@+id/paDescrTV"
                     android:background="@drawable/bg_white_corned" />
             </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
-                android:minHeight="144dp"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:id="@+id/oaMiddleRightLL"
+                android:layout_height="144dp"
+                android:id="@+id/paMiddleRightLL"
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp">
@@ -115,37 +101,19 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/oaAddressTV"/>
+                        android:id="@+id/paAddressTV" />
                 </ScrollView>
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
+        <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/oaBottomLL">
-            <RelativeLayout
-                android:minWidth="25px"
-                android:minHeight="25px"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <Button
-                    android:text="ХОЧУ!"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/oaWantB"
-                    android:paddingLeft="40dp"
-                    android:paddingRight="40dp"
-                    android:minHeight="@dimen/sign_in_edit_height"
-                    android:background="@drawable/button"
-                    android:typeface="monospace"
-                    android:textStyle="bold"
-                    android:textSize="24sp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="@dimen/sign_in_edit_margin" />
-            </RelativeLayout>
-        </LinearLayout>
+            android:id="@+id/paOffersLV"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10dp"
+            android:paddingTop="10dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp" />
     </LinearLayout>
     <RelativeLayout
         android:visibility="gone"

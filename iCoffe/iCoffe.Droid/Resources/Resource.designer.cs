@@ -627,20 +627,20 @@ namespace iCoffe.Droid
 			// aapt resource value: 0x7f0a0007
 			public const int icon_only = 2131361799;
 			
-			// aapt resource value: 0x7f0a004b
-			public const int imageView1 = 2131361867;
+			// aapt resource value: 0x7f0a0049
+			public const int imageView1 = 2131361865;
 			
 			// aapt resource value: 0x7f0a000c
 			public const int light = 2131361804;
 			
-			// aapt resource value: 0x7f0a004c
-			public const int linearLayout1 = 2131361868;
+			// aapt resource value: 0x7f0a004a
+			public const int linearLayout1 = 2131361866;
 			
-			// aapt resource value: 0x7f0a002e
-			public const int lock_message = 2131361838;
+			// aapt resource value: 0x7f0a0031
+			public const int lock_message = 2131361841;
 			
-			// aapt resource value: 0x7f0a002d
-			public const int locker = 2131361837;
+			// aapt resource value: 0x7f0a0030
+			public const int locker = 2131361840;
 			
 			// aapt resource value: 0x7f0a001a
 			public const int mContentFL = 2131361818;
@@ -672,146 +672,140 @@ namespace iCoffe.Droid
 			// aapt resource value: 0x7f0a0002
 			public const int normal = 2131361794;
 			
-			// aapt resource value: 0x7f0a002a
-			public const int oaAddressTV = 2131361834;
-			
-			// aapt resource value: 0x7f0a0028
-			public const int oaBonusDescrTV = 2131361832;
-			
-			// aapt resource value: 0x7f0a002b
-			public const int oaBottomLL = 2131361835;
-			
-			// aapt resource value: 0x7f0a0024
-			public const int oaCafeImageIV = 2131361828;
+			// aapt resource value: 0x7f0a0023
+			public const int ofListView = 2131361827;
 			
 			// aapt resource value: 0x7f0a0022
-			public const int oaCafeNameIV = 2131361826;
-			
-			// aapt resource value: 0x7f0a0021
-			public const int oaCafeNameRL = 2131361825;
-			
-			// aapt resource value: 0x7f0a0023
-			public const int oaCafeNameTV = 2131361827;
-			
-			// aapt resource value: 0x7f0a001f
-			public const int oaMainLL = 2131361823;
-			
-			// aapt resource value: 0x7f0a0026
-			public const int oaMiddleLL = 2131361830;
-			
-			// aapt resource value: 0x7f0a0027
-			public const int oaMiddleLeftLL = 2131361831;
-			
-			// aapt resource value: 0x7f0a0029
-			public const int oaMiddleRightLL = 2131361833;
-			
-			// aapt resource value: 0x7f0a0025
-			public const int oaPriceTV = 2131361829;
+			public const int ofMainLL = 2131361826;
 			
 			// aapt resource value: 0x7f0a0020
-			public const int oaTopLL = 2131361824;
+			public const int oiGiftIV = 2131361824;
+			
+			// aapt resource value: 0x7f0a001f
+			public const int oiOfferLogoIV = 2131361823;
+			
+			// aapt resource value: 0x7f0a0021
+			public const int oiOfferTitleTV = 2131361825;
+			
+			// aapt resource value: 0x7f0a002e
+			public const int paAddressTV = 2131361838;
 			
 			// aapt resource value: 0x7f0a002c
-			public const int oaWantB = 2131361836;
+			public const int paDescrTV = 2131361836;
 			
-			// aapt resource value: 0x7f0a0033
-			public const int ofListView = 2131361843;
+			// aapt resource value: 0x7f0a0027
+			public const int paLogoIV = 2131361831;
 			
-			// aapt resource value: 0x7f0a0032
-			public const int ofMainLL = 2131361842;
+			// aapt resource value: 0x7f0a0024
+			public const int paMainLL = 2131361828;
 			
-			// aapt resource value: 0x7f0a0030
-			public const int oiGiftIV = 2131361840;
+			// aapt resource value: 0x7f0a002a
+			public const int paMiddleLL = 2131361834;
+			
+			// aapt resource value: 0x7f0a002b
+			public const int paMiddleLeftLL = 2131361835;
+			
+			// aapt resource value: 0x7f0a002d
+			public const int paMiddleRightLL = 2131361837;
+			
+			// aapt resource value: 0x7f0a0026
+			public const int paNameRL = 2131361830;
+			
+			// aapt resource value: 0x7f0a0028
+			public const int paNameTV = 2131361832;
 			
 			// aapt resource value: 0x7f0a002f
-			public const int oiOfferLogoIV = 2131361839;
+			public const int paOffersLV = 2131361839;
 			
-			// aapt resource value: 0x7f0a0031
-			public const int oiOfferTitleTV = 2131361841;
+			// aapt resource value: 0x7f0a0025
+			public const int paTopLL = 2131361829;
 			
-			// aapt resource value: 0x7f0a0035
-			public const int poiGiftIV = 2131361845;
+			// aapt resource value: 0x7f0a0029
+			public const int paViewIV = 2131361833;
+			
+			// aapt resource value: 0x7f0a0033
+			public const int poiGiftIV = 2131361843;
+			
+			// aapt resource value: 0x7f0a0032
+			public const int poiOfferLogoIV = 2131361842;
 			
 			// aapt resource value: 0x7f0a0034
-			public const int poiOfferLogoIV = 2131361844;
+			public const int poiOfferTitleTV = 2131361844;
 			
-			// aapt resource value: 0x7f0a0036
-			public const int poiOfferTitleTV = 2131361846;
-			
-			// aapt resource value: 0x7f0a004f
-			public const int relativeLayout1 = 2131361871;
+			// aapt resource value: 0x7f0a004d
+			public const int relativeLayout1 = 2131361869;
 			
 			// aapt resource value: 0x7f0a0003
 			public const int satellite = 2131361795;
 			
-			// aapt resource value: 0x7f0a003b
-			public const int siEmailET = 2131361851;
-			
-			// aapt resource value: 0x7f0a003a
-			public const int siEmailIV = 2131361850;
+			// aapt resource value: 0x7f0a0039
+			public const int siEmailET = 2131361849;
 			
 			// aapt resource value: 0x7f0a0038
-			public const int siEmailLL = 2131361848;
+			public const int siEmailIV = 2131361848;
 			
-			// aapt resource value: 0x7f0a0037
-			public const int siMainRL = 2131361847;
+			// aapt resource value: 0x7f0a0036
+			public const int siEmailLL = 2131361846;
 			
-			// aapt resource value: 0x7f0a003e
-			public const int siPasswordET = 2131361854;
-			
-			// aapt resource value: 0x7f0a003d
-			public const int siPasswordIV = 2131361853;
-			
-			// aapt resource value: 0x7f0a0039
-			public const int siPasswordLL = 2131361849;
+			// aapt resource value: 0x7f0a0035
+			public const int siMainRL = 2131361845;
 			
 			// aapt resource value: 0x7f0a003c
-			public const int siSigninB = 2131361852;
+			public const int siPasswordET = 2131361852;
 			
-			// aapt resource value: 0x7f0a003f
-			public const int siSignupB = 2131361855;
+			// aapt resource value: 0x7f0a003b
+			public const int siPasswordIV = 2131361851;
+			
+			// aapt resource value: 0x7f0a0037
+			public const int siPasswordLL = 2131361847;
+			
+			// aapt resource value: 0x7f0a003a
+			public const int siSigninB = 2131361850;
+			
+			// aapt resource value: 0x7f0a003d
+			public const int siSignupB = 2131361853;
 			
 			// aapt resource value: 0x7f0a0008
 			public const int standard = 2131361800;
 			
-			// aapt resource value: 0x7f0a0049
-			public const int suConfirmET = 2131361865;
-			
-			// aapt resource value: 0x7f0a0048
-			public const int suConfirmIV = 2131361864;
-			
-			// aapt resource value: 0x7f0a0045
-			public const int suConfirmLL = 2131361861;
-			
-			// aapt resource value: 0x7f0a0044
-			public const int suEmailET = 2131361860;
-			
-			// aapt resource value: 0x7f0a0043
-			public const int suEmailIV = 2131361859;
-			
-			// aapt resource value: 0x7f0a0041
-			public const int suEmailLL = 2131361857;
-			
-			// aapt resource value: 0x7f0a0040
-			public const int suMainRL = 2131361856;
-			
 			// aapt resource value: 0x7f0a0047
-			public const int suPasswordET = 2131361863;
+			public const int suConfirmET = 2131361863;
 			
 			// aapt resource value: 0x7f0a0046
-			public const int suPasswordIV = 2131361862;
+			public const int suConfirmIV = 2131361862;
+			
+			// aapt resource value: 0x7f0a0043
+			public const int suConfirmLL = 2131361859;
 			
 			// aapt resource value: 0x7f0a0042
-			public const int suPasswordLL = 2131361858;
+			public const int suEmailET = 2131361858;
 			
-			// aapt resource value: 0x7f0a004a
-			public const int suSignupB = 2131361866;
+			// aapt resource value: 0x7f0a0041
+			public const int suEmailIV = 2131361857;
 			
-			// aapt resource value: 0x7f0a004e
-			public const int t2fAllclearB = 2131361870;
+			// aapt resource value: 0x7f0a003f
+			public const int suEmailLL = 2131361855;
 			
-			// aapt resource value: 0x7f0a004d
-			public const int t2fRules = 2131361869;
+			// aapt resource value: 0x7f0a003e
+			public const int suMainRL = 2131361854;
+			
+			// aapt resource value: 0x7f0a0045
+			public const int suPasswordET = 2131361861;
+			
+			// aapt resource value: 0x7f0a0044
+			public const int suPasswordIV = 2131361860;
+			
+			// aapt resource value: 0x7f0a0040
+			public const int suPasswordLL = 2131361856;
+			
+			// aapt resource value: 0x7f0a0048
+			public const int suSignupB = 2131361864;
+			
+			// aapt resource value: 0x7f0a004c
+			public const int t2fAllclearB = 2131361868;
+			
+			// aapt resource value: 0x7f0a004b
+			public const int t2fRules = 2131361867;
 			
 			// aapt resource value: 0x7f0a0004
 			public const int terrain = 2131361796;
@@ -858,13 +852,13 @@ namespace iCoffe.Droid
 			public const int MapFragment = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int Offer = 2130903043;
+			public const int OfferItem = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int OfferItem = 2130903044;
+			public const int OffersFragment = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int OffersFragment = 2130903045;
+			public const int Place = 2130903045;
 			
 			// aapt resource value: 0x7f030006
 			public const int PurchasedOfferItem = 2130903046;

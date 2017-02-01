@@ -35,6 +35,11 @@ namespace iCoffe.Shared
             return Offers.FirstOrDefault(offer => offer.Id == offerId);
         }
 
+        public static List<OfferInfo> GetOffers(int placeId)
+        {
+            return Offers.Where(offer => offer.PlaceId == placeId).ToList<OfferInfo>();
+        }
+
         //internal static BonusOffer GetBonusOffer(Guid guid)
         //{
         //    return BonusOffers.FirstOrDefault(offer => offer.Id == guid);

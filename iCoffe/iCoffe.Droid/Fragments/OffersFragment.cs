@@ -38,8 +38,8 @@ namespace iCoffe.Droid.Fragments
         {
             //throw new NotImplementedException();
             //Toast.MakeText(Activity, string.Format(@"id : {0}; Descr: {1}", OffersAdapter[e.Position].Id, OffersAdapter[e.Position].Description), ToastLength.Short).Show();
-            Intent intent = new Intent(Activity, typeof(OfferActivity));
-            intent.PutExtra(MainActivity.C_OFFER_ID, OffersAdapter[e.Position].Id);
+            Intent intent = new Intent(Activity, typeof(PlaceActivity));
+            intent.PutExtra(MainActivity.C_PLACE_ID, OffersAdapter[e.Position].PlaceId);
             StartActivityForResult(intent, 1);
         }
 

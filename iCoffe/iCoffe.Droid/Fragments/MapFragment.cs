@@ -59,8 +59,8 @@ namespace iCoffe.Droid.Fragments
             //Toast.MakeText(Activity, string.Format(@"id : {0}; Descr: {1}", OffersAdapter[e.Position].Id, OffersAdapter[e.Position].Description), ToastLength.Short).Show();
 			var lv = (sender as ListView);
 			var adapter = (lv.Adapter as PurchasedOffersAdapter); 
-            Intent intent = new Intent(Activity, typeof(OfferActivity));
-            intent.PutExtra(MainActivity.C_OFFER_ID, adapter[e.Position].Id);
+            Intent intent = new Intent(Activity, typeof(PlaceActivity));
+            intent.PutExtra(MainActivity.C_PLACE_ID, adapter[e.Position].PlaceId);
             StartActivityForResult(intent, 1);
         }
 
@@ -165,26 +165,10 @@ namespace iCoffe.Droid.Fragments
             if (markers.ContainsKey(marker.Id))
             {
                 SDiag.Debug.Print(string.Format(@"cafeId : {0}", markers[marker.Id]));
-                var offers = Data.Offers.Where(o => o.PlaceId == (markers[marker.Id])).ToList<OfferInfo>();
 
-                if (offers.Count == 0)
-                {
-                    Toast.MakeText(Activity, "¬ данном месте нет доступных предложений", ToastLength.Short).Show();
-                    return;
-                }
-
-                if (offers.Count == 1)
-                {
-                    Intent intent = new Intent(Activity, typeof(OfferActivity));
-                    intent.PutExtra(MainActivity.C_OFFER_ID, offers[0].Id);
-                    StartActivityForResult(intent, 1);
-                }
-                else
-                {
-                    OffersLV.Adapter = new PurchasedOffersAdapter(Activity, offers);
-					Fade.Visibility = ViewStates.Visible;
-					OffersLV.Visibility = ViewStates.Visible;
-                }
+                Intent intent = new Intent(Activity, typeof(PlaceActivity));
+                intent.PutExtra(MainActivity.C_PLACE_ID, markers[marker.Id]);
+                StartActivityForResult(intent, 1);
             }
 		}
 

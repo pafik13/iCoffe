@@ -31,7 +31,7 @@ namespace iCoffe.Droid
         public const string C_IS_NEED_TUTORIAL = @"C_IS_NEED_TUTORIAL";
         public const string C_IS_BACK_PRESSED_IN_SIGN_IN = @"C_IS_BACK_PRESSED_IN_SIGN_IN";
 
-        public const string C_OFFER_ID = @"C_OFFER_ID";
+        public const string C_PLACE_ID = @"C_PLACE_ID";
 
 
         // Layouts
@@ -192,7 +192,7 @@ namespace iCoffe.Droid
 
             ProgressDialog = ProgressDialog.Show(this, @"", "Получение данных...", true);
 
-            SDiag.Debug.Print("Radius " + radius.ToString());
+            SDiag.Debug.Print("Radius " + rad.ToString());
             string accessToken = GetSharedPreferences(C_DEFAULT_PREFS, FileCreationMode.Private).GetString(C_ACCESS_TOKEN, string.Empty);
             SDiag.Debug.Print("accessToken " + accessToken);
             Data.Offers = new List<Offer>();
@@ -344,11 +344,7 @@ namespace iCoffe.Droid
             {
                 RunOnUiThread(() => {
                     (map as Fragments.MapFragment).RecreateMarkers();
-                    if (IsFirstLocation)
-                    {
-                        (map as Fragments.MapFragment).MoveCamera(new Android.Gms.Maps.Model.LatLng(lat, lon));
-                        IsFirstLocation = false;
-                    }
+                    (map as Fragments.MapFragment).MoveCamera(new Android.Gms.Maps.Model.LatLng(lat, lon));
                 });
             }
 
@@ -443,7 +439,7 @@ namespace iCoffe.Droid
 		
 		void UpdateAllData(double lat, double lon, int rad)
 		{
-			if (ProgressDialog != null && ProgressDialog.IsShown) { ProgressDialog.Hide(); }
+			if (ProgressDialog != null && ProgressDialog.IsShowing) { ProgressDialog.Hide(); }
 			if (CTData != null && CTData.CanBeCanceled && CTSData != null)
             {
                 CTSData.Cancel();
