@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:minWidth="25px"
     android:minHeight="25px"
     android:layout_width="match_parent"
@@ -115,24 +115,24 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp" />
     </LinearLayout>
-    <RelativeLayout
+    <View
         android:visibility="gone"
-        android:id="@+id/locker"
+        android:id="@+id/fade"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/translucent_black"
         android:minWidth="25px"
-        android:minHeight="25px">
-        <TextView
-            android:text="Large Text"
-            android:minHeight="@dimen/sign_in_edit_height"
-            android:padding="@dimen/sign_in_edit_margin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lock_message"
-            android:layout_centerInParent="true"
-            android:background="@drawable/bg_white_70_corned"
-            android:textColor="@color/red_main"
-            android:textSize="36sp" />
-    </RelativeLayout>
-</RelativeLayout>
+        android:minHeight="25px" />
+    <TextView
+        android:visibility="gone"
+        android:text="Large Text"
+        android:minHeight="@dimen/sign_in_edit_height"
+        android:padding="@dimen/sign_in_edit_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/message"
+        android:layout_graviti="center"
+        android:background="@drawable/bg_white_70_corned"
+        android:textColor="@color/red_main"
+        android:textSize="36sp" />
+</FrameLayout>

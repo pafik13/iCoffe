@@ -65,10 +65,10 @@ namespace iCoffe.Droid
             var offer = Data.GetOffer(adapter[e.Position].Id);
 
             new AlertDialog.Builder(this)
-                        .SetTitle(string.Concat("Описание предложения: ", offer.Title))
+                        .SetTitle(esource.String.offer_caption)
                         .SetMessage(string.Concat(offer.Description, System.Environment.NewLine, "Цена: ", offer.Price))
                         .SetCancelable(false)
-                        .SetPositiveButton("ХОЧУ", (caller, args) => {
+                        .SetPositiveButton(Resource.String.want_button, (caller, args) => {
                             IgnoreBackPress = true;
 
                             if (Rest.BuyOffer(AccessToken, offer.Id))
@@ -95,11 +95,11 @@ namespace iCoffe.Droid
 
         void ShowMessage(string message)
         {
-            var locker = FindViewById<RelativeLayout>(Resource.Id.locker);
-            locker.Visibility = ViewStates.Visible;
-
-            var lock_message = FindViewById<TextView>(Resource.Id.lock_message);
-            lock_message.Text = message;
+            var fade = FindViewById<RelativeLayout>(Resource.Id.fade);
+            fade.Visibility = ViewStates.Visible;
+            var message = FindViewById<TextView>(Resource.Id.message);
+			message.Text = message;
+            message.Visibility = ViewStates.Visible;
 
             ThreadPool.QueueUserWorkItem(state =>
             {
@@ -107,7 +107,8 @@ namespace iCoffe.Droid
 
                 RunOnUiThread(() =>
                 {
-                    locker.Visibility = ViewStates.Gone;
+                    fade.Visibility = ViewStates.Gone;
+					message.Visibility = ViewStates.Gone;
                     IgnoreBackPress = false;
                 });
 

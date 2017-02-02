@@ -5,6 +5,8 @@
   <string name="error_caption">Ошибка!</string>
   <string name="warning_caption">Внимание!</string>
   <string name="cancel_button">Отмена</string>
+  <string name="offer_caption">Описание предложения:</string>
+  <string name="want_button">ХОЧУ</string>
   <string name="no_internet_connection">Отсутствует подключение к интернету - проверьте правильность настроек.</string>
   <string name="no_internet_provider">Выключено подключение к интернету.</string>
   <string name="no_location_provider">Не получается получить данные о местоположении, так как отключены провайдеры.</string>
