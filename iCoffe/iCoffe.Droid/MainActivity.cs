@@ -81,6 +81,11 @@ namespace iCoffe.Droid
 
             AccountTab = FindViewById<LinearLayout>(Resource.Id.maUserTabLL);
             AccountTab.Click += UserTab_Click; ;
+			
+			// HockeyApp
+			CrashManager.Register(this);
+            UpdateManager.Register(this);
+			
         }
 
         void OnTick()
@@ -420,6 +425,9 @@ namespace iCoffe.Droid
             }
 
             SDiag.Debug.Print("Location updates paused because application is entering the background");
+			
+			// HockeyApp
+			UpdateManager.Unregister();
         }
 
         protected override void OnStop()
@@ -427,6 +435,16 @@ namespace iCoffe.Droid
             base.OnStop();
             SDiag.Debug.Print("OnStop called");
         }
+		
+		
+		protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+			// HockeyApp
+			UpdateManager.Unregister();
+        }
+
 
         public override void OnBackPressed()
         {

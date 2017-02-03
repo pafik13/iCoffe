@@ -25,4 +25,4 @@ using Android.App;
 
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
-
+[assembly: MetaData ("net.hockeyapp.android.appIdentifier", Value="Your-Api-Key")]

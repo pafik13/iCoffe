@@ -6,9 +6,9 @@
     android:minHeight="25px"
     android:background="@drawable/bg_white_corned">
     <ImageView
-        android:src="@drawable/ic_bonus_logo_demo_120dp"
+        android:src="@drawable/ic_placeholder_100dp"
         android:layout_height="100dp"
-        android:layout_width="120dp"
+        android:layout_width="100dp"
         android:id="@+id/oiOfferLogoIV"
         android:layout_alignParentLeft="true"
         android:scaleType="fitXY" />
