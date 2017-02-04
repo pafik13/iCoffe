@@ -6,7 +6,7 @@
     android:minHeight="25px"
     android:background="@drawable/bg_white_corned">
     <ImageView
-        android:src="@drawable/ic_placeholder_100dp"
+        android:src="@drawable/placeholder_image_100dp"
         android:layout_height="100dp"
         android:layout_width="100dp"
         android:id="@+id/oiOfferLogoIV"

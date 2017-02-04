@@ -10,10 +10,10 @@ using Android.Content.PM;
 
 using UniversalImageLoader.Core;
 
-using iCoffe.Shared;
-using iCoffe.Droid.Adapters;
+using tutCoffee.Shared;
+using tutCoffee.Droid.Adapters;
 
-namespace iCoffe.Droid
+namespace tutCoffee.Droid
 {
     [Activity(Label = "PlaceActivity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class PlaceActivity : Activity
@@ -65,7 +65,7 @@ namespace iCoffe.Droid
             var offer = Data.GetOffer(adapter[e.Position].Id);
 
             new AlertDialog.Builder(this)
-                        .SetTitle(esource.String.offer_caption)
+                        .SetTitle(Resource.String.offer_caption)
                         .SetMessage(string.Concat(offer.Description, System.Environment.NewLine, "Цена: ", offer.Price))
                         .SetCancelable(false)
                         .SetPositiveButton(Resource.String.want_button, (caller, args) => {
@@ -97,9 +97,9 @@ namespace iCoffe.Droid
         {
             var fade = FindViewById<RelativeLayout>(Resource.Id.fade);
             fade.Visibility = ViewStates.Visible;
-            var message = FindViewById<TextView>(Resource.Id.message);
-			message.Text = message;
-            message.Visibility = ViewStates.Visible;
+            var msg = FindViewById<TextView>(Resource.Id.message);
+            msg.Text = message;
+            msg.Visibility = ViewStates.Visible;
 
             ThreadPool.QueueUserWorkItem(state =>
             {
@@ -108,7 +108,7 @@ namespace iCoffe.Droid
                 RunOnUiThread(() =>
                 {
                     fade.Visibility = ViewStates.Gone;
-					message.Visibility = ViewStates.Gone;
+                    msg.Visibility = ViewStates.Gone;
                     IgnoreBackPress = false;
                 });
 

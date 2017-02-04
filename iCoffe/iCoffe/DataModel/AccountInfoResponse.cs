@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace iCoffe.Shared
+namespace tutCoffee.Shared
 {
     public class AccountInfoResponse
     {

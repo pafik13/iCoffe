@@ -1,4 +1,4 @@
-﻿namespace iCoffe.Shared
+﻿namespace tutCoffee.Shared
 {
     public static class Consts
     {

@@ -5,10 +5,10 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-using iCoffe.Shared;
-using iCoffe.Droid.Adapters;
+using tutCoffee.Shared;
+using tutCoffee.Droid.Adapters;
 
-namespace iCoffe.Droid.Fragments
+namespace tutCoffee.Droid.Fragments
 {
     public class OffersFragment : Fragment
     {

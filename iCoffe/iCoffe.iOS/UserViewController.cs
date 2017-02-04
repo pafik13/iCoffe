@@ -4,11 +4,11 @@ using System.Linq;
 using System.CodeDom.Compiler;
 using UIKit;
 using System.Collections.Generic;
-using iCoffe.Shared;
+using tutCoffee.Shared;
 using CoreLocation;
 using MapKit;
 
-namespace iCoffe.iOS
+namespace tutCoffee.iOS
 {
 	partial class UserViewController : UIViewController
 	{

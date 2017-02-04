@@ -1,4 +1,4 @@
-﻿namespace iCoffe.Shared
+﻿namespace tutCoffee.Shared
 {
     public class Place: PlaceInfo
     {

@@ -2,7 +2,7 @@
 using CoreLocation;
 using UIKit;
 
-namespace iCoffe.iOS
+namespace tutCoffee.iOS
 {
 	public class LocationManager
 	{

@@ -3,7 +3,7 @@ using CoreGraphics;
 using Foundation;
 using UIKit;
 
-namespace iCoffe.iOS
+namespace tutCoffee.iOS
 {
 	public class UserBonusRow : UITableViewCell
 	{

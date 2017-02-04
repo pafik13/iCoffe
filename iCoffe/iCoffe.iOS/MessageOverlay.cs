@@ -2,7 +2,7 @@
 using CoreGraphics;
 using UIKit;
 
-namespace iCoffe.iOS
+namespace tutCoffee.iOS
 {
 public class MessageOverlay : UIView
 	{

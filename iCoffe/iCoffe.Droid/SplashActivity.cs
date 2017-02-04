@@ -4,7 +4,7 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Views;
 
-namespace iCoffe.Droid
+namespace tutCoffee.Droid
 {
     //https://forums.xamarin.com/discussion/19362/xamarin-forms-splashscreen-in-android
     [Activity(Label = "tutCoffee", Theme = "@style/MyTheme.Splash", Icon = "@drawable/NewIcon", MainLauncher = true, NoHistory = true, ScreenOrientation = ScreenOrientation.Portrait)]

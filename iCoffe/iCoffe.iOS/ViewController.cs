@@ -10,9 +10,9 @@ using UIKit;
 using Foundation;
 using CoreLocation;
 
-using iCoffe.Shared;
+using tutCoffee.Shared;
 
-namespace iCoffe.iOS
+namespace tutCoffee.iOS
 {
 	public enum AvailbleTabs
 	{

@@ -3,9 +3,9 @@ using System;
 using System.CodeDom.Compiler;
 using UIKit;
 
-using iCoffe.Shared;
+using tutCoffee.Shared;
 
-namespace iCoffe.iOS
+namespace tutCoffee.iOS
 {
 	public partial class SignInViewController : UIViewController
 	{

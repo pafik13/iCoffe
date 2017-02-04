@@ -5,13 +5,13 @@ using Android.App;
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle ("iCoffe.Droid")]
+[assembly: AssemblyTitle ("tutCoffee.Droid")]
 [assembly: AssemblyDescription ("")]
 [assembly: AssemblyConfiguration ("")]
-[assembly: AssemblyCompany ("")]
-[assembly: AssemblyProduct ("")]
-[assembly: AssemblyCopyright ("joe")]
-[assembly: AssemblyTrademark ("")]
+[assembly: AssemblyCompany ("Apps2Adds")]
+[assembly: AssemblyProduct ("tutCoffee")]
+[assembly: AssemblyCopyright ("(c) Pavel Lyubin")]
+[assembly: AssemblyTrademark ("tutCoffee")]
 [assembly: AssemblyCulture ("")]
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
@@ -25,4 +25,4 @@ using Android.App;
 
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
-[assembly: MetaData ("net.hockeyapp.android.appIdentifier", Value="Your-Api-Key")]
+[assembly: MetaData ("net.hockeyapp.android.appIdentifier", Value= "69e8adb902e545a39ab075d1c60bfe38")]

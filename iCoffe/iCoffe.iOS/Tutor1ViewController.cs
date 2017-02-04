@@ -2,7 +2,7 @@ using Foundation;
 using System;
 using UIKit;
 
-namespace iCoffe.iOS
+namespace tutCoffee.iOS
 {
     public partial class Tutor1ViewController : UIViewController
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Android.Views;
 using Android.Support.V4.View;
 
-namespace iCoffe.Droid.Adapters
+namespace tutCoffee.Droid.Adapters
 {
     public class TutorialAdapter : PagerAdapter
     {

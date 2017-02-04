@@ -9,7 +9,7 @@ using System;
 using System.CodeDom.Compiler;
 using UIKit;
 
-namespace iCoffe.iOS
+namespace tutCoffee.iOS
 {
     [Register ("UserViewController")]
     partial class UserViewController

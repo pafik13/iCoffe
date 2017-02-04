@@ -6,11 +6,11 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
-using iCoffe.Shared;
+using tutCoffee.Shared;
 using System.Net;
 using Android.Content.PM;
 
-namespace iCoffe.Droid
+namespace tutCoffee.Droid
 {
     [Activity(Label = "SignUpActivity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class SignUpActivity : Activity

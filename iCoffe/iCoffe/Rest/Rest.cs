@@ -8,7 +8,7 @@ using System.Globalization;
 using RestSharp;
 using System.Threading.Tasks;
 
-namespace iCoffe.Shared
+namespace tutCoffee.Shared
 {
     public static class Rest
     {
@@ -33,7 +33,7 @@ namespace iCoffe.Shared
             return response.StatusCode;
         }
 
-        public static string GetAccessToken(string username, string password)
+        public static AccessRecord GetAccessToken(string username, string password)
         {
             var client = new RestClient(Consts.HostUrl);
             var request = new RestRequest(Consts.TokenPath, Method.POST);
@@ -43,10 +43,10 @@ namespace iCoffe.Shared
             var response = client.Execute<AccessRecord>(request);
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                return response.Data.access_token;
+                return response.Data;
             }
 
-            return string.Empty;
+            return null;
         }
 
         public static async Task<AccountInfoResponse> GetAccountInfoAsync(string bearer)

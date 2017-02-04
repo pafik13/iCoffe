@@ -4,11 +4,11 @@ using Android.App;
 using Android.Views;
 using Android.Widget;
 
-using iCoffe.Shared;
+using tutCoffee.Shared;
 
 using UniversalImageLoader.Core;
 
-namespace iCoffe.Droid.Adapters
+namespace tutCoffee.Droid.Adapters
 {
     public class PurchasedOffersAdapter : BaseAdapter<OfferInfo>
     {

@@ -11,10 +11,10 @@ using Android.Widget;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 
-using iCoffe.Shared;
-using iCoffe.Droid.Adapters;
+using tutCoffee.Shared;
+using tutCoffee.Droid.Adapters;
 
-namespace iCoffe.Droid.Fragments
+namespace tutCoffee.Droid.Fragments
 {
     public class MapFragment : Fragment, IOnMapReadyCallback, GoogleMap.IOnMarkerClickListener
     {

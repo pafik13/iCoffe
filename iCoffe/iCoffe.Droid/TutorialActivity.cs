@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 
-using Android.App;
-using Android.Content;
 using Android.OS;
+using Android.App;
 using Android.Views;
 using Android.Widget;
+using Android.Content;
 using Android.Support.V4.View;
 
-using iCoffe.Droid.Adapters;
 using Android.Content.PM;
 
-namespace iCoffe.Droid
+using tutCoffee.Droid.Adapters;
+
+namespace tutCoffee.Droid
 {
     [Activity(Label = "TutorialActivity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class TutorialActivity : Activity

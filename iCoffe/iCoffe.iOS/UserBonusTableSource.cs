@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Foundation;
 using UIKit;
 
-using iCoffe.Shared;
+using tutCoffee.Shared;
 
-namespace iCoffe.iOS
+namespace tutCoffee.iOS
 {
 	public class UserBonusTableSource: UITableViewSource
 	{

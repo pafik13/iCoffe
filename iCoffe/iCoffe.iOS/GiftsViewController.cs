@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.CodeDom.Compiler;
 using UIKit;
 
-using iCoffe.Shared;
+using tutCoffee.Shared;
 
-namespace iCoffe.iOS
+namespace tutCoffee.iOS
 {
 	partial class GiftsViewController : UIViewController
 	{

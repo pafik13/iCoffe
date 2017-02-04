@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace iCoffe.iOS
+namespace tutCoffee.iOS
 {
 	public class Application
 	{

@@ -4,9 +4,9 @@ using UIKit;
 
 using SDWebImage;
 
-using iCoffe.Shared;
+using tutCoffee.Shared;
 
-namespace iCoffe.iOS
+namespace tutCoffee.iOS
 {
     public partial class BonusViewController : UIViewController
     {

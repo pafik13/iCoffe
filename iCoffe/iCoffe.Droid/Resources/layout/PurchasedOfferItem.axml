@@ -6,7 +6,7 @@
     android:minHeight="25px"
     android:background="@drawable/bg_white_corned">
     <ImageView
-        android:src="@drawable/ic_placeholder_72dp"
+        android:src="@drawable/placeholder_image_72dp"
         android:layout_height="72dp"
         android:layout_width="72dp"
         android:id="@+id/poiOfferLogoIV"

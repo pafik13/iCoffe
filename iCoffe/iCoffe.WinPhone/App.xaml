@@ -1,7 +1,7 @@
 ﻿<Application
-    x:Class="iCoffe.WinPhone.App"
+    x:Class="tutCoffee.WinPhone.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:iCoffe.WinPhone">
+    xmlns:local="using:tutCoffee.WinPhone">
 
 </Application>

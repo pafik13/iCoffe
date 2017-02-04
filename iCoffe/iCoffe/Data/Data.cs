@@ -4,7 +4,7 @@ using System.Linq;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace iCoffe.Shared
+namespace tutCoffee.Shared
 {
     public class Data
     {

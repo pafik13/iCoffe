@@ -5,9 +5,9 @@ using UIKit;
 using MapKit;
 using CoreLocation;
 
-using iCoffe.Shared;
+using tutCoffee.Shared;
 
-namespace iCoffe.iOS
+namespace tutCoffee.iOS
 {
 	class BasicMapAnnotation : MKAnnotation{
 		CLLocationCoordinate2D coordinate;

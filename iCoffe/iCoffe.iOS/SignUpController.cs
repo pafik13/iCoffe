@@ -2,10 +2,10 @@ using Foundation;
 using System;
 using UIKit;
 
-using iCoffe.Shared;
+using tutCoffee.Shared;
 using System.Net;
 
-namespace iCoffe.iOS
+namespace tutCoffee.iOS
 {
     public partial class SignUpController : UIViewController
     {

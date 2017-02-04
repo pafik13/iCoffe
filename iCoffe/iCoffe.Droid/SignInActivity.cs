@@ -7,11 +7,11 @@ using Android.OS;
 using Android.Views;
 using Android.Widget;
 
-using iCoffe.Shared;
+using tutCoffee.Shared;
 using Android.Views.InputMethods;
 using Android.Content.PM;
 
-namespace iCoffe.Droid
+namespace tutCoffee.Droid
 {
     [Activity(Label = "SignInActivity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class SignInActivity : Activity
@@ -117,26 +117,12 @@ namespace iCoffe.Droid
 
         private void GetAccessToken()
         {
-            //string accessToken = Rest.GetAccessToken(userEmail.Text, userPassword.Text);
-            string accessToken = Rest.GetAccessToken(userEmail.Text, userPassword.Text);
+            var accessRecord = Rest.GetAccessToken(userEmail.Text, userPassword.Text);
             RunOnUiThread(() =>
             {
                 if (progressDialog != null) progressDialog.Dismiss();
 
-                if (!string.IsNullOrEmpty(accessToken))
-                {
-                    ISharedPreferences sharedPreferences = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
-                    bool isSignedLater = sharedPreferences.GetBoolean(userEmail.Text, false);
-
-                    sharedPreferences.Edit()
-                        .PutString(MainActivity.C_ACCESS_TOKEN, accessToken)
-                        .PutBoolean(MainActivity.C_IS_NEED_TUTORIAL, !isSignedLater)
-                        .PutBoolean(userEmail.Text, true)
-                        .Apply();
-
-                    Finish();
-                }
-                else
+                if (accessRecord == null || string.IsNullOrEmpty(accessRecord.access_token))
                 {
                     AlertDialog.Builder builder;
                     builder = new AlertDialog.Builder(this);
@@ -147,6 +133,20 @@ namespace iCoffe.Droid
                         dialog.Dismiss();
                     });
                     dialog = builder.Show();
+                }
+                else
+                {
+                    ISharedPreferences sharedPreferences = GetSharedPreferences(MainActivity.C_DEFAULT_PREFS, FileCreationMode.Private);
+                    bool isSignedLater = sharedPreferences.GetBoolean(userEmail.Text, false);
+
+                    sharedPreferences.Edit()
+                        .PutString(MainActivity.C_ACCESS_TOKEN, accessRecord.access_token)
+                        .PutString(MainActivity.C_TOKEN_EXPIRE_DATETIME, DateTime.Now.AddSeconds(accessRecord.expires_in).ToString("O"))
+                        .PutBoolean(MainActivity.C_IS_NEED_TUTORIAL, !isSignedLater)
+                        .PutBoolean(userEmail.Text, true)
+                        .Apply();
+
+                    Finish();
                 }
             });
         }

@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Threading;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using SDiag = System.Diagnostics;
 
 using Android.App;
@@ -15,10 +16,11 @@ using Android.Locations;
 
 using UniversalImageLoader.Core;
 
-using iCoffe.Shared;
-using System.Threading.Tasks;
+using HockeyApp.Android;
 
-namespace iCoffe.Droid
+using tutCoffee.Shared;
+
+namespace tutCoffee.Droid
 {
     [Activity(Label = "MainActivity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : Activity, ILocationListener
@@ -30,6 +32,7 @@ namespace iCoffe.Droid
         public const string C_ACCESS_TOKEN = @"ACCESS_TOKEN";
         public const string C_IS_NEED_TUTORIAL = @"C_IS_NEED_TUTORIAL";
         public const string C_IS_BACK_PRESSED_IN_SIGN_IN = @"C_IS_BACK_PRESSED_IN_SIGN_IN";
+        public const string C_TOKEN_EXPIRE_DATETIME = @"C_TOKEN_EXPIRE_DATETIME";
 
         public const string C_PLACE_ID = @"C_PLACE_ID";
 
@@ -150,9 +153,17 @@ namespace iCoffe.Droid
             }
 
             string accessToken = sharedPreferences.GetString(C_ACCESS_TOKEN, string.Empty);
+            string tokenExpire = sharedPreferences.GetString(C_TOKEN_EXPIRE_DATETIME, string.Empty);
+            bool isTokenExpired = false;
+            DateTime expireDate;
+            if (DateTime.TryParse(tokenExpire, null, System.Globalization.DateTimeStyles.RoundtripKind, out expireDate))
+            {
+                isTokenExpired = DateTime.Now > expireDate;
+            }
+
             bool isNeedTutorial = sharedPreferences.GetBoolean(C_IS_NEED_TUTORIAL, true);
 
-            if (string.IsNullOrEmpty(accessToken))
+            if (string.IsNullOrEmpty(accessToken) || isTokenExpired)
             {
                 StartActivity(new Intent(this, typeof(SignInActivity)));
                 return;
