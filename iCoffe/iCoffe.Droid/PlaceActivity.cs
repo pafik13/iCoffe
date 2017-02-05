@@ -36,7 +36,7 @@ namespace tutCoffee.Droid
             Place = Data.GetPlace(placeId);
             Offers = Data.GetOffers(placeId);
 
-            FindViewById<TextView>(Resource.Id.paDescrTV).Text = "<нет описания>";
+            FindViewById<TextView>(Resource.Id.paDescrTV).Text = string.IsNullOrEmpty(Place.Description) ? "<нет описания>" : Place.Description;
             FindViewById<TextView>(Resource.Id.paAddressTV).Text = string.IsNullOrEmpty(Place.Address) ? "<нет адреса>" : Place.Address;
             FindViewById<TextView>(Resource.Id.paNameTV).Text = Place.Name;
 
