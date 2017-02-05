@@ -22,6 +22,7 @@
         p1:background="@drawable/button"
         p1:textSize="24sp"
         p1:textStyle="bold"
+        p1:textColor="@android:color/white"
         p1:typeface="monospace" />
     <RelativeLayout
         p1:minWidth="25px"

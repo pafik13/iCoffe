@@ -95,7 +95,7 @@ namespace tutCoffee.Droid
 
         void ShowMessage(string message)
         {
-            var fade = FindViewById<RelativeLayout>(Resource.Id.fade);
+            var fade = FindViewById<View>(Resource.Id.fade);
             fade.Visibility = ViewStates.Visible;
             var msg = FindViewById<TextView>(Resource.Id.message);
             msg.Text = message;

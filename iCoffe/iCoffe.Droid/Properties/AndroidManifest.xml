@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="ru.apps2adds.tutCoffee" android:installLocation="auto" android:versionName="1.3.4" android:versionCode="11">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="ru.apps2adds.tutCoffee" android:installLocation="auto" android:versionName="1.3.4" android:versionCode="12">
 	<uses-sdk android:minSdkVersion="15" />
 	<uses-library android:name="com.google.android.maps" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />

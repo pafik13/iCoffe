@@ -72,6 +72,8 @@ namespace tutCoffee.Droid.Fragments
 
         public void RefreshUserInfo()
         {
+            if (Data.UserInfo == null) return;
+
             MainLayout.FindViewById<TextView>(Resource.Id.afUserLoginTV).Text = Data.UserInfo.Login;
             MainLayout.FindViewById<TextView>(Resource.Id.afUserNameTV).Text = Data.UserInfo.Login;
             MainLayout.FindViewById<TextView>(Resource.Id.afUserPointsAmountTV).Text = Data.UserInfo.PointsAmount.ToString();
